@@ -28,21 +28,52 @@
   --radius-sm:10px;
   --shadow:0 2px 10px rgba(46,43,61,0.08), 0 1px 2px rgba(46,43,61,0.04);
   --shadow-lift:0 10px 26px rgba(46,43,61,0.12);
+  --overlay-bg:rgba(46,43,61,0.35);
+  --btn-primary-bg:var(--ink);
+  --btn-primary-text:#FFFFFF;
+  --hover-bg:#F4F2FB;
   --font-display:'Caveat', cursive;
   --font-body:'Plus Jakarta Sans', sans-serif;
   --font-mono:'IBM Plex Mono', monospace;
 }
+:root[data-theme="dark"]{
+  --bg:#19181D;
+  --paper:#232128;
+  --paper-soft:#2B2930;
+  --ink:#EDE7DC;
+  --ink-soft:#B3ADBD;
+  --ink-faint:#7B7588;
+  --line:#37343D;
+  --sage:#7FCBA0;
+  --sage-soft:#1F3A2E;
+  --amber:#F0BD5E;
+  --amber-soft:#3D2F14;
+  --coral:#FF6B4A;
+  --coral-soft:#3A2218;
+  --periwinkle:#9CA8E8;
+  --sand:#E0B26B;
+  --shadow:0 2px 10px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-lift:0 10px 28px rgba(0,0,0,0.55);
+  --overlay-bg:rgba(0,0,0,0.6);
+  --btn-primary-bg:#EDE7DC;
+  --btn-primary-text:#19181D;
+  --hover-bg:#322F39;
+}
 *{ box-sizing:border-box; }
 html,body{ margin:0; padding:0; }
+html{ background:var(--bg); color-scheme:light; }
+html[data-theme="dark"]{ color-scheme:dark; }
 body{
   background:var(--bg);
   color:var(--ink);
   font-family:var(--font-body);
   -webkit-font-smoothing:antialiased;
+  transition:background-color .2s ease, color .2s ease;
 }
 #app{ max-width:720px; margin:0 auto; padding:24px 20px 80px; min-height:100vh; }
 
 .app-header{ display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:6px; }
+.header-actions{ display:flex; align-items:center; gap:2px; }
 .brand{ display:flex; flex-direction:column; }
 .brand-mark{ font-family:var(--font-display); font-size:34px; font-weight:700; line-height:1; color:var(--ink); }
 .brand-tag{ font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:2px; }
@@ -59,14 +90,14 @@ body{
 .view-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:10px; }
 .view-head h2{ font-family:var(--font-display); font-size:24px; margin:0; font-weight:600; }
 
-.btn-primary{ background:var(--ink); color:#fff; border:none; padding:10px 16px; border-radius:999px; font-family:var(--font-body); font-weight:600; font-size:13px; cursor:pointer; white-space:nowrap; }
+.btn-primary{ background:var(--btn-primary-bg); color:var(--btn-primary-text); border:none; padding:10px 16px; border-radius:999px; font-family:var(--font-body); font-weight:600; font-size:13px; cursor:pointer; white-space:nowrap; }
 .btn-primary:hover{ opacity:.88; }
 .btn-primary.small{ padding:8px 14px; font-size:12px; border-radius:var(--radius-sm); }
 .btn-secondary{ background:var(--paper-soft); color:var(--ink); border:1px solid var(--line); padding:9px 14px; border-radius:999px; font-weight:600; font-size:13px; cursor:pointer; }
 .btn-secondary.small{ border-radius:var(--radius-sm); padding:8px 12px; font-size:12px; }
 .btn-secondary.danger{ color:var(--coral); border-color:var(--coral-soft); background:var(--coral-soft); }
 
-.card{ background:var(--paper); border-radius:var(--radius); padding:16px 16px 14px; box-shadow:var(--shadow); position:relative; }
+.card{ background:var(--paper); border-radius:var(--radius); padding:16px 16px 14px; box-shadow:var(--shadow); border:1px solid var(--line); position:relative; }
 .mono{ font-family:var(--font-mono); }
 .ink-faint{ color:var(--ink-faint); }
 .ink-soft{ color:var(--ink-soft); }
@@ -125,7 +156,7 @@ body{
 .section-stats b{ font-weight:600; }
 .section-expand{ margin-top:10px; padding-top:10px; border-top:1px dashed var(--line); display:flex; flex-direction:column; gap:8px; }
 .note-row{ background:var(--paper-soft); border-radius:var(--radius-sm); padding:10px 12px; cursor:pointer; transition:background .15s; }
-.note-row:hover{ background:#F4F2FB; }
+.note-row:hover{ background:var(--hover-bg); }
 .note-row-top{ display:flex; justify-content:space-between; align-items:center; gap:8px; }
 .note-row-title{ font-weight:600; font-size:14px; }
 .note-row-amount{ font-family:var(--font-mono); font-size:13px; color:var(--ink-soft); white-space:nowrap; }
@@ -197,7 +228,7 @@ label input, label select{ margin-top:6px; }
 .field-row{ display:flex; gap:10px; }
 .field-row > label{ flex:1; }
 
-.overlay{ position:fixed; inset:0; background:rgba(46,43,61,0.35); display:flex; align-items:center; justify-content:center; padding:20px; z-index:50; }
+.overlay{ position:fixed; inset:0; background:var(--overlay-bg); display:flex; align-items:center; justify-content:center; padding:20px; z-index:50; }
 .modal{ background:var(--paper); border-radius:var(--radius); padding:24px; width:100%; max-width:380px; max-height:86vh; overflow-y:auto; box-shadow:var(--shadow-lift); }
 .modal h3{ font-family:var(--font-display); font-size:24px; margin:0 0 16px; font-weight:600; }
 .modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:8px; }
@@ -295,6 +326,24 @@ function daysBetween(iso){
   return Math.max(0, Math.floor((Date.now() - d.getTime()) / 86400000));
 }
 
+function detectSystemTheme(){
+  try{
+    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+  }catch(e){}
+  return 'light';
+}
+
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', state.settings.theme === 'dark' ? 'dark' : 'light');
+}
+
+function toggleTheme(){
+  state.settings.theme = state.settings.theme === 'dark' ? 'light' : 'dark';
+  applyTheme();
+  render();
+  saveData();
+}
+
 function suggestSectionName(duration){
   const now = new Date();
   if(duration === 'yearly') return String(now.getFullYear());
@@ -368,6 +417,10 @@ async function loadData(){
       await window.storage.set(STORAGE_KEY, JSON.stringify({ sections: [], dues: [], settings: state.settings }), false);
     }catch(e2){ console.error('Could not initialize storage', e2); }
   }
+  if(!state.settings.theme){
+    state.settings.theme = detectSystemTheme();
+  }
+  applyTheme();
   if(state.sections.length){
     state.expandedSectionIds[state.sections[0].id] = true;
   }
@@ -606,13 +659,17 @@ function emptyState(title, body, cta, ctaAction){
 }
 
 function renderHeader(){
+  const isDark = state.settings.theme === 'dark';
   return `
   <header class="app-header">
     <div class="brand">
       <span class="brand-mark">BudgetNotes</span>
       <span class="brand-tag">write it. track it.</span>
     </div>
-    <button class="icon-btn" data-action="open-settings" title="Backup &amp; settings" aria-label="Backup and settings">&#9881;</button>
+    <div class="header-actions">
+      <button class="icon-btn" data-action="toggle-theme" title="${isDark ? 'Switch to light theme' : 'Switch to dark theme'}" aria-label="${isDark ? 'Switch to light theme' : 'Switch to dark theme'}">${isDark ? '&#9789;' : '&#9728;'}</button>
+      <button class="icon-btn" data-action="open-settings" title="Backup &amp; settings" aria-label="Backup and settings">&#9881;</button>
+    </div>
   </header>
   <nav class="tabs" role="tablist">
     <button class="tab ${state.tab==='home'?'active':''}" data-action="set-tab" data-tab="home">Home</button>
@@ -1092,6 +1149,8 @@ function init(){
         state.showNewDue = true; render(); break;
       case 'open-settings':
         state.showSettings = true; state.importError = null; render(); break;
+      case 'toggle-theme':
+        toggleTheme(); break;
       case 'close-modal':
         state.showNewSection = false; state.editSectionId = null;
         state.showNewNoteFor = null; state.showNewDue = false; state.showSettings = false;
