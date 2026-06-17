@@ -66,13 +66,7 @@ body{
 .btn-secondary.small{ border-radius:var(--radius-sm); padding:8px 12px; font-size:12px; }
 .btn-secondary.danger{ color:var(--coral); border-color:var(--coral-soft); background:var(--coral-soft); }
 
-.card-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
 .card{ background:var(--paper); border-radius:var(--radius); padding:16px 16px 14px; box-shadow:var(--shadow); position:relative; }
-.note-card{ cursor:pointer; transition:box-shadow .15s, transform .15s; }
-.note-card:hover{ box-shadow:var(--shadow-lift); transform:translateY(-1px); }
-.card-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
-.note-title{ font-family:var(--font-display); font-size:22px; margin:0; font-weight:600; color:var(--ink); }
-.ledger-line{ margin:8px 0 10px; font-size:14px; }
 .mono{ font-family:var(--font-mono); }
 .ink-faint{ color:var(--ink-faint); }
 .ink-soft{ color:var(--ink-soft); }
@@ -83,14 +77,69 @@ body{
 .bar-sage .bar-fill{ background-color:var(--sage); }
 .bar-amber .bar-fill{ background-color:var(--amber); }
 .bar-coral .bar-fill{ background-color:var(--coral); }
-.card-meta{ font-size:12px; color:var(--ink-faint); margin-top:8px; }
 
-.detail-head{ display:flex; align-items:baseline; justify-content:space-between; margin:10px 0 4px; gap:10px; flex-wrap:wrap; }
+.empty{ text-align:center; padding:48px 20px; background:var(--paper); border-radius:var(--radius); }
+.empty-title{ font-family:var(--font-display); font-size:22px; margin-bottom:6px; }
+.empty-body{ color:var(--ink-soft); font-size:14px; margin-bottom:16px; max-width:320px; margin-left:auto; margin-right:auto; }
+
+.link-back{ background:none; border:none; color:var(--ink-soft); font-size:13px; cursor:pointer; padding:0; margin-bottom:6px; }
+.link-back:hover{ color:var(--ink); }
+
+/* Home */
+.stats-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+.stat-col{ display:flex; flex-direction:column; gap:4px; min-width:0; }
+.stat-label{ font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); font-weight:700; }
+.stat-value{ font-family:var(--font-mono); font-size:17px; font-weight:600; color:var(--ink); overflow:hidden; text-overflow:ellipsis; }
+.stats-divider{ border-top:1px solid var(--line); margin:14px 0 12px; }
+.savings-row{ display:flex; justify-content:space-between; align-items:baseline; }
+.savings-label{ font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); font-weight:700; }
+.savings-value{ font-family:var(--font-mono); font-size:20px; font-weight:700; color:var(--sage); }
+
+.leading-card{ margin-top:16px; }
+.leading-title{ font-family:var(--font-display); font-size:20px; font-weight:600; margin:0; }
+.leading-sub{ font-size:12px; color:var(--ink-faint); margin:2px 0 14px; }
+.rank-list{ display:flex; flex-direction:column; gap:10px; margin-bottom:14px; }
+.rank-row{ display:grid; grid-template-columns:18px 1fr 90px auto; align-items:center; gap:10px; font-size:13px; }
+.rank-num{ color:var(--ink-faint); font-weight:700; font-size:12px; }
+.rank-desc{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.rank-bar{ height:8px; border-radius:999px; background:var(--line); overflow:hidden; }
+.rank-bar-fill{ height:100%; border-radius:999px; background:var(--periwinkle); }
+.rank-amount{ font-family:var(--font-mono); font-weight:600; text-align:right; white-space:nowrap; }
+.legend-row{ display:flex; gap:16px; flex-wrap:wrap; padding-top:10px; border-top:1px solid var(--line); font-size:12px; color:var(--ink-soft); }
+.legend-item{ display:flex; align-items:center; gap:6px; }
+.legend-dot{ width:8px; height:8px; border-radius:50%; display:inline-block; }
+.dot-essential{ background:var(--sage); }
+.dot-discretionary{ background:var(--periwinkle); }
+.dot-untagged{ background:var(--ink-faint); }
+
+/* Sections (Notes tab) */
+.section-list{ display:flex; flex-direction:column; gap:14px; }
+.section-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; cursor:pointer; }
+.section-name-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.section-name{ font-family:var(--font-display); font-size:24px; font-weight:600; margin:0; }
+.duration-badge{ font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; background:var(--paper-soft); color:var(--ink-soft); padding:3px 9px; border-radius:999px; border:1px solid var(--line); }
+.section-actions{ display:flex; align-items:center; gap:0px; flex-shrink:0; }
+.chevron{ font-size:13px; color:var(--ink-faint); transition:transform .15s; display:inline-block; }
+.chevron.open{ transform:rotate(90deg); }
+.section-stats{ display:flex; gap:16px; flex-wrap:wrap; font-size:13px; margin:10px 0 8px; }
+.section-stats b{ font-weight:600; }
+.section-expand{ margin-top:10px; padding-top:10px; border-top:1px dashed var(--line); display:flex; flex-direction:column; gap:8px; }
+.note-row{ background:var(--paper-soft); border-radius:var(--radius-sm); padding:10px 12px; cursor:pointer; transition:background .15s; }
+.note-row:hover{ background:#F4F2FB; }
+.note-row-top{ display:flex; justify-content:space-between; align-items:center; gap:8px; }
+.note-row-title{ font-weight:600; font-size:14px; }
+.note-row-amount{ font-family:var(--font-mono); font-size:13px; color:var(--ink-soft); white-space:nowrap; }
+.note-row-bar{ margin-top:6px; height:6px; }
+
+/* Note detail */
+.detail-head{ display:flex; align-items:flex-start; justify-content:space-between; margin:10px 0 4px; gap:14px; flex-wrap:wrap; }
 .note-title-lg{ font-family:var(--font-display); font-size:32px; margin:0; font-weight:600; }
-.budget-line{ font-size:13px; color:var(--ink-soft); white-space:nowrap; }
-.detail-stats{ display:flex; gap:8px; font-size:14px; margin-bottom:18px; flex-wrap:wrap; }
+.budget-edit{ display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
+.budget-edit label{ font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); font-weight:700; margin:0; }
+.budget-input-inline{ width:130px; text-align:right; font-family:var(--font-mono); font-weight:600; padding:7px 10px; }
+.detail-stats{ display:flex; gap:8px; font-size:14px; margin-bottom:6px; flex-wrap:wrap; }
 .text-coral{ color:var(--coral); font-weight:600; }
-.text-sage{ color:var(--sage); }
+.allocate-hint{ font-size:12px; color:var(--ink-faint); margin-bottom:16px; }
 
 .entry-form{ display:flex; gap:8px; margin-bottom:6px; }
 .entry-form input{ flex:1; }
@@ -99,22 +148,27 @@ body{
 .entry-preview.hint{ color:var(--ink-faint); }
 .form-error{ font-size:12px; color:var(--coral); margin:-2px 2px 12px; }
 
+.budget-items-card{ margin:18px 0 16px; }
+.bi-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+.bi-title{ font-weight:700; font-size:12px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-soft); }
+.bi-row{ display:grid; grid-template-columns:84px 1fr auto; gap:10px; padding:7px 2px; border-bottom:1px solid var(--line); font-size:13px; align-items:center; }
+.bi-row:last-child{ border-bottom:none; }
+.bi-row .mono{ font-weight:600; }
+.bi-pct{ color:var(--ink-faint); font-size:12px; white-space:nowrap; }
+
 .ledger{ display:flex; flex-direction:column; border-top:1px solid var(--line); }
-.ledger-row{ display:grid; grid-template-columns:84px 1fr auto auto; align-items:center; gap:10px; padding:10px 2px; border-bottom:1px solid var(--line); font-size:14px; }
+.ledger-row{ display:grid; grid-template-columns:20px 84px 1fr auto auto; align-items:center; gap:10px; padding:10px 2px; border-bottom:1px solid var(--line); font-size:14px; }
 .ledger-row .amount{ font-weight:600; }
 .ledger-row .date{ font-size:12px; }
 
-.link-back{ background:none; border:none; color:var(--ink-soft); font-size:13px; cursor:pointer; padding:0; margin-bottom:6px; }
-.link-back:hover{ color:var(--ink); }
+.tag-btn{ width:16px; height:16px; border-radius:50%; border:2px solid var(--line); background:var(--paper); cursor:pointer; padding:0; flex-shrink:0; }
+.tag-btn.tag-essential{ background:var(--sage); border-color:var(--sage); }
+.tag-btn.tag-discretionary{ background:var(--periwinkle); border-color:var(--periwinkle); }
 
-.empty{ text-align:center; padding:48px 20px; background:var(--paper); border-radius:var(--radius); }
-.empty-title{ font-family:var(--font-display); font-size:22px; margin-bottom:6px; }
-.empty-body{ color:var(--ink-soft); font-size:14px; margin-bottom:16px; max-width:320px; margin-left:auto; margin-right:auto; }
-
+/* Dues */
 .subtabs{ display:flex; gap:8px; background:var(--paper-soft); padding:4px; border-radius:999px; }
 .subtab{ border:none; background:none; padding:7px 16px; border-radius:999px; font-weight:600; font-size:13px; color:var(--ink-faint); cursor:pointer; }
 .subtab.active{ background:var(--paper); color:var(--ink); box-shadow:var(--shadow); }
-
 .due-list{ display:flex; flex-direction:column; gap:12px; }
 .due-top{ display:flex; justify-content:space-between; align-items:center; cursor:pointer; gap:10px; }
 .due-person{ font-weight:700; font-size:16px; }
@@ -140,6 +194,8 @@ label input, label select{ margin-top:6px; }
 .radio-row{ display:flex; gap:18px; margin-bottom:14px; font-size:13px; font-weight:600; color:var(--ink-soft); }
 .radio-row label{ display:flex; align-items:center; gap:6px; margin-bottom:0; }
 .radio-row input{ width:auto; }
+.field-row{ display:flex; gap:10px; }
+.field-row > label{ flex:1; }
 
 .overlay{ position:fixed; inset:0; background:rgba(46,43,61,0.35); display:flex; align-items:center; justify-content:center; padding:20px; z-index:50; }
 .modal{ background:var(--paper); border-radius:var(--radius); padding:24px; width:100%; max-width:380px; max-height:86vh; overflow-y:auto; box-shadow:var(--shadow-lift); }
@@ -151,11 +207,12 @@ label input, label select{ margin-top:6px; }
 
 .loading{ text-align:center; padding:80px 20px; color:var(--ink-soft); font-family:var(--font-display); font-size:20px; }
 .toast-error{ background:var(--coral-soft); color:var(--coral); padding:10px 14px; border-radius:var(--radius-sm); font-size:13px; margin-top:14px; }
+.toast-info{ background:var(--sage-soft); color:var(--sage); padding:10px 14px; border-radius:var(--radius-sm); font-size:13px; margin-bottom:14px; }
 
 @media (max-width:480px){
   .brand-mark{ font-size:28px; }
-  .card-grid{ grid-template-columns:1fr; }
-  .ledger-row{ grid-template-columns:70px 1fr auto; }
+  .stats-row{ grid-template-columns:repeat(2,1fr); gap:14px; }
+  .ledger-row{ grid-template-columns:16px 70px 1fr auto; }
   .ledger-row .date{ display:none; }
 }
 @media (prefers-reduced-motion:reduce){
@@ -183,21 +240,26 @@ if(!window.storage){
 const STORAGE_KEY = 'app:data';
 
 let state = {
-  notes: [],
+  sections: [],
   dues: [],
   settings: { defaultCurrency: '$' },
-  tab: 'notes',
+  tab: 'home',
   duesTab: 'lent',
-  openNoteId: null,
-  showNewNote: false,
+  expandedSectionIds: {},
+  openNote: null, // { sectionId, noteId }
+  showNewSection: false,
+  editSectionId: null,
+  showNewNoteFor: null, // sectionId
   showNewDue: false,
   showSettings: false,
   expandedDueId: null,
-  confirmDeleteNote: null,
+  confirmDeleteSection: null,
+  confirmDeleteNote: null, // "sectionId:noteId"
   confirmDeleteEntry: null,
   confirmDeleteDue: null,
   entryError: null,
   importError: null,
+  migrationNotice: null,
   error: null,
   loaded: false,
 };
@@ -233,22 +295,81 @@ function daysBetween(iso){
   return Math.max(0, Math.floor((Date.now() - d.getTime()) / 86400000));
 }
 
+function suggestSectionName(duration){
+  const now = new Date();
+  if(duration === 'yearly') return String(now.getFullYear());
+  if(duration === 'weekly') return 'Week of ' + now.toLocaleDateString(undefined, { month:'short', day:'numeric' });
+  return now.toLocaleDateString(undefined, { month:'long', year:'numeric' });
+}
+
+// Groups entries by description (case-insensitive), summing amounts and
+// picking the majority tag. Used for "Budget Items" and "Leading Expenses".
+function groupEntries(entries){
+  const map = new Map();
+  entries.forEach(e => {
+    const key = (e.desc || '').trim().toLowerCase();
+    if(!key) return;
+    if(!map.has(key)){
+      map.set(key, { desc: e.desc.trim(), amount: 0, count: 0, tagCounts: {} });
+    }
+    const g = map.get(key);
+    g.amount += Number(e.amount) || 0;
+    g.count += 1;
+    const t = e.tag || 'untagged';
+    g.tagCounts[t] = (g.tagCounts[t] || 0) + 1;
+  });
+  const groups = [...map.values()].map(g => {
+    let bestTag = 'untagged', bestCount = -1;
+    Object.keys(g.tagCounts).forEach(t => { if(g.tagCounts[t] > bestCount){ bestCount = g.tagCounts[t]; bestTag = t; } });
+    return { desc: g.desc, amount: g.amount, count: g.count, tag: bestTag };
+  });
+  groups.sort((a,b) => b.amount - a.amount);
+  return groups;
+}
+
 async function loadData(){
   try{
     const res = await window.storage.get(STORAGE_KEY, false);
     if(res && res.value){
       const parsed = JSON.parse(res.value);
-      state.notes = parsed.notes || [];
-      state.dues = parsed.dues || [];
       state.settings = parsed.settings || { defaultCurrency: '$' };
+      if(Array.isArray(parsed.sections)){
+        state.sections = parsed.sections;
+      } else if(Array.isArray(parsed.notes) && parsed.notes.length){
+        // Migrate the old flat-notes format (no sections) into one section.
+        const migrated = {
+          id: uid(),
+          name: 'My Notes',
+          totalBudget: parsed.notes.reduce((s,n) => s + (Number(n.budget)||0), 0),
+          duration: 'monthly',
+          currency: parsed.notes[0].currency || state.settings.defaultCurrency || '$',
+          createdAt: new Date().toISOString(),
+          notes: parsed.notes.map(n => ({
+            id: n.id || uid(),
+            title: n.title || 'Untitled note',
+            icon: '',
+            budget: Number(n.budget) || 0,
+            entries: (n.entries || []).map(e => ({ id: e.id || uid(), amount: e.amount, desc: e.desc, date: e.date, tag: e.tag || null })),
+            createdAt: n.createdAt || new Date().toISOString()
+          }))
+        };
+        state.sections = [migrated];
+        state.migrationNotice = 'Your earlier notes were moved into a new section called "My Notes" so nothing was lost.';
+      } else {
+        state.sections = [];
+      }
+      state.dues = parsed.dues || [];
     }
   } catch(e){
-    state.notes = [];
+    state.sections = [];
     state.dues = [];
     state.settings = { defaultCurrency: '$' };
     try{
-      await window.storage.set(STORAGE_KEY, JSON.stringify({ notes: [], dues: [], settings: state.settings }), false);
+      await window.storage.set(STORAGE_KEY, JSON.stringify({ sections: [], dues: [], settings: state.settings }), false);
     }catch(e2){ console.error('Could not initialize storage', e2); }
+  }
+  if(state.sections.length){
+    state.expandedSectionIds[state.sections[0].id] = true;
   }
   state.loaded = true;
   render();
@@ -257,7 +378,7 @@ async function loadData(){
 async function saveData(){
   try{
     const result = await window.storage.set(STORAGE_KEY, JSON.stringify({
-      notes: state.notes, dues: state.dues, settings: state.settings
+      sections: state.sections, dues: state.dues, settings: state.settings
     }), false);
     const hadError = !!state.error;
     state.error = result ? null : 'Could not save just now. Your latest change may not persist.';
@@ -269,35 +390,105 @@ async function saveData(){
   }
 }
 
+function findSection(sectionId){ return state.sections.find(s => s.id === sectionId); }
+function findNote(sectionId, noteId){
+  const s = findSection(sectionId);
+  return s ? s.notes.find(n => n.id === noteId) : null;
+}
+
+function sectionAllocated(section){ return section.notes.reduce((s,n) => s + (Number(n.budget)||0), 0); }
+function sectionSpent(section){ return section.notes.reduce((s,n) => s + n.entries.reduce((s2,e)=>s2+e.amount,0), 0); }
+function sectionSavings(section){ return Math.max(0, section.totalBudget - sectionAllocated(section)); }
+
+function noteSpent(note){ return note.entries.reduce((s,e) => s + e.amount, 0); }
+
 function pendingAmount(due){
   const paid = due.payments.reduce((s,p) => s + (Number(p.amount) || 0), 0);
   return Math.max(0, due.amount - paid);
 }
-
 function accruedInterest(due){
   if(!due.rate) return 0;
   const days = daysBetween(due.date);
   return due.amount * (due.rate/100) * (days/365);
 }
 
-function createNote({title, budget, currency}){
-  const note = {
+/* ---------- mutations ---------- */
+
+function createSection({name, totalBudget, duration, currency}){
+  const section = {
     id: uid(),
-    title: (title || '').trim() || 'Untitled note',
-    budget: Number(budget) || 0,
+    name: (name||'').trim() || suggestSectionName(duration),
+    totalBudget: Number(totalBudget) || 0,
+    duration: duration || 'monthly',
     currency: currency || state.settings.defaultCurrency || '$',
-    entries: [],
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
+    notes: []
   };
-  state.notes.unshift(note);
-  state.showNewNote = false;
-  state.openNoteId = note.id;
+  state.sections.unshift(section);
+  state.expandedSectionIds[section.id] = true;
+  state.showNewSection = false;
   render();
   saveData();
 }
 
-function addEntry(noteId, rawValue){
-  const note = state.notes.find(n => n.id === noteId);
+function updateSection(id, {name, totalBudget, duration, currency}){
+  const s = findSection(id);
+  if(!s) return;
+  s.name = (name||'').trim() || s.name;
+  s.totalBudget = Number(totalBudget) || 0;
+  s.duration = duration || s.duration;
+  s.currency = currency || s.currency;
+  state.editSectionId = null;
+  state.showNewSection = false;
+  render();
+  saveData();
+}
+
+function deleteSection(id){
+  state.sections = state.sections.filter(s => s.id !== id);
+  if(state.openNote && state.openNote.sectionId === id) state.openNote = null;
+  state.confirmDeleteSection = null;
+  render();
+  saveData();
+}
+
+function createNoteInSection(sectionId, {title, icon, budget}){
+  const s = findSection(sectionId);
+  if(!s) return;
+  const note = {
+    id: uid(),
+    title: (title||'').trim() || 'Untitled note',
+    icon: (icon||'').trim().slice(0,4),
+    budget: Number(budget) || 0,
+    entries: [],
+    createdAt: new Date().toISOString()
+  };
+  s.notes.unshift(note);
+  state.showNewNoteFor = null;
+  state.openNote = { sectionId, noteId: note.id };
+  render();
+  saveData();
+}
+
+function deleteNote(sectionId, noteId){
+  const s = findSection(sectionId);
+  if(s) s.notes = s.notes.filter(n => n.id !== noteId);
+  if(state.openNote && state.openNote.noteId === noteId) state.openNote = null;
+  state.confirmDeleteNote = null;
+  render();
+  saveData();
+}
+
+function updateNoteBudget(sectionId, noteId, value){
+  const n = findNote(sectionId, noteId);
+  if(!n) return;
+  n.budget = Number(value) || 0;
+  render();
+  saveData();
+}
+
+function addEntry(sectionId, noteId, rawValue){
+  const note = findNote(sectionId, noteId);
   if(!note) return;
   const trimmed = (rawValue || '').trim();
   const match = trimmed.match(/^(-?[\d,]+(?:\.\d{1,2})?)\s+(.+)$/);
@@ -310,8 +501,26 @@ function addEntry(noteId, rawValue){
   state.entryError = null;
   const amount = parseFloat(match[1].replace(/,/g, ''));
   const desc = match[2].trim();
-  note.entries.unshift({ id: uid(), amount, desc, date: new Date().toISOString() });
+  note.entries.unshift({ id: uid(), amount, desc, date: new Date().toISOString(), tag: null });
   pendingFocus = 'entry-input';
+  render();
+  saveData();
+}
+
+function deleteEntry(sectionId, noteId, entryId){
+  const note = findNote(sectionId, noteId);
+  if(note) note.entries = note.entries.filter(e => e.id !== entryId);
+  state.confirmDeleteEntry = null;
+  render();
+  saveData();
+}
+
+function cycleTag(sectionId, noteId, entryId){
+  const note = findNote(sectionId, noteId);
+  if(!note) return;
+  const entry = note.entries.find(e => e.id === entryId);
+  if(!entry) return;
+  entry.tag = entry.tag === null ? 'essential' : entry.tag === 'essential' ? 'discretionary' : null;
   render();
   saveData();
 }
@@ -344,7 +553,7 @@ function addPayment(dueId, amt){
 }
 
 function exportData(){
-  const blob = new Blob([JSON.stringify({ notes: state.notes, dues: state.dues, settings: state.settings }, null, 2)], { type: 'application/json' });
+  const blob = new Blob([JSON.stringify({ sections: state.sections, dues: state.dues, settings: state.settings }, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -360,7 +569,18 @@ function importData(file){
   reader.onload = (e) => {
     try{
       const parsed = JSON.parse(e.target.result);
-      state.notes = Array.isArray(parsed.notes) ? parsed.notes : [];
+      if(Array.isArray(parsed.sections)){
+        state.sections = parsed.sections;
+      } else if(Array.isArray(parsed.notes)){
+        state.sections = parsed.notes.length ? [{
+          id: uid(), name: 'My Notes', duration:'monthly',
+          totalBudget: parsed.notes.reduce((s,n)=>s+(Number(n.budget)||0),0),
+          currency: state.settings.defaultCurrency || '$', createdAt: new Date().toISOString(),
+          notes: parsed.notes.map(n => ({ id:n.id||uid(), title:n.title||'Untitled note', icon:'', budget:Number(n.budget)||0, entries:(n.entries||[]).map(e=>({id:e.id||uid(),amount:e.amount,desc:e.desc,date:e.date,tag:e.tag||null})), createdAt:n.createdAt||new Date().toISOString() }))
+        }] : [];
+      } else {
+        state.sections = [];
+      }
       state.dues = Array.isArray(parsed.dues) ? parsed.dues : [];
       state.settings = parsed.settings || state.settings;
       state.importError = null;
@@ -374,6 +594,8 @@ function importData(file){
   };
   reader.readAsText(file);
 }
+
+/* ---------- rendering ---------- */
 
 function emptyState(title, body, cta, ctaAction){
   return `<div class="empty">
@@ -393,77 +615,196 @@ function renderHeader(){
     <button class="icon-btn" data-action="open-settings" title="Backup &amp; settings" aria-label="Backup and settings">&#9881;</button>
   </header>
   <nav class="tabs" role="tablist">
-    <button class="tab ${state.tab==='notes'?'active':''}" data-action="set-tab" data-tab="notes">Budget Notes</button>
-    <button class="tab ${state.tab==='dues'?'active':''}" data-action="set-tab" data-tab="dues">Dues Tracker</button>
+    <button class="tab ${state.tab==='home'?'active':''}" data-action="set-tab" data-tab="home">Home</button>
+    <button class="tab ${state.tab==='notes'?'active':''}" data-action="set-tab" data-tab="notes">Notes</button>
+    <button class="tab ${state.tab==='dues'?'active':''}" data-action="set-tab" data-tab="dues">Dues</button>
   </nav>`;
 }
 
-function noteCard(note){
-  const spent = note.entries.reduce((s,e) => s + e.amount, 0);
+function allEntriesFlat(){
+  const out = [];
+  state.sections.forEach(s => s.notes.forEach(n => n.entries.forEach(e => out.push(e))));
+  return out;
+}
+
+function renderHome(){
+  const sym = state.settings.defaultCurrency;
+  const totalNotes = state.sections.reduce((s,sec) => s + sec.notes.length, 0);
+  const totalBudget = state.sections.reduce((s,sec) => s + (Number(sec.totalBudget)||0), 0);
+  const totalSpent = allEntriesFlat().reduce((s,e) => s + e.amount, 0);
+  const utilized = totalBudget > 0 ? Math.round((totalSpent/totalBudget)*100) : 0;
+  const totalSavings = state.sections.reduce((s,sec) => s + sectionSavings(sec), 0);
+
+  const statsCard = `
+  <div class="card">
+    <div class="stats-row">
+      <div class="stat-col"><span class="stat-label">Notes</span><span class="stat-value">${totalNotes}</span></div>
+      <div class="stat-col"><span class="stat-label">Budget</span><span class="stat-value">${formatMoney(totalBudget, sym)}</span></div>
+      <div class="stat-col"><span class="stat-label">Spent</span><span class="stat-value">${formatMoney(totalSpent, sym)}</span></div>
+      <div class="stat-col"><span class="stat-label">Utilized</span><span class="stat-value">${utilized}%</span></div>
+    </div>
+    <div class="stats-divider"></div>
+    <div class="savings-row">
+      <span class="savings-label">Total savings</span>
+      <span class="savings-value">${formatMoney(totalSavings, sym)}</span>
+    </div>
+  </div>`;
+
+  const groups = groupEntries(allEntriesFlat());
+  const top5 = groups.slice(0,5);
+  let leadingCard;
+  if(top5.length === 0){
+    leadingCard = `<div class="card leading-card">${emptyState('No expenses yet', 'Once you log a few entries in your notes, your biggest expenses will show up here.', null, null)}</div>`;
+  } else {
+    const max = Math.max(...top5.map(g => g.amount));
+    const legend = { essential:0, discretionary:0, untagged:0 };
+    top5.forEach(g => { legend[g.tag] = (legend[g.tag]||0) + g.amount; });
+    leadingCard = `
+    <div class="card leading-card">
+      <h3 class="leading-title">Leading expenses</h3>
+      <p class="leading-sub">Items that cost you the most</p>
+      <div class="rank-list">
+        ${top5.map((g,i) => `
+          <div class="rank-row">
+            <span class="rank-num">${i+1}.</span>
+            <span class="rank-desc">${escapeHtml(g.desc)}</span>
+            <span class="rank-bar"><span class="rank-bar-fill" style="width:${Math.max(6, Math.round(g.amount/max*100))}%"></span></span>
+            <span class="rank-amount mono">${formatMoney(g.amount, sym)}</span>
+          </div>`).join('')}
+      </div>
+      <div class="legend-row">
+        <span class="legend-item"><span class="legend-dot dot-essential"></span>Essential: ${formatMoney(legend.essential, sym)}</span>
+        <span class="legend-item"><span class="legend-dot dot-discretionary"></span>Discretionary: ${formatMoney(legend.discretionary, sym)}</span>
+        <span class="legend-item"><span class="legend-dot dot-untagged"></span>Untagged: ${formatMoney(legend.untagged, sym)}</span>
+      </div>
+    </div>`;
+  }
+
+  return `<div class="view">${statsCard}${leadingCard}</div>`;
+}
+
+function noteRow(section, note){
+  const spent = noteSpent(note);
   const pct = note.budget > 0 ? (spent/note.budget*100) : 0;
   const clamped = Math.min(100, Math.max(0, pct));
   const status = pct > 100 ? 'coral' : (pct >= 70 ? 'amber' : 'sage');
-  const isConfirm = state.confirmDeleteNote === note.id;
   return `
-  <div class="card note-card" data-action="open-note" data-id="${note.id}" role="button" tabindex="0">
-    <div class="card-top">
-      <h3 class="note-title">${escapeHtml(note.title)}</h3>
-      <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-note':'ask-delete-note'}" data-id="${note.id}" title="Delete note" aria-label="Delete note">${isConfirm?'Delete?':'\u2715'}</button>
+  <div class="note-row" data-action="open-note" data-section-id="${section.id}" data-note-id="${note.id}" role="button" tabindex="0">
+    <div class="note-row-top">
+      <span class="note-row-title">${note.icon ? escapeHtml(note.icon)+' ' : ''}${escapeHtml(note.title)}</span>
+      <span class="note-row-amount">${formatMoney(spent, section.currency)} / ${formatMoney(note.budget, section.currency)}</span>
     </div>
-    <div class="ledger-line">
-      <span class="mono">${formatMoney(spent, note.currency)}</span>
-      <span class="ink-faint"> of ${formatMoney(note.budget, note.currency)}</span>
-    </div>
-    <div class="bar bar-${status}"><div class="bar-fill" style="width:${clamped}%"></div></div>
-    <div class="card-meta">${note.entries.length} ${note.entries.length===1?'entry':'entries'}${pct>100?` &middot; ${formatMoney(spent-note.budget, note.currency)} over`:''}</div>
+    <div class="bar bar-${status} note-row-bar"><div class="bar-fill" style="width:${clamped}%"></div></div>
   </div>`;
 }
 
-function renderNotesList(){
+function sectionCard(section){
+  const expanded = !!state.expandedSectionIds[section.id];
+  const allocated = sectionAllocated(section);
+  const spent = sectionSpent(section);
+  const savings = sectionSavings(section);
+  const pct = section.totalBudget > 0 ? (spent/section.totalBudget*100) : 0;
+  const clamped = Math.min(100, Math.max(0, pct));
+  const status = pct > 100 ? 'coral' : (pct >= 70 ? 'amber' : 'sage');
+  const isConfirm = state.confirmDeleteSection === section.id;
+  return `
+  <div class="card section-card">
+    <div class="section-top" data-action="toggle-section" data-id="${section.id}" role="button" tabindex="0">
+      <div class="section-name-row">
+        <h3 class="section-name">${escapeHtml(section.name)}</h3>
+        <span class="duration-badge">${escapeHtml(section.duration)}</span>
+      </div>
+      <div class="section-actions">
+        <button class="icon-btn ghost" data-action="ask-edit-section" data-id="${section.id}" title="Edit section" aria-label="Edit section">Edit</button>
+        <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-section':'ask-delete-section'}" data-id="${section.id}" title="Delete section" aria-label="Delete section">${isConfirm?'Delete?':'\u2715'}</button>
+        <span class="chevron ${expanded?'open':''}">&#9656;</span>
+      </div>
+    </div>
+    <div class="section-stats">
+      <span>Budget <b class="mono">${formatMoney(section.totalBudget, section.currency)}</b></span>
+      <span>Spent <b class="mono">${formatMoney(spent, section.currency)}</b></span>
+      <span>Savings <b class="mono">${formatMoney(savings, section.currency)}</b></span>
+      <span class="ink-faint">${section.notes.length} ${section.notes.length===1?'note':'notes'}</span>
+    </div>
+    <div class="bar bar-${status}"><div class="bar-fill" style="width:${clamped}%"></div></div>
+    ${expanded ? `
+      <div class="section-expand">
+        ${section.notes.length === 0 ? `<p class="ink-faint" style="font-size:13px;margin:4px 0 8px;">No notes in this section yet.</p>` : section.notes.map(n => noteRow(section, n)).join('')}
+        <button class="btn-secondary small" data-action="open-new-note-for" data-section-id="${section.id}" style="align-self:flex-start;">+ Add note</button>
+      </div>` : ''}
+  </div>`;
+}
+
+function renderSectionsList(){
   return `
   <div class="view">
     <div class="view-head">
-      <h2>Your notes</h2>
-      <button class="btn-primary" data-action="open-new-note">+ New note</button>
+      <h2>Your sections</h2>
+      <button class="btn-primary" data-action="open-new-section">+ New section</button>
     </div>
-    ${state.notes.length===0
-      ? emptyState('No notes yet', 'Start one to track a budget \u2014 a month, a trip, anything.', '+ New note', 'open-new-note')
-      : `<div class="card-grid">${state.notes.map(noteCard).join('')}</div>`}
+    ${state.sections.length===0
+      ? emptyState('No sections yet', 'A section is a budgeting period \u2014 weekly, monthly, or yearly. Create one, then add notes like Groceries or Fuel inside it.', '+ New section', 'open-new-section')
+      : `<div class="section-list">${state.sections.map(sectionCard).join('')}</div>`}
   </div>`;
 }
 
-function entryRow(entry, note){
+function bi_row(g, note, section){
+  const pct = note.budget > 0 ? Math.round(g.amount/note.budget*100) : 0;
+  return `<div class="bi-row">
+    <span class="mono">${formatMoney(g.amount, section.currency)}</span>
+    <span>${escapeHtml(g.desc)}${g.count>1?` <span class="ink-faint">(x${g.count})</span>`:''}</span>
+    <span class="bi-pct">${pct}%</span>
+  </div>`;
+}
+
+function entryRow(entry, section, note){
   const isConfirm = state.confirmDeleteEntry === entry.id;
+  const tagClass = entry.tag === 'essential' ? 'tag-essential' : entry.tag === 'discretionary' ? 'tag-discretionary' : '';
+  const tagTitle = entry.tag === 'essential' ? 'Essential \u2014 click to change' : entry.tag === 'discretionary' ? 'Discretionary \u2014 click to change' : 'Untagged \u2014 click to tag';
   return `
   <div class="ledger-row">
-    <span class="mono amount ${entry.amount<0?'text-sage':''}">${formatMoney(entry.amount, note.currency)}</span>
+    <button class="tag-btn ${tagClass}" data-action="cycle-tag" data-section-id="${section.id}" data-note-id="${note.id}" data-entry-id="${entry.id}" title="${tagTitle}" aria-label="${tagTitle}"></button>
+    <span class="mono amount">${formatMoney(entry.amount, section.currency)}</span>
     <span class="desc">${escapeHtml(entry.desc)}</span>
     <span class="ink-faint date">${formatDate(entry.date)}</span>
-    <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-entry':'ask-delete-entry'}" data-id="${entry.id}" aria-label="Delete entry">${isConfirm?'Confirm':'\u2715'}</button>
+    <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-entry':'ask-delete-entry'}" data-section-id="${section.id}" data-note-id="${note.id}" data-entry-id="${entry.id}" aria-label="Delete entry">${isConfirm?'Confirm':'\u2715'}</button>
   </div>`;
 }
 
-function renderNoteDetail(note){
-  const spent = note.entries.reduce((s,e) => s + e.amount, 0);
+function renderNoteDetail(section, note){
+  const spent = noteSpent(note);
   const remaining = note.budget - spent;
   const pct = note.budget > 0 ? (spent/note.budget*100) : 0;
   const clamped = Math.min(100, Math.max(0, pct));
   const status = pct > 100 ? 'coral' : (pct >= 70 ? 'amber' : 'sage');
+  const groups = groupEntries(note.entries);
+  const availableToAllocate = sectionSavings(section);
+
   return `
   <div class="view">
-    <button class="link-back" data-action="back-to-notes">&larr; All notes</button>
+    <button class="link-back" data-action="back-to-sections">&larr; ${escapeHtml(section.name)}</button>
     <div class="detail-head">
-      <h2 class="note-title-lg">${escapeHtml(note.title)}</h2>
-      <div class="budget-line mono">${formatMoney(note.budget, note.currency)} budget</div>
+      <h2 class="note-title-lg">${note.icon ? escapeHtml(note.icon)+' ' : ''}${escapeHtml(note.title)}</h2>
+      <div class="budget-edit">
+        <label for="note-budget-input">Budget</label>
+        <input id="note-budget-input" class="budget-input-inline" type="number" min="0" step="0.01" value="${note.budget}" data-section-id="${section.id}" data-note-id="${note.id}" />
+      </div>
     </div>
     <div class="bar bar-${status} bar-lg"><div class="bar-fill" style="width:${clamped}%"></div></div>
     <div class="detail-stats">
-      <span class="mono">${formatMoney(spent, note.currency)} spent</span>
+      <span class="mono">${formatMoney(spent, section.currency)} spent</span>
       <span class="ink-faint">&middot;</span>
-      <span class="mono ${remaining<0?'text-coral':'ink-soft'}">${remaining<0 ? formatMoney(Math.abs(remaining), note.currency)+' over' : formatMoney(remaining, note.currency)+' left'}</span>
+      <span class="mono ${remaining<0?'text-coral':'ink-soft'}">${remaining<0 ? formatMoney(Math.abs(remaining), section.currency)+' over' : formatMoney(remaining, section.currency)+' left'}</span>
     </div>
+    <div class="allocate-hint">${formatMoney(availableToAllocate, section.currency)} still available to allocate in ${escapeHtml(section.name)}</div>
 
-    <form class="entry-form" data-form="entry">
+    ${groups.length > 0 ? `
+      <div class="card budget-items-card">
+        <div class="bi-head"><span class="bi-title">Budget items (${groups.length})</span></div>
+        ${groups.map(g => bi_row(g, note, section)).join('')}
+      </div>` : ''}
+
+    <form class="entry-form" data-form="entry" data-section-id="${section.id}" data-note-id="${note.id}">
       <input id="entry-input" name="entry" type="text" autocomplete="off" placeholder="150 Groceries" />
       <button type="submit" class="btn-primary small">Add</button>
     </form>
@@ -472,7 +813,11 @@ function renderNoteDetail(note){
 
     ${note.entries.length===0
       ? emptyState('Nothing logged yet', 'Type an amount and what it was for, then press Add.', null, null)
-      : `<div class="ledger">${note.entries.map(en => entryRow(en, note)).join('')}</div>`}
+      : `<div class="ledger">${note.entries.map(en => entryRow(en, section, note)).join('')}</div>`}
+
+    <div style="margin-top:18px;">
+      <button class="btn-secondary small ${state.confirmDeleteNote===(section.id+':'+note.id)?'danger':''}" data-action="${state.confirmDeleteNote===(section.id+':'+note.id)?'confirm-delete-note':'ask-delete-note'}" data-section-id="${section.id}" data-note-id="${note.id}">${state.confirmDeleteNote===(section.id+':'+note.id)?'Confirm delete note':'Delete this note'}</button>
+    </div>
   </div>`;
 }
 
@@ -523,29 +868,65 @@ function renderDuesView(){
   </div>`;
 }
 
-function newNoteModal(){
+function currencyOptions(selected){
+  const opts = [['$','$ Dollar'],['\u20B9','\u20B9 Rupee'],['\u20AC','\u20AC Euro'],['\u00A3','\u00A3 Pound'],['\u00A5','\u00A5 Yen']];
+  return opts.map(([v,label]) => `<option value="${v}" ${selected===v?'selected':''}>${label}</option>`).join('') + `<option value="custom">Custom symbol</option>`;
+}
+
+function sectionModal(){
+  const editing = state.editSectionId ? findSection(state.editSectionId) : null;
+  const duration = editing ? editing.duration : 'monthly';
+  const name = editing ? editing.name : suggestSectionName(duration);
+  const budget = editing ? editing.totalBudget : '';
+  const currency = editing ? editing.currency : (state.settings.defaultCurrency || '$');
   return `
   <div class="overlay">
     <div class="modal">
-      <h3>New note</h3>
-      <form data-form="new-note">
-        <label>Title
-          <input name="title" type="text" placeholder="March Budget" required />
-        </label>
-        <label>Budget
-          <input name="budget" type="number" min="0" step="0.01" placeholder="20000" required />
-        </label>
-        <label>Currency
-          <select name="currency">
-            <option value="$">$ Dollar</option>
-            <option value="\u20B9">\u20B9 Rupee</option>
-            <option value="\u20AC">\u20AC Euro</option>
-            <option value="\u00A3">\u00A3 Pound</option>
-            <option value="\u00A5">\u00A5 Yen</option>
-            <option value="custom">Custom symbol</option>
+      <h3>${editing ? 'Edit section' : 'New section'}</h3>
+      <form data-form="section" data-edit-id="${editing ? editing.id : ''}">
+        <label>Duration
+          <select name="duration">
+            <option value="weekly" ${duration==='weekly'?'selected':''}>Weekly</option>
+            <option value="monthly" ${duration==='monthly'?'selected':''}>Monthly</option>
+            <option value="yearly" ${duration==='yearly'?'selected':''}>Yearly</option>
           </select>
         </label>
+        <label>Name
+          <input name="name" type="text" value="${escapeHtml(name)}" placeholder="May 2026" required />
+        </label>
+        <label>Total budget
+          <input name="totalBudget" type="number" min="0" step="0.01" value="${budget}" placeholder="65000" required />
+        </label>
+        <label>Currency
+          <select name="currency">${currencyOptions(currency)}</select>
+        </label>
         <input name="customCurrency" type="text" maxlength="3" placeholder="Custom symbol" class="custom-currency-input" />
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" data-action="close-modal">Cancel</button>
+          <button type="submit" class="btn-primary">${editing ? 'Save' : 'Create'}</button>
+        </div>
+      </form>
+    </div>
+  </div>`;
+}
+
+function noteModal(){
+  return `
+  <div class="overlay">
+    <div class="modal">
+      <h3>Add a note</h3>
+      <form data-form="note" data-section-id="${state.showNewNoteFor}">
+        <label>Title
+          <input name="title" type="text" placeholder="Groceries" required />
+        </label>
+        <div class="field-row">
+          <label>Icon <span class="ink-faint">(optional)</span>
+            <input name="icon" type="text" maxlength="4" placeholder="\uD83D\uDED2" />
+          </label>
+          <label>Budget
+            <input name="budget" type="number" min="0" step="0.01" placeholder="30000" required />
+          </label>
+        </div>
         <div class="modal-actions">
           <button type="button" class="btn-secondary" data-action="close-modal">Cancel</button>
           <button type="submit" class="btn-primary">Create</button>
@@ -592,21 +973,14 @@ function newDueModal(){
 
 function settingsModal(){
   const c = state.settings.defaultCurrency;
-  const opt = (v,label) => `<option value="${v}" ${c===v?'selected':''}>${label}</option>`;
   return `
   <div class="overlay">
     <div class="modal">
       <h3>Backup &amp; settings</h3>
       <div class="settings-row">
         <div>
-          <div class="settings-label">Default currency for dues</div>
-          <select id="default-currency-select">
-            ${opt('$','$ Dollar')}
-            ${opt('\u20B9','\u20B9 Rupee')}
-            ${opt('\u20AC','\u20AC Euro')}
-            ${opt('\u00A3','\u00A3 Pound')}
-            ${opt('\u00A5','\u00A5 Yen')}
-          </select>
+          <div class="settings-label">Default currency</div>
+          <select id="default-currency-select">${currencyOptions(c).replace('<option value="custom">Custom symbol</option>','')}</select>
         </div>
       </div>
       <div class="settings-row">
@@ -626,13 +1000,13 @@ function settingsModal(){
 function attachLivePreview(){
   const input = document.getElementById('entry-input');
   const preview = document.getElementById('entry-preview');
-  if(!input || !preview) return;
-  const note = state.notes.find(n => n.id === state.openNoteId);
+  if(!input || !preview || !state.openNote) return;
+  const section = findSection(state.openNote.sectionId);
   const update = () => {
     const v = input.value.trim();
     const match = v.match(/^(-?[\d,]+(?:\.\d{1,2})?)\s+(.+)$/);
-    if(match && note){
-      preview.textContent = formatMoney(parseFloat(match[1].replace(/,/g,'')), note.currency) + ' \u2192 ' + match[2].trim();
+    if(match && section){
+      preview.textContent = formatMoney(parseFloat(match[1].replace(/,/g,'')), section.currency) + ' \u2192 ' + match[2].trim();
       preview.className = 'entry-preview valid';
     } else if(v){
       preview.textContent = 'Start with a number, like \u201c150 Groceries\u201d';
@@ -654,9 +1028,19 @@ function render(){
   }
   let html = renderHeader();
   html += `<main class="main">`;
-  if(state.tab === 'notes'){
-    const note = state.notes.find(n => n.id === state.openNoteId);
-    html += note ? renderNoteDetail(note) : renderNotesList();
+  if(state.migrationNotice){
+    html += `<div class="toast-info">${escapeHtml(state.migrationNotice)}</div>`;
+  }
+  if(state.tab === 'home'){
+    html += renderHome();
+  } else if(state.tab === 'notes'){
+    if(state.openNote){
+      const section = findSection(state.openNote.sectionId);
+      const note = section ? findNote(section.id, state.openNote.noteId) : null;
+      html += (section && note) ? renderNoteDetail(section, note) : renderSectionsList();
+    } else {
+      html += renderSectionsList();
+    }
   } else {
     html += renderDuesView();
   }
@@ -664,7 +1048,8 @@ function render(){
     html += `<div class="toast-error">${escapeHtml(state.error)}</div>`;
   }
   html += `</main>`;
-  if(state.showNewNote) html += newNoteModal();
+  if(state.showNewSection) html += sectionModal();
+  if(state.showNewNoteFor) html += noteModal();
   if(state.showNewDue) html += newDueModal();
   if(state.showSettings) html += settingsModal();
   app.innerHTML = html;
@@ -682,7 +1067,8 @@ function init(){
 
   app.addEventListener('click', (e) => {
     if(e.target.classList && e.target.classList.contains('overlay')){
-      state.showNewNote = false; state.showNewDue = false; state.showSettings = false;
+      state.showNewSection = false; state.editSectionId = null;
+      state.showNewNoteFor = null; state.showNewDue = false; state.showSettings = false;
       render();
       return;
     }
@@ -690,36 +1076,46 @@ function init(){
     if(!el) return;
     const action = el.dataset.action;
     const id = el.dataset.id;
+    const sectionId = el.dataset.sectionId;
+    const noteId = el.dataset.noteId;
+    const entryId = el.dataset.entryId;
     switch(action){
       case 'set-tab':
-        state.tab = el.dataset.tab; state.openNoteId = null; render(); break;
-      case 'open-new-note':
-        state.showNewNote = true; render(); break;
+        state.tab = el.dataset.tab; render(); break;
+      case 'open-new-section':
+        state.editSectionId = null; state.showNewSection = true; render(); break;
+      case 'ask-edit-section':
+        state.editSectionId = id; state.showNewSection = true; render(); break;
+      case 'open-new-note-for':
+        state.showNewNoteFor = sectionId; render(); break;
       case 'open-new-due':
         state.showNewDue = true; render(); break;
       case 'open-settings':
         state.showSettings = true; state.importError = null; render(); break;
       case 'close-modal':
-        state.showNewNote = false; state.showNewDue = false; state.showSettings = false; render(); break;
+        state.showNewSection = false; state.editSectionId = null;
+        state.showNewNoteFor = null; state.showNewDue = false; state.showSettings = false;
+        render(); break;
+      case 'toggle-section':
+        state.expandedSectionIds[id] = !state.expandedSectionIds[id]; render(); break;
+      case 'ask-delete-section':
+        state.confirmDeleteSection = id; render(); break;
+      case 'confirm-delete-section':
+        deleteSection(id); break;
       case 'open-note':
-        state.openNoteId = id; state.entryError = null; render(); break;
-      case 'back-to-notes':
-        state.openNoteId = null; render(); break;
+        state.openNote = { sectionId, noteId }; state.entryError = null; render(); break;
+      case 'back-to-sections':
+        state.openNote = null; render(); break;
       case 'ask-delete-note':
-        state.confirmDeleteNote = id; render(); break;
+        state.confirmDeleteNote = sectionId + ':' + noteId; render(); break;
       case 'confirm-delete-note':
-        state.notes = state.notes.filter(n => n.id !== id);
-        if(state.openNoteId === id) state.openNoteId = null;
-        state.confirmDeleteNote = null;
-        render(); saveData(); break;
+        deleteNote(sectionId, noteId); break;
       case 'ask-delete-entry':
-        state.confirmDeleteEntry = id; render(); break;
-      case 'confirm-delete-entry': {
-        const note = state.notes.find(n => n.id === state.openNoteId);
-        if(note) note.entries = note.entries.filter(en => en.id !== id);
-        state.confirmDeleteEntry = null;
-        render(); saveData(); break;
-      }
+        state.confirmDeleteEntry = entryId; render(); break;
+      case 'confirm-delete-entry':
+        deleteEntry(sectionId, noteId, entryId); break;
+      case 'cycle-tag':
+        cycleTag(sectionId, noteId, entryId); break;
       case 'set-dues-tab':
         state.duesTab = el.dataset.duestab; render(); break;
       case 'toggle-due':
@@ -751,12 +1147,20 @@ function init(){
   app.addEventListener('submit', (e) => {
     e.preventDefault();
     const form = e.target;
-    if(form.dataset.form === 'new-note'){
+    if(form.dataset.form === 'section'){
       let currency = form.elements['currency'].value;
       if(currency === 'custom') currency = form.elements['customCurrency'].value || '$';
-      createNote({ title: form.elements['title'].value, budget: form.elements['budget'].value, currency });
+      const payload = { name: form.elements['name'].value, totalBudget: form.elements['totalBudget'].value, duration: form.elements['duration'].value, currency };
+      if(form.dataset.editId){ updateSection(form.dataset.editId, payload); }
+      else { createSection(payload); }
+    } else if(form.dataset.form === 'note'){
+      createNoteInSection(form.dataset.sectionId, {
+        title: form.elements['title'].value,
+        icon: form.elements['icon'].value,
+        budget: form.elements['budget'].value
+      });
     } else if(form.dataset.form === 'entry'){
-      addEntry(state.openNoteId, form.elements['entry'].value);
+      addEntry(form.dataset.sectionId, form.dataset.noteId, form.elements['entry'].value);
     } else if(form.dataset.form === 'new-due'){
       createDue({
         type: form.elements['type'].value,
@@ -779,10 +1183,25 @@ function init(){
       state.settings.defaultCurrency = e.target.value;
       saveData();
     }
+    if(e.target.id === 'note-budget-input'){
+      updateNoteBudget(e.target.dataset.sectionId, e.target.dataset.noteId, e.target.value);
+    }
     if(e.target.name === 'currency'){
       const form = e.target.closest('form');
       const customInput = form && form.querySelector('.custom-currency-input');
       if(customInput) customInput.style.display = e.target.value === 'custom' ? 'block' : 'none';
+    }
+    if(e.target.name === 'duration'){
+      const form = e.target.closest('form');
+      if(form && form.dataset.form === 'section' && !form.dataset.editId){
+        const nameInput = form.elements['name'];
+        if(nameInput && !nameInput.dataset.touched){
+          nameInput.value = suggestSectionName(e.target.value);
+        }
+      }
+    }
+    if(e.target.name === 'name'){
+      e.target.dataset.touched = 'true';
     }
   });
 
