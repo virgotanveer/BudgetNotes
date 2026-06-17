@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BudgetNotes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F1FA;
+  --paper:#FFFFFF;
+  --paper-soft:#FBFAFE;
+  --ink:#2E2B3D;
+  --ink-soft:#6B6580;
+  --ink-faint:#9B96B5;
+  --line:#E3E0F0;
+  --sage:#6FA98C;
+  --sage-soft:#DCEEE3;
+  --amber:#E0A93D;
+  --amber-soft:#FBEBD0;
+  --coral:#DD7E73;
+  --coral-soft:#FAE0DC;
+  --periwinkle:#7C8FD1;
+  --sand:#CE9C56;
+  --radius:18px;
+  --radius-sm:10px;
+  --shadow:0 2px 10px rgba(46,43,61,0.08), 0 1px 2px rgba(46,43,61,0.04);
+  --shadow-lift:0 10px 26px rgba(46,43,61,0.12);
+  --font-display:'Caveat', cursive;
+  --font-body:'Plus Jakarta Sans', sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+}
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  -webkit-font-smoothing:antialiased;
+}
+#app{ max-width:720px; margin:0 auto; padding:24px 20px 80px; min-height:100vh; }
+
+.app-header{ display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:6px; }
+.brand{ display:flex; flex-direction:column; }
+.brand-mark{ font-family:var(--font-display); font-size:34px; font-weight:700; line-height:1; color:var(--ink); }
+.brand-tag{ font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:2px; }
+.icon-btn{ background:none; border:none; font-size:18px; color:var(--ink-soft); cursor:pointer; padding:6px; border-radius:8px; line-height:1; }
+.icon-btn:hover{ background:var(--paper); }
+.icon-btn.ghost{ font-size:12px; font-weight:600; color:var(--ink-faint); }
+.icon-btn.danger{ color:var(--coral); }
+
+.tabs{ display:flex; gap:18px; border-bottom:1px solid var(--line); margin:18px 0 22px; }
+.tab{ background:none; border:none; padding:10px 2px; font-family:var(--font-body); font-weight:600; font-size:14px; color:var(--ink-faint); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
+.tab.active{ color:var(--ink); border-bottom-color:var(--sage); }
+.tab:focus-visible, .icon-btn:focus-visible, button:focus-visible, [tabindex]:focus-visible{ outline:2px solid var(--periwinkle); outline-offset:2px; }
+
+.view-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:10px; }
+.view-head h2{ font-family:var(--font-display); font-size:24px; margin:0; font-weight:600; }
+
+.btn-primary{ background:var(--ink); color:#fff; border:none; padding:10px 16px; border-radius:999px; font-family:var(--font-body); font-weight:600; font-size:13px; cursor:pointer; white-space:nowrap; }
+.btn-primary:hover{ opacity:.88; }
+.btn-primary.small{ padding:8px 14px; font-size:12px; border-radius:var(--radius-sm); }
+.btn-secondary{ background:var(--paper-soft); color:var(--ink); border:1px solid var(--line); padding:9px 14px; border-radius:999px; font-weight:600; font-size:13px; cursor:pointer; }
+.btn-secondary.small{ border-radius:var(--radius-sm); padding:8px 12px; font-size:12px; }
+.btn-secondary.danger{ color:var(--coral); border-color:var(--coral-soft); background:var(--coral-soft); }
+
+.card-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+.card{ background:var(--paper); border-radius:var(--radius); padding:16px 16px 14px; box-shadow:var(--shadow); position:relative; }
+.note-card{ cursor:pointer; transition:box-shadow .15s, transform .15s; }
+.note-card:hover{ box-shadow:var(--shadow-lift); transform:translateY(-1px); }
+.card-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+.note-title{ font-family:var(--font-display); font-size:22px; margin:0; font-weight:600; color:var(--ink); }
+.ledger-line{ margin:8px 0 10px; font-size:14px; }
+.mono{ font-family:var(--font-mono); }
+.ink-faint{ color:var(--ink-faint); }
+.ink-soft{ color:var(--ink-soft); }
+
+.bar{ height:10px; border-radius:999px; background:var(--line); overflow:hidden; }
+.bar-lg{ height:14px; margin:14px 0 10px; }
+.bar-fill{ height:100%; border-radius:999px; transition:width .3s ease; background-image:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0)); }
+.bar-sage .bar-fill{ background-color:var(--sage); }
+.bar-amber .bar-fill{ background-color:var(--amber); }
+.bar-coral .bar-fill{ background-color:var(--coral); }
+.card-meta{ font-size:12px; color:var(--ink-faint); margin-top:8px; }
+
+.detail-head{ display:flex; align-items:baseline; justify-content:space-between; margin:10px 0 4px; gap:10px; flex-wrap:wrap; }
+.note-title-lg{ font-family:var(--font-display); font-size:32px; margin:0; font-weight:600; }
+.budget-line{ font-size:13px; color:var(--ink-soft); white-space:nowrap; }
+.detail-stats{ display:flex; gap:8px; font-size:14px; margin-bottom:18px; flex-wrap:wrap; }
+.text-coral{ color:var(--coral); font-weight:600; }
+.text-sage{ color:var(--sage); }
+
+.entry-form{ display:flex; gap:8px; margin-bottom:6px; }
+.entry-form input{ flex:1; }
+.entry-preview{ font-size:12px; min-height:16px; margin:2px 2px 12px; color:var(--ink-faint); }
+.entry-preview.valid{ color:var(--sage); font-weight:600; }
+.entry-preview.hint{ color:var(--ink-faint); }
+.form-error{ font-size:12px; color:var(--coral); margin:-2px 2px 12px; }
+
+.ledger{ display:flex; flex-direction:column; border-top:1px solid var(--line); }
+.ledger-row{ display:grid; grid-template-columns:84px 1fr auto auto; align-items:center; gap:10px; padding:10px 2px; border-bottom:1px solid var(--line); font-size:14px; }
+.ledger-row .amount{ font-weight:600; }
+.ledger-row .date{ font-size:12px; }
+
+.link-back{ background:none; border:none; color:var(--ink-soft); font-size:13px; cursor:pointer; padding:0; margin-bottom:6px; }
+.link-back:hover{ color:var(--ink); }
+
+.empty{ text-align:center; padding:48px 20px; background:var(--paper); border-radius:var(--radius); }
+.empty-title{ font-family:var(--font-display); font-size:22px; margin-bottom:6px; }
+.empty-body{ color:var(--ink-soft); font-size:14px; margin-bottom:16px; max-width:320px; margin-left:auto; margin-right:auto; }
+
+.subtabs{ display:flex; gap:8px; background:var(--paper-soft); padding:4px; border-radius:999px; }
+.subtab{ border:none; background:none; padding:7px 16px; border-radius:999px; font-weight:600; font-size:13px; color:var(--ink-faint); cursor:pointer; }
+.subtab.active{ background:var(--paper); color:var(--ink); box-shadow:var(--shadow); }
+
+.due-list{ display:flex; flex-direction:column; gap:12px; }
+.due-top{ display:flex; justify-content:space-between; align-items:center; cursor:pointer; gap:10px; }
+.due-person{ font-weight:700; font-size:16px; }
+.due-amount{ font-size:16px; font-weight:600; white-space:nowrap; }
+.accent-periwinkle{ color:var(--periwinkle); }
+.accent-sand{ color:var(--sand); }
+.due-meta{ font-size:12px; color:var(--ink-soft); margin-top:4px; }
+.due-note{ font-size:13px; color:var(--ink-soft); margin-top:6px; font-style:italic; }
+.due-expand{ margin-top:12px; padding-top:12px; border-top:1px dashed var(--line); display:flex; flex-direction:column; gap:10px; }
+.payment-form{ display:flex; gap:8px; }
+.payment-form input{ flex:1; }
+.payment-list{ display:flex; flex-direction:column; gap:4px; }
+.payment-row{ display:flex; justify-content:space-between; font-size:13px; padding:4px 0; border-bottom:1px solid var(--line); }
+
+input[type=text], input[type=number], input[type=date], select{
+  width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:var(--radius-sm);
+  font-family:var(--font-body); font-size:14px; background:var(--paper-soft); color:var(--ink);
+}
+input:focus, select:focus{ outline:2px solid var(--sage); outline-offset:1px; }
+label{ display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:12px; }
+label input, label select{ margin-top:6px; }
+.custom-currency-input{ display:none; margin-top:-4px; margin-bottom:12px; }
+.radio-row{ display:flex; gap:18px; margin-bottom:14px; font-size:13px; font-weight:600; color:var(--ink-soft); }
+.radio-row label{ display:flex; align-items:center; gap:6px; margin-bottom:0; }
+.radio-row input{ width:auto; }
+
+.overlay{ position:fixed; inset:0; background:rgba(46,43,61,0.35); display:flex; align-items:center; justify-content:center; padding:20px; z-index:50; }
+.modal{ background:var(--paper); border-radius:var(--radius); padding:24px; width:100%; max-width:380px; max-height:86vh; overflow-y:auto; box-shadow:var(--shadow-lift); }
+.modal h3{ font-family:var(--font-display); font-size:24px; margin:0 0 16px; font-weight:600; }
+.modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:8px; }
+.settings-row{ margin-bottom:16px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.settings-label{ font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; }
+.small-print{ font-size:12px; }
+
+.loading{ text-align:center; padding:80px 20px; color:var(--ink-soft); font-family:var(--font-display); font-size:20px; }
+.toast-error{ background:var(--coral-soft); color:var(--coral); padding:10px 14px; border-radius:var(--radius-sm); font-size:13px; margin-top:14px; }
+
+@media (max-width:480px){
+  .brand-mark{ font-size:28px; }
+  .card-grid{ grid-template-columns:1fr; }
+  .ledger-row{ grid-template-columns:70px 1fr auto; }
+  .ledger-row .date{ display:none; }
+}
+@media (prefers-reduced-motion:reduce){
+  *{ transition:none !important; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+(function(){
+
+if(!window.storage){
+  console.warn('window.storage not found — using an in-memory fallback for this preview.');
+  const mem = {};
+  window.storage = {
+    async get(key){ if(!(key in mem)) throw new Error('not found'); return {key, value:mem[key], shared:false}; },
+    async set(key, value){ mem[key]=value; return {key, value, shared:false}; },
+    async delete(key){ delete mem[key]; return {key, deleted:true, shared:false}; },
+    async list(prefix){ return {keys:Object.keys(mem).filter(k=>!prefix||k.startsWith(prefix)), prefix, shared:false}; }
+  };
+}
+
+const STORAGE_KEY = 'app:data';
+
+let state = {
+  notes: [],
+  dues: [],
+  settings: { defaultCurrency: '$' },
+  tab: 'notes',
+  duesTab: 'lent',
+  openNoteId: null,
+  showNewNote: false,
+  showNewDue: false,
+  showSettings: false,
+  expandedDueId: null,
+  confirmDeleteNote: null,
+  confirmDeleteEntry: null,
+  confirmDeleteDue: null,
+  entryError: null,
+  importError: null,
+  error: null,
+  loaded: false,
+};
+
+let pendingFocus = null;
+
+function uid(){ return Math.random().toString(36).slice(2,9) + Date.now().toString(36).slice(-4); }
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function formatMoney(amount, symbol){
+  const n = Number(amount) || 0;
+  const neg = n < 0;
+  const abs = Math.abs(n);
+  const fixed = (Math.round(abs*100)/100) % 1 === 0 ? abs.toFixed(0) : abs.toFixed(2);
+  const parts = fixed.split('.');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  const out = parts.join('.');
+  return (neg ? '-' : '') + (symbol || '') + out;
+}
+
+function formatDate(iso){
+  const d = new Date(iso);
+  if(isNaN(d)) return '';
+  return d.toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' });
+}
+
+function daysBetween(iso){
+  const d = new Date(iso);
+  if(isNaN(d)) return 0;
+  return Math.max(0, Math.floor((Date.now() - d.getTime()) / 86400000));
+}
+
+async function loadData(){
+  try{
+    const res = await window.storage.get(STORAGE_KEY, false);
+    if(res && res.value){
+      const parsed = JSON.parse(res.value);
+      state.notes = parsed.notes || [];
+      state.dues = parsed.dues || [];
+      state.settings = parsed.settings || { defaultCurrency: '$' };
+    }
+  } catch(e){
+    state.notes = [];
+    state.dues = [];
+    state.settings = { defaultCurrency: '$' };
+    try{
+      await window.storage.set(STORAGE_KEY, JSON.stringify({ notes: [], dues: [], settings: state.settings }), false);
+    }catch(e2){ console.error('Could not initialize storage', e2); }
+  }
+  state.loaded = true;
+  render();
+}
+
+async function saveData(){
+  try{
+    const result = await window.storage.set(STORAGE_KEY, JSON.stringify({
+      notes: state.notes, dues: state.dues, settings: state.settings
+    }), false);
+    const hadError = !!state.error;
+    state.error = result ? null : 'Could not save just now. Your latest change may not persist.';
+    if(hadError !== !!state.error) render();
+  }catch(e){
+    console.error(e);
+    state.error = 'Could not save just now. Your latest change may not persist.';
+    render();
+  }
+}
+
+function pendingAmount(due){
+  const paid = due.payments.reduce((s,p) => s + (Number(p.amount) || 0), 0);
+  return Math.max(0, due.amount - paid);
+}
+
+function accruedInterest(due){
+  if(!due.rate) return 0;
+  const days = daysBetween(due.date);
+  return due.amount * (due.rate/100) * (days/365);
+}
+
+function createNote({title, budget, currency}){
+  const note = {
+    id: uid(),
+    title: (title || '').trim() || 'Untitled note',
+    budget: Number(budget) || 0,
+    currency: currency || state.settings.defaultCurrency || '$',
+    entries: [],
+    createdAt: new Date().toISOString()
+  };
+  state.notes.unshift(note);
+  state.showNewNote = false;
+  state.openNoteId = note.id;
+  render();
+  saveData();
+}
+
+function addEntry(noteId, rawValue){
+  const note = state.notes.find(n => n.id === noteId);
+  if(!note) return;
+  const trimmed = (rawValue || '').trim();
+  const match = trimmed.match(/^(-?[\d,]+(?:\.\d{1,2})?)\s+(.+)$/);
+  if(!match){
+    state.entryError = trimmed ? 'Start with a number, like \u201c150 Groceries\u201d' : null;
+    pendingFocus = 'entry-input';
+    render();
+    return;
+  }
+  state.entryError = null;
+  const amount = parseFloat(match[1].replace(/,/g, ''));
+  const desc = match[2].trim();
+  note.entries.unshift({ id: uid(), amount, desc, date: new Date().toISOString() });
+  pendingFocus = 'entry-input';
+  render();
+  saveData();
+}
+
+function createDue({type, person, amount, date, rate, note}){
+  const due = {
+    id: uid(),
+    type: type === 'borrowed' ? 'borrowed' : 'lent',
+    person: (person || '').trim() || 'Unnamed',
+    amount: Number(amount) || 0,
+    date: date || new Date().toISOString().slice(0,10),
+    rate: Number(rate) || 0,
+    note: (note || '').trim(),
+    payments: [],
+    createdAt: new Date().toISOString()
+  };
+  state.dues.unshift(due);
+  state.showNewDue = false;
+  render();
+  saveData();
+}
+
+function addPayment(dueId, amt){
+  const due = state.dues.find(d => d.id === dueId);
+  const n = Number(amt);
+  if(!due || !n || n <= 0) return;
+  due.payments.push({ id: uid(), amount: n, date: new Date().toISOString() });
+  render();
+  saveData();
+}
+
+function exportData(){
+  const blob = new Blob([JSON.stringify({ notes: state.notes, dues: state.dues, settings: state.settings }, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'budgetnotes-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function importData(file){
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try{
+      const parsed = JSON.parse(e.target.result);
+      state.notes = Array.isArray(parsed.notes) ? parsed.notes : [];
+      state.dues = Array.isArray(parsed.dues) ? parsed.dues : [];
+      state.settings = parsed.settings || state.settings;
+      state.importError = null;
+      state.showSettings = false;
+      render();
+      saveData();
+    }catch(err){
+      state.importError = 'That file could not be read. Make sure it\u2019s a BudgetNotes backup.';
+      render();
+    }
+  };
+  reader.readAsText(file);
+}
+
+function emptyState(title, body, cta, ctaAction){
+  return `<div class="empty">
+    <div class="empty-title">${escapeHtml(title)}</div>
+    <div class="empty-body">${escapeHtml(body)}</div>
+    ${cta ? `<button class="btn-primary" data-action="${ctaAction}">${escapeHtml(cta)}</button>` : ''}
+  </div>`;
+}
+
+function renderHeader(){
+  return `
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-mark">BudgetNotes</span>
+      <span class="brand-tag">write it. track it.</span>
+    </div>
+    <button class="icon-btn" data-action="open-settings" title="Backup &amp; settings" aria-label="Backup and settings">&#9881;</button>
+  </header>
+  <nav class="tabs" role="tablist">
+    <button class="tab ${state.tab==='notes'?'active':''}" data-action="set-tab" data-tab="notes">Budget Notes</button>
+    <button class="tab ${state.tab==='dues'?'active':''}" data-action="set-tab" data-tab="dues">Dues Tracker</button>
+  </nav>`;
+}
+
+function noteCard(note){
+  const spent = note.entries.reduce((s,e) => s + e.amount, 0);
+  const pct = note.budget > 0 ? (spent/note.budget*100) : 0;
+  const clamped = Math.min(100, Math.max(0, pct));
+  const status = pct > 100 ? 'coral' : (pct >= 70 ? 'amber' : 'sage');
+  const isConfirm = state.confirmDeleteNote === note.id;
+  return `
+  <div class="card note-card" data-action="open-note" data-id="${note.id}" role="button" tabindex="0">
+    <div class="card-top">
+      <h3 class="note-title">${escapeHtml(note.title)}</h3>
+      <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-note':'ask-delete-note'}" data-id="${note.id}" title="Delete note" aria-label="Delete note">${isConfirm?'Delete?':'\u2715'}</button>
+    </div>
+    <div class="ledger-line">
+      <span class="mono">${formatMoney(spent, note.currency)}</span>
+      <span class="ink-faint"> of ${formatMoney(note.budget, note.currency)}</span>
+    </div>
+    <div class="bar bar-${status}"><div class="bar-fill" style="width:${clamped}%"></div></div>
+    <div class="card-meta">${note.entries.length} ${note.entries.length===1?'entry':'entries'}${pct>100?` &middot; ${formatMoney(spent-note.budget, note.currency)} over`:''}</div>
+  </div>`;
+}
+
+function renderNotesList(){
+  return `
+  <div class="view">
+    <div class="view-head">
+      <h2>Your notes</h2>
+      <button class="btn-primary" data-action="open-new-note">+ New note</button>
+    </div>
+    ${state.notes.length===0
+      ? emptyState('No notes yet', 'Start one to track a budget \u2014 a month, a trip, anything.', '+ New note', 'open-new-note')
+      : `<div class="card-grid">${state.notes.map(noteCard).join('')}</div>`}
+  </div>`;
+}
+
+function entryRow(entry, note){
+  const isConfirm = state.confirmDeleteEntry === entry.id;
+  return `
+  <div class="ledger-row">
+    <span class="mono amount ${entry.amount<0?'text-sage':''}">${formatMoney(entry.amount, note.currency)}</span>
+    <span class="desc">${escapeHtml(entry.desc)}</span>
+    <span class="ink-faint date">${formatDate(entry.date)}</span>
+    <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-entry':'ask-delete-entry'}" data-id="${entry.id}" aria-label="Delete entry">${isConfirm?'Confirm':'\u2715'}</button>
+  </div>`;
+}
+
+function renderNoteDetail(note){
+  const spent = note.entries.reduce((s,e) => s + e.amount, 0);
+  const remaining = note.budget - spent;
+  const pct = note.budget > 0 ? (spent/note.budget*100) : 0;
+  const clamped = Math.min(100, Math.max(0, pct));
+  const status = pct > 100 ? 'coral' : (pct >= 70 ? 'amber' : 'sage');
+  return `
+  <div class="view">
+    <button class="link-back" data-action="back-to-notes">&larr; All notes</button>
+    <div class="detail-head">
+      <h2 class="note-title-lg">${escapeHtml(note.title)}</h2>
+      <div class="budget-line mono">${formatMoney(note.budget, note.currency)} budget</div>
+    </div>
+    <div class="bar bar-${status} bar-lg"><div class="bar-fill" style="width:${clamped}%"></div></div>
+    <div class="detail-stats">
+      <span class="mono">${formatMoney(spent, note.currency)} spent</span>
+      <span class="ink-faint">&middot;</span>
+      <span class="mono ${remaining<0?'text-coral':'ink-soft'}">${remaining<0 ? formatMoney(Math.abs(remaining), note.currency)+' over' : formatMoney(remaining, note.currency)+' left'}</span>
+    </div>
+
+    <form class="entry-form" data-form="entry">
+      <input id="entry-input" name="entry" type="text" autocomplete="off" placeholder="150 Groceries" />
+      <button type="submit" class="btn-primary small">Add</button>
+    </form>
+    <div id="entry-preview" class="entry-preview"></div>
+    ${state.entryError ? `<div class="form-error">${escapeHtml(state.entryError)}</div>` : ''}
+
+    ${note.entries.length===0
+      ? emptyState('Nothing logged yet', 'Type an amount and what it was for, then press Add.', null, null)
+      : `<div class="ledger">${note.entries.map(en => entryRow(en, note)).join('')}</div>`}
+  </div>`;
+}
+
+function dueCard(due){
+  const pending = pendingAmount(due);
+  const interest = accruedInterest(due);
+  const expanded = state.expandedDueId === due.id;
+  const isConfirm = state.confirmDeleteDue === due.id;
+  const accent = due.type === 'lent' ? 'periwinkle' : 'sand';
+  const sym = state.settings.defaultCurrency;
+  return `
+  <div class="card due-card">
+    <div class="due-top" data-action="toggle-due" data-id="${due.id}" role="button" tabindex="0">
+      <div class="due-person">${escapeHtml(due.person)}</div>
+      <div class="due-amount mono accent-${accent}">${formatMoney(pending, sym)}</div>
+    </div>
+    <div class="due-meta">${due.type==='lent'?'lent':'borrowed'} ${formatMoney(due.amount, sym)} &middot; ${formatDate(due.date)}${due.rate>0?` &middot; ${due.rate}% &middot; est. ${formatMoney(interest, sym)} interest`:''}</div>
+    ${due.note ? `<div class="due-note">${escapeHtml(due.note)}</div>` : ''}
+    ${expanded ? `
+      <div class="due-expand">
+        <form class="payment-form" data-form="payment" data-due-id="${due.id}">
+          <input name="amount" type="number" min="0" step="0.01" placeholder="Payment amount" />
+          <button type="submit" class="btn-secondary small">Log payment</button>
+        </form>
+        ${due.payments.length>0 ? `<div class="payment-list">${due.payments.map(p=>`<div class="payment-row"><span class="mono">${formatMoney(p.amount, sym)}</span><span class="ink-faint">${formatDate(p.date)}</span></div>`).join('')}</div>` : ''}
+        <button class="btn-secondary small ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-due':'ask-delete-due'}" data-id="${due.id}" style="align-self:flex-start;">${isConfirm?'Confirm delete':'Delete this'}</button>
+      </div>` : ''}
+  </div>`;
+}
+
+function renderDuesView(){
+  const filtered = state.dues.filter(d => d.type === state.duesTab);
+  return `
+  <div class="view">
+    <div class="view-head">
+      <div class="subtabs">
+        <button class="subtab ${state.duesTab==='lent'?'active':''}" data-action="set-dues-tab" data-duestab="lent">Lent</button>
+        <button class="subtab ${state.duesTab==='borrowed'?'active':''}" data-action="set-dues-tab" data-duestab="borrowed">Borrowed</button>
+      </div>
+      <button class="btn-primary" data-action="open-new-due">+ Add</button>
+    </div>
+    ${filtered.length===0
+      ? emptyState(
+          state.duesTab==='lent' ? 'No loans out' : 'Nothing borrowed',
+          state.duesTab==='lent' ? 'Track money you\u2019ve lent to friends.' : 'Track loans, EMIs, or money you owe.',
+          '+ Add', 'open-new-due')
+      : `<div class="due-list">${filtered.map(dueCard).join('')}</div>`}
+  </div>`;
+}
+
+function newNoteModal(){
+  return `
+  <div class="overlay">
+    <div class="modal">
+      <h3>New note</h3>
+      <form data-form="new-note">
+        <label>Title
+          <input name="title" type="text" placeholder="March Budget" required />
+        </label>
+        <label>Budget
+          <input name="budget" type="number" min="0" step="0.01" placeholder="20000" required />
+        </label>
+        <label>Currency
+          <select name="currency">
+            <option value="$">$ Dollar</option>
+            <option value="\u20B9">\u20B9 Rupee</option>
+            <option value="\u20AC">\u20AC Euro</option>
+            <option value="\u00A3">\u00A3 Pound</option>
+            <option value="\u00A5">\u00A5 Yen</option>
+            <option value="custom">Custom symbol</option>
+          </select>
+        </label>
+        <input name="customCurrency" type="text" maxlength="3" placeholder="Custom symbol" class="custom-currency-input" />
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" data-action="close-modal">Cancel</button>
+          <button type="submit" class="btn-primary">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>`;
+}
+
+function newDueModal(){
+  const today = new Date().toISOString().slice(0,10);
+  return `
+  <div class="overlay">
+    <div class="modal">
+      <h3>Add a due</h3>
+      <form data-form="new-due">
+        <div class="radio-row">
+          <label><input type="radio" name="type" value="lent" ${state.duesTab==='lent'?'checked':''}/> Lent</label>
+          <label><input type="radio" name="type" value="borrowed" ${state.duesTab==='borrowed'?'checked':''}/> Borrowed</label>
+        </div>
+        <label>Person / lender
+          <input name="person" type="text" placeholder="John" required />
+        </label>
+        <label>Amount
+          <input name="amount" type="number" min="0" step="0.01" placeholder="5000" required />
+        </label>
+        <label>Date
+          <input name="date" type="date" value="${today}" />
+        </label>
+        <label>Interest rate % <span class="ink-faint">(optional)</span>
+          <input name="rate" type="number" min="0" step="0.1" placeholder="0" />
+        </label>
+        <label>Note <span class="ink-faint">(optional)</span>
+          <input name="note" type="text" placeholder="Lent for rent" />
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" data-action="close-modal">Cancel</button>
+          <button type="submit" class="btn-primary">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>`;
+}
+
+function settingsModal(){
+  const c = state.settings.defaultCurrency;
+  const opt = (v,label) => `<option value="${v}" ${c===v?'selected':''}>${label}</option>`;
+  return `
+  <div class="overlay">
+    <div class="modal">
+      <h3>Backup &amp; settings</h3>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Default currency for dues</div>
+          <select id="default-currency-select">
+            ${opt('$','$ Dollar')}
+            ${opt('\u20B9','\u20B9 Rupee')}
+            ${opt('\u20AC','\u20AC Euro')}
+            ${opt('\u00A3','\u00A3 Pound')}
+            ${opt('\u00A5','\u00A5 Yen')}
+          </select>
+        </div>
+      </div>
+      <div class="settings-row">
+        <button class="btn-secondary" data-action="export-data">Export backup (.json)</button>
+        <button class="btn-secondary" data-action="trigger-import">Import backup</button>
+        <input id="import-file" type="file" accept="application/json" hidden />
+      </div>
+      ${state.importError ? `<div class="form-error">${escapeHtml(state.importError)}</div>` : ''}
+      <p class="ink-faint small-print">Everything here stays in your account \u2014 nothing is shared.</p>
+      <div class="modal-actions">
+        <button type="button" class="btn-primary" data-action="close-modal">Done</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function attachLivePreview(){
+  const input = document.getElementById('entry-input');
+  const preview = document.getElementById('entry-preview');
+  if(!input || !preview) return;
+  const note = state.notes.find(n => n.id === state.openNoteId);
+  const update = () => {
+    const v = input.value.trim();
+    const match = v.match(/^(-?[\d,]+(?:\.\d{1,2})?)\s+(.+)$/);
+    if(match && note){
+      preview.textContent = formatMoney(parseFloat(match[1].replace(/,/g,'')), note.currency) + ' \u2192 ' + match[2].trim();
+      preview.className = 'entry-preview valid';
+    } else if(v){
+      preview.textContent = 'Start with a number, like \u201c150 Groceries\u201d';
+      preview.className = 'entry-preview hint';
+    } else {
+      preview.textContent = '';
+      preview.className = 'entry-preview';
+    }
+  };
+  input.addEventListener('input', update);
+  update();
+}
+
+function render(){
+  const app = document.getElementById('app');
+  if(!state.loaded){
+    app.innerHTML = `<div class="loading">Loading your notes&hellip;</div>`;
+    return;
+  }
+  let html = renderHeader();
+  html += `<main class="main">`;
+  if(state.tab === 'notes'){
+    const note = state.notes.find(n => n.id === state.openNoteId);
+    html += note ? renderNoteDetail(note) : renderNotesList();
+  } else {
+    html += renderDuesView();
+  }
+  if(state.error){
+    html += `<div class="toast-error">${escapeHtml(state.error)}</div>`;
+  }
+  html += `</main>`;
+  if(state.showNewNote) html += newNoteModal();
+  if(state.showNewDue) html += newDueModal();
+  if(state.showSettings) html += settingsModal();
+  app.innerHTML = html;
+
+  if(pendingFocus){
+    const el = document.getElementById(pendingFocus);
+    if(el) el.focus();
+    pendingFocus = null;
+  }
+  attachLivePreview();
+}
+
+function init(){
+  const app = document.getElementById('app');
+
+  app.addEventListener('click', (e) => {
+    if(e.target.classList && e.target.classList.contains('overlay')){
+      state.showNewNote = false; state.showNewDue = false; state.showSettings = false;
+      render();
+      return;
+    }
+    const el = e.target.closest('[data-action]');
+    if(!el) return;
+    const action = el.dataset.action;
+    const id = el.dataset.id;
+    switch(action){
+      case 'set-tab':
+        state.tab = el.dataset.tab; state.openNoteId = null; render(); break;
+      case 'open-new-note':
+        state.showNewNote = true; render(); break;
+      case 'open-new-due':
+        state.showNewDue = true; render(); break;
+      case 'open-settings':
+        state.showSettings = true; state.importError = null; render(); break;
+      case 'close-modal':
+        state.showNewNote = false; state.showNewDue = false; state.showSettings = false; render(); break;
+      case 'open-note':
+        state.openNoteId = id; state.entryError = null; render(); break;
+      case 'back-to-notes':
+        state.openNoteId = null; render(); break;
+      case 'ask-delete-note':
+        state.confirmDeleteNote = id; render(); break;
+      case 'confirm-delete-note':
+        state.notes = state.notes.filter(n => n.id !== id);
+        if(state.openNoteId === id) state.openNoteId = null;
+        state.confirmDeleteNote = null;
+        render(); saveData(); break;
+      case 'ask-delete-entry':
+        state.confirmDeleteEntry = id; render(); break;
+      case 'confirm-delete-entry': {
+        const note = state.notes.find(n => n.id === state.openNoteId);
+        if(note) note.entries = note.entries.filter(en => en.id !== id);
+        state.confirmDeleteEntry = null;
+        render(); saveData(); break;
+      }
+      case 'set-dues-tab':
+        state.duesTab = el.dataset.duestab; render(); break;
+      case 'toggle-due':
+        state.expandedDueId = state.expandedDueId === id ? null : id; render(); break;
+      case 'ask-delete-due':
+        state.confirmDeleteDue = id; render(); break;
+      case 'confirm-delete-due':
+        state.dues = state.dues.filter(d => d.id !== id);
+        state.confirmDeleteDue = null;
+        render(); saveData(); break;
+      case 'export-data':
+        exportData(); break;
+      case 'trigger-import': {
+        const f = document.getElementById('import-file');
+        if(f) f.click();
+        break;
+      }
+      default: break;
+    }
+  });
+
+  app.addEventListener('keydown', (e) => {
+    if((e.key === 'Enter' || e.key === ' ') && e.target.matches('[data-action][role="button"]')){
+      e.preventDefault();
+      e.target.click();
+    }
+  });
+
+  app.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.target;
+    if(form.dataset.form === 'new-note'){
+      let currency = form.elements['currency'].value;
+      if(currency === 'custom') currency = form.elements['customCurrency'].value || '$';
+      createNote({ title: form.elements['title'].value, budget: form.elements['budget'].value, currency });
+    } else if(form.dataset.form === 'entry'){
+      addEntry(state.openNoteId, form.elements['entry'].value);
+    } else if(form.dataset.form === 'new-due'){
+      createDue({
+        type: form.elements['type'].value,
+        person: form.elements['person'].value,
+        amount: form.elements['amount'].value,
+        date: form.elements['date'].value,
+        rate: form.elements['rate'].value,
+        note: form.elements['note'].value
+      });
+    } else if(form.dataset.form === 'payment'){
+      addPayment(form.dataset.dueId, form.elements['amount'].value);
+    }
+  });
+
+  app.addEventListener('change', (e) => {
+    if(e.target.id === 'import-file' && e.target.files[0]){
+      importData(e.target.files[0]);
+    }
+    if(e.target.id === 'default-currency-select'){
+      state.settings.defaultCurrency = e.target.value;
+      saveData();
+    }
+    if(e.target.name === 'currency'){
+      const form = e.target.closest('form');
+      const customInput = form && form.querySelector('.custom-currency-input');
+      if(customInput) customInput.style.display = e.target.value === 'custom' ? 'block' : 'none';
+    }
+  });
+
+  loadData();
+}
+
+init();
+})();
+</script>
+</body>
+</html>
