@@ -273,7 +273,7 @@ const STORAGE_KEY = 'app:data';
 let state = {
   sections: [],
   dues: [],
-  settings: { defaultCurrency: '$' },
+  settings: { defaultCurrency: 'Rs ' },
   tab: 'home',
   duesTab: 'lent',
   expandedSectionIds: {},
@@ -381,7 +381,7 @@ async function loadData(){
     const res = await window.storage.get(STORAGE_KEY, false);
     if(res && res.value){
       const parsed = JSON.parse(res.value);
-      state.settings = parsed.settings || { defaultCurrency: '$' };
+      state.settings = parsed.settings || { defaultCurrency: 'Rs ' };
       if(Array.isArray(parsed.sections)){
         state.sections = parsed.sections;
       } else if(Array.isArray(parsed.notes) && parsed.notes.length){
@@ -391,7 +391,7 @@ async function loadData(){
           name: 'My Notes',
           totalBudget: parsed.notes.reduce((s,n) => s + (Number(n.budget)||0), 0),
           duration: 'monthly',
-          currency: parsed.notes[0].currency || state.settings.defaultCurrency || '$',
+          currency: parsed.notes[0].currency || state.settings.defaultCurrency || 'Rs ',
           createdAt: new Date().toISOString(),
           notes: parsed.notes.map(n => ({
             id: n.id || uid(),
@@ -412,7 +412,7 @@ async function loadData(){
   } catch(e){
     state.sections = [];
     state.dues = [];
-    state.settings = { defaultCurrency: '$' };
+    state.settings = { defaultCurrency: 'Rs ' };
     try{
       await window.storage.set(STORAGE_KEY, JSON.stringify({ sections: [], dues: [], settings: state.settings }), false);
     }catch(e2){ console.error('Could not initialize storage', e2); }
@@ -473,7 +473,7 @@ function createSection({name, totalBudget, duration, currency}){
     name: (name||'').trim() || suggestSectionName(duration),
     totalBudget: Number(totalBudget) || 0,
     duration: duration || 'monthly',
-    currency: currency || state.settings.defaultCurrency || '$',
+    currency: currency || state.settings.defaultCurrency || 'Rs ',
     createdAt: new Date().toISOString(),
     notes: []
   };
@@ -628,7 +628,7 @@ function importData(file){
         state.sections = parsed.notes.length ? [{
           id: uid(), name: 'My Notes', duration:'monthly',
           totalBudget: parsed.notes.reduce((s,n)=>s+(Number(n.budget)||0),0),
-          currency: state.settings.defaultCurrency || '$', createdAt: new Date().toISOString(),
+          currency: state.settings.defaultCurrency || 'Rs ', createdAt: new Date().toISOString(),
           notes: parsed.notes.map(n => ({ id:n.id||uid(), title:n.title||'Untitled note', icon:'', budget:Number(n.budget)||0, entries:(n.entries||[]).map(e=>({id:e.id||uid(),amount:e.amount,desc:e.desc,date:e.date,tag:e.tag||null})), createdAt:n.createdAt||new Date().toISOString() }))
         }] : [];
       } else {
@@ -926,7 +926,7 @@ function renderDuesView(){
 }
 
 function currencyOptions(selected){
-  const opts = [['$','$ Dollar'],['\u20B9','\u20B9 Rupee'],['\u20AC','\u20AC Euro'],['\u00A3','\u00A3 Pound'],['\u00A5','\u00A5 Yen']];
+  const opts = [['Rs ','Rs Pakistani Rupee'],['$','$ Dollar'],['\u20B9','\u20B9 Indian Rupee'],['\u20AC','\u20AC Euro'],['\u00A3','\u00A3 Pound'],['\u00A5','\u00A5 Yen']];
   return opts.map(([v,label]) => `<option value="${v}" ${selected===v?'selected':''}>${label}</option>`).join('') + `<option value="custom">Custom symbol</option>`;
 }
 
@@ -935,7 +935,7 @@ function sectionModal(){
   const duration = editing ? editing.duration : 'monthly';
   const name = editing ? editing.name : suggestSectionName(duration);
   const budget = editing ? editing.totalBudget : '';
-  const currency = editing ? editing.currency : (state.settings.defaultCurrency || '$');
+  const currency = editing ? editing.currency : (state.settings.defaultCurrency || 'Rs ');
   return `
   <div class="overlay">
     <div class="modal">
@@ -1208,7 +1208,7 @@ function init(){
     const form = e.target;
     if(form.dataset.form === 'section'){
       let currency = form.elements['currency'].value;
-      if(currency === 'custom') currency = form.elements['customCurrency'].value || '$';
+      if(currency === 'custom') currency = form.elements['customCurrency'].value || 'Rs ';
       const payload = { name: form.elements['name'].value, totalBudget: form.elements['totalBudget'].value, duration: form.elements['duration'].value, currency };
       if(form.dataset.editId){ updateSection(form.dataset.editId, payload); }
       else { createSection(payload); }
