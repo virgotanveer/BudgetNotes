@@ -235,6 +235,18 @@ body{
 .btn-tx-neg, .btn-tx-pos{ flex:1; border:none; border-radius:var(--radius-sm); padding:12px; font-weight:700; font-size:13px; cursor:pointer; font-family:var(--font-body); }
 .btn-tx-neg{ background:var(--coral-soft); color:var(--coral); }
 .btn-tx-pos{ background:var(--sage-soft); color:var(--sage); }
+.todo-nav{ display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+.todo-date-main{ font-family:var(--font-display); font-size:22px; font-weight:600; color:var(--display-color); }
+.todo-progress-label{ font-size:12px; color:var(--ink-faint); margin:4px 0 16px; text-align:right; }
+.todo-section-label{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); margin:14px 0 8px; }
+.todo-list{ display:flex; flex-direction:column; gap:6px; margin-bottom:6px; }
+.todo-row{ display:flex; align-items:center; gap:10px; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 12px; }
+.todo-row.done{ opacity:.6; }
+.todo-check{ width:22px; height:22px; border-radius:50%; border:2px solid var(--line); background:var(--paper-soft); cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:13px; color:#fff; padding:0; }
+.todo-check.checked{ background:var(--sage); border-color:var(--sage); }
+.todo-text{ flex:1; font-size:14px; }
+.todo-row.done .todo-text{ text-decoration:line-through; color:var(--ink-faint); }
+.todo-date-tag{ font-size:11px; white-space:nowrap; }
 
 input[type=text], input[type=number], input[type=date], select{
   width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:var(--radius-sm);
@@ -333,6 +345,8 @@ const STORAGE_KEY = 'app:data';
 let state = {
   sections: [],
   dues: [],
+  todos: [],
+  todoDate: null,
   settings: { defaultCurrency: 'Rs ' },
   tab: 'home',
   duesTab: 'lent',
@@ -351,6 +365,7 @@ let state = {
   confirmDeleteEntry: null,
   confirmDeleteDue: null,
   confirmDeleteTx: null,
+  confirmDeleteTodo: null,
   entryError: null,
   transactionError: null,
   importError: null,
@@ -406,6 +421,29 @@ function toggleTheme(){
   applyTheme();
   render();
   saveData();
+}
+
+function todayStr(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function shiftDateStr(dateStr, deltaDays){
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setDate(d.getDate() + deltaDays);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function formatTodoDateLabel(dateStr){
+  const today = todayStr();
+  const d = new Date(dateStr + 'T00:00:00');
+  const t = new Date(today + 'T00:00:00');
+  const diffDays = Math.round((d - t) / 86400000);
+  const monthDay = d.toLocaleDateString(undefined, { month:'short', day:'numeric' });
+  if(diffDays === 0) return 'Today, ' + monthDay;
+  if(diffDays === 1) return 'Tomorrow, ' + monthDay;
+  if(diffDays === -1) return 'Yesterday, ' + monthDay;
+  return d.toLocaleDateString(undefined, { weekday:'long' }) + ', ' + monthDay;
 }
 
 function suggestSectionName(duration){
@@ -496,15 +534,18 @@ async function loadData(){
         state.sections = [];
       }
       state.dues = (parsed.dues || []).map(migrateDue);
+      state.todos = Array.isArray(parsed.todos) ? parsed.todos : [];
     }
   } catch(e){
     state.sections = [];
     state.dues = [];
+    state.todos = [];
     state.settings = { defaultCurrency: 'Rs ' };
     try{
-      await window.storage.set(STORAGE_KEY, JSON.stringify({ sections: [], dues: [], settings: state.settings }), false);
+      await window.storage.set(STORAGE_KEY, JSON.stringify({ sections: [], dues: [], todos: [], settings: state.settings }), false);
     }catch(e2){ console.error('Could not initialize storage', e2); }
   }
+  state.todoDate = todayStr();
   if(!state.settings.theme){
     state.settings.theme = detectSystemTheme();
   }
@@ -519,7 +560,7 @@ async function loadData(){
 async function saveData(){
   try{
     const result = await window.storage.set(STORAGE_KEY, JSON.stringify({
-      sections: state.sections, dues: state.dues, settings: state.settings
+      sections: state.sections, dues: state.dues, todos: state.todos, settings: state.settings
     }), false);
     const hadError = !!state.error;
     state.error = result ? null : 'Could not save just now. Your latest change may not persist.';
@@ -560,6 +601,30 @@ function dueGroupTotal(type){
 }
 
 /* ---------- mutations ---------- */
+
+function addTodo(dateStr, text){
+  const trimmed = (text || '').trim();
+  if(!trimmed) return;
+  state.todos.unshift({ id: uid(), text: trimmed, done: false, date: dateStr || todayStr(), createdAt: new Date().toISOString() });
+  pendingFocus = 'todo-input';
+  render();
+  saveData();
+}
+
+function toggleTodo(id){
+  const t = state.todos.find(t => t.id === id);
+  if(!t) return;
+  t.done = !t.done;
+  render();
+  saveData();
+}
+
+function deleteTodo(id){
+  state.todos = state.todos.filter(t => t.id !== id);
+  state.confirmDeleteTodo = null;
+  render();
+  saveData();
+}
 
 function createSection({name, totalBudget, duration, currency}){
   const section = {
@@ -774,7 +839,7 @@ function shareRecords(dueId){
 }
 
 function exportData(){
-  const blob = new Blob([JSON.stringify({ sections: state.sections, dues: state.dues, settings: state.settings }, null, 2)], { type: 'application/json' });
+  const blob = new Blob([JSON.stringify({ sections: state.sections, dues: state.dues, todos: state.todos, settings: state.settings }, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -803,6 +868,7 @@ function importData(file){
         state.sections = [];
       }
       state.dues = (Array.isArray(parsed.dues) ? parsed.dues : []).map(migrateDue);
+      state.todos = Array.isArray(parsed.todos) ? parsed.todos : [];
       state.settings = parsed.settings || state.settings;
       state.importError = null;
       state.showSettings = false;
@@ -843,6 +909,7 @@ function renderHeader(){
     <button class="tab ${state.tab==='home'?'active':''}" data-action="set-tab" data-tab="home">Home</button>
     <button class="tab ${state.tab==='notes'?'active':''}" data-action="set-tab" data-tab="notes">Notes</button>
     <button class="tab ${state.tab==='dues'?'active':''}" data-action="set-tab" data-tab="dues">Dues</button>
+    <button class="tab ${state.tab==='todos'?'active':''}" data-action="set-tab" data-tab="todos">Todos</button>
   </nav>`;
 }
 
@@ -1043,6 +1110,62 @@ function renderNoteDetail(section, note){
     <div style="margin-top:18px;">
       <button class="btn-secondary small ${state.confirmDeleteNote===(section.id+':'+note.id)?'danger':''}" data-action="${state.confirmDeleteNote===(section.id+':'+note.id)?'confirm-delete-note':'ask-delete-note'}" data-section-id="${section.id}" data-note-id="${note.id}">${state.confirmDeleteNote===(section.id+':'+note.id)?'Confirm delete note':'Delete this note'}</button>
     </div>
+  </div>`;
+}
+
+function todoRow(t, opts){
+  opts = opts || {};
+  const isConfirm = state.confirmDeleteTodo === t.id;
+  return `
+  <div class="todo-row ${t.done?'done':''}">
+    <button class="todo-check ${t.done?'checked':''}" data-action="toggle-todo" data-id="${t.id}" aria-label="${t.done?'Mark not done':'Mark done'}">${t.done?'\u2713':''}</button>
+    <span class="todo-text">${escapeHtml(t.text)}</span>
+    ${opts.showDate ? `<span class="ink-faint todo-date-tag">${formatDate(t.date)}</span>` : ''}
+    <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-todo':'ask-delete-todo'}" data-id="${t.id}" aria-label="Delete task">${isConfirm?'Confirm':'\u2715'}</button>
+  </div>`;
+}
+
+function renderTodosView(){
+  const today = todayStr();
+  const viewDate = state.todoDate || today;
+  const isToday = viewDate === today;
+  let dayTodos = state.todos.filter(t => t.date === viewDate);
+  dayTodos = dayTodos.slice().sort((a,b) => (a.done?1:0) - (b.done?1:0));
+  const carriedOver = isToday ? state.todos.filter(t => t.date < viewDate && !t.done) : [];
+  const totalForProgress = dayTodos.length + carriedOver.length;
+  const doneCount = dayTodos.filter(t => t.done).length;
+  const pct = totalForProgress > 0 ? Math.round(doneCount/totalForProgress*100) : 0;
+
+  return `
+  <div class="view">
+    <div class="todo-nav">
+      <button class="icon-btn" data-action="todo-prev-day" aria-label="Previous day">&#8249;</button>
+      <span class="todo-date-main">${formatTodoDateLabel(viewDate)}</span>
+      <button class="icon-btn" data-action="todo-next-day" aria-label="Next day">&#8250;</button>
+    </div>
+    ${!isToday ? `<button class="link-back" data-action="todo-jump-today" style="display:block;margin:0 auto 14px;">&larr; Back to today</button>` : ''}
+
+    ${totalForProgress > 0 ? `
+      <div class="bar bar-sage"><div class="bar-fill" style="width:${pct}%"></div></div>
+      <div class="todo-progress-label">${doneCount} of ${totalForProgress} done</div>
+    ` : ''}
+
+    <form class="entry-form" data-form="todo" data-date="${viewDate}">
+      <input id="todo-input" name="todo" type="text" autocomplete="off" placeholder="${isToday ? 'What do you need to do today?' : 'Add a task for this day'}" />
+      <button type="submit" class="btn-primary small">Add</button>
+    </form>
+
+    ${carriedOver.length > 0 ? `
+      <div class="todo-section-label">Carried over</div>
+      <div class="todo-list">${carriedOver.map(t => todoRow(t, {showDate:true})).join('')}</div>
+    ` : ''}
+
+    ${dayTodos.length > 0
+      ? `${carriedOver.length > 0 ? `<div class="todo-section-label">${isToday ? 'Today' : 'This day'}</div>` : ''}<div class="todo-list">${dayTodos.map(t => todoRow(t, {showDate:false})).join('')}</div>`
+      : (carriedOver.length === 0 ? emptyState(
+          isToday ? 'Nothing on your list' : 'No tasks for this day',
+          isToday ? 'Add something below to get started.' : 'Tasks you add here will only show up on this day.',
+          null, null) : '')}
   </div>`;
 }
 
@@ -1339,8 +1462,10 @@ function render(){
     } else {
       html += renderSectionsList();
     }
-  } else {
+  } else if(state.tab === 'dues'){
     html += renderDuesView();
+  } else if(state.tab === 'todos'){
+    html += renderTodosView();
   }
   if(state.error){
     html += `<div class="toast-error">${escapeHtml(state.error)}</div>`;
@@ -1442,6 +1567,18 @@ function init(){
         state.confirmDeleteDue = id; render(); break;
       case 'confirm-delete-due':
         deleteDue(id); break;
+      case 'toggle-todo':
+        toggleTodo(id); break;
+      case 'ask-delete-todo':
+        state.confirmDeleteTodo = id; render(); break;
+      case 'confirm-delete-todo':
+        deleteTodo(id); break;
+      case 'todo-prev-day':
+        state.todoDate = shiftDateStr(state.todoDate || todayStr(), -1); render(); break;
+      case 'todo-next-day':
+        state.todoDate = shiftDateStr(state.todoDate || todayStr(), 1); render(); break;
+      case 'todo-jump-today':
+        state.todoDate = todayStr(); render(); break;
       case 'export-data':
         exportData(); break;
       case 'trigger-import': {
@@ -1487,6 +1624,8 @@ function init(){
       addTransaction(form.dataset.dueId, form.elements['transaction'].value, sign);
     } else if(form.dataset.form === 'rename-lender'){
       renameLender(form.dataset.dueId, form.elements['person'].value);
+    } else if(form.dataset.form === 'todo'){
+      addTodo(form.dataset.date, form.elements['todo'].value);
     }
   });
 
