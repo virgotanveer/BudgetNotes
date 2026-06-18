@@ -199,22 +199,42 @@ body{
 .tag-btn.tag-discretionary{ background:var(--periwinkle); border-color:var(--periwinkle); }
 
 /* Dues */
-.subtabs{ display:flex; gap:8px; background:var(--paper-soft); padding:4px; border-radius:999px; }
-.subtab{ border:none; background:none; padding:7px 16px; border-radius:999px; font-weight:600; font-size:13px; color:var(--ink-faint); cursor:pointer; }
-.subtab.active{ background:var(--paper); color:var(--ink); box-shadow:var(--shadow); }
+.dues-summary-row{ display:flex; gap:12px; margin-bottom:10px; }
+.dues-summary-card{ flex:1; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; cursor:pointer; display:flex; flex-direction:column; gap:6px; box-shadow:var(--shadow); transition:border-color .15s; }
+.dues-summary-card.active{ border-color:var(--periwinkle); }
+.dues-summary-label{ font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; }
+.dues-summary-value{ font-size:18px; font-weight:700; }
+.dues-tagline{ font-size:12px; color:var(--ink-faint); margin:0 0 18px; }
+.text-sage{ color:var(--sage); }
 .due-list{ display:flex; flex-direction:column; gap:12px; }
 .due-top{ display:flex; justify-content:space-between; align-items:center; cursor:pointer; gap:10px; }
+.due-person-row{ display:flex; align-items:center; gap:4px; }
 .due-person{ font-weight:700; font-size:16px; }
+.due-amount-row{ display:flex; align-items:center; gap:8px; }
 .due-amount{ font-size:16px; font-weight:600; white-space:nowrap; }
 .accent-periwinkle{ color:var(--periwinkle); }
 .accent-sand{ color:var(--sand); }
-.due-meta{ font-size:12px; color:var(--ink-soft); margin-top:4px; }
-.due-note{ font-size:13px; color:var(--ink-soft); margin-top:6px; font-style:italic; }
+.due-stats{ display:flex; gap:16px; font-size:13px; margin:10px 0 8px; color:var(--ink-soft); }
+.due-stats b{ font-weight:600; color:var(--ink); }
+.due-banner{ background:var(--paper-soft); border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 14px; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.due-banner-amount{ font-weight:700; font-size:15px; }
+.due-banner-label{ font-size:12px; color:var(--ink-soft); }
 .due-expand{ margin-top:12px; padding-top:12px; border-top:1px dashed var(--line); display:flex; flex-direction:column; gap:10px; }
-.payment-form{ display:flex; gap:8px; }
-.payment-form input{ flex:1; }
-.payment-list{ display:flex; flex-direction:column; gap:4px; }
-.payment-row{ display:flex; justify-content:space-between; font-size:13px; padding:4px 0; border-bottom:1px solid var(--line); }
+.due-actions-row{ display:flex; gap:8px; }
+.tx-list{ display:flex; flex-direction:column; gap:6px; }
+.tx-row{ display:grid; grid-template-columns:90px 1fr auto; align-items:center; gap:10px; padding:8px 10px; border-radius:var(--radius-sm); font-size:13px; }
+.tx-row.positive{ background:var(--sage-soft); }
+.tx-row.negative{ background:var(--coral-soft); }
+.tx-row.positive .tx-amount{ color:var(--sage); font-weight:700; }
+.tx-row.negative .tx-amount{ color:var(--coral); font-weight:700; }
+.tx-person-row{ font-size:13px; color:var(--ink-soft); margin:-6px 0 14px; }
+.tx-hint-card{ background:var(--paper-soft); border-radius:var(--radius-sm); padding:12px 14px; margin-bottom:14px; font-size:12px; color:var(--ink-soft); }
+.tx-hint-title{ font-weight:700; margin-bottom:4px; color:var(--ink); }
+.tx-hint-line{ margin:2px 0; }
+.tx-buttons-row{ display:flex; gap:10px; margin:4px 0 12px; }
+.btn-tx-neg, .btn-tx-pos{ flex:1; border:none; border-radius:var(--radius-sm); padding:12px; font-weight:700; font-size:13px; cursor:pointer; font-family:var(--font-body); }
+.btn-tx-neg{ background:var(--coral-soft); color:var(--coral); }
+.btn-tx-pos{ background:var(--sage-soft); color:var(--sage); }
 
 input[type=text], input[type=number], input[type=date], select{
   width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:var(--radius-sm);
@@ -322,13 +342,17 @@ let state = {
   editSectionId: null,
   showNewNoteFor: null, // sectionId
   showNewDue: false,
+  showAddTxFor: null, // dueId
+  editLenderId: null,
   showSettings: false,
   expandedDueId: null,
   confirmDeleteSection: null,
   confirmDeleteNote: null, // "sectionId:noteId"
   confirmDeleteEntry: null,
   confirmDeleteDue: null,
+  confirmDeleteTx: null,
   entryError: null,
+  transactionError: null,
   importError: null,
   migrationNotice: null,
   error: null,
@@ -416,6 +440,30 @@ function groupEntries(entries){
   return groups;
 }
 
+function migrateDue(d){
+  if(Array.isArray(d.transactions)) return d;
+  const transactions = [];
+  if(d.amount){
+    transactions.push({
+      id: uid(),
+      amount: -(Number(d.amount) || 0),
+      desc: (d.note || '').trim() || 'Initial amount',
+      comment: '',
+      date: d.date ? new Date(d.date).toISOString() : (d.createdAt || new Date().toISOString())
+    });
+  }
+  (d.payments || []).forEach(p => {
+    transactions.push({ id: p.id || uid(), amount: Number(p.amount) || 0, desc: 'Paid', comment: '', date: p.date || new Date().toISOString() });
+  });
+  return {
+    id: d.id || uid(),
+    type: d.type === 'borrowed' ? 'borrowed' : 'lent',
+    person: d.person || 'Unnamed',
+    transactions,
+    createdAt: d.createdAt || new Date().toISOString()
+  };
+}
+
 async function loadData(){
   try{
     const res = await window.storage.get(STORAGE_KEY, false);
@@ -447,7 +495,7 @@ async function loadData(){
       } else {
         state.sections = [];
       }
-      state.dues = parsed.dues || [];
+      state.dues = (parsed.dues || []).map(migrateDue);
     }
   } catch(e){
     state.sections = [];
@@ -495,14 +543,20 @@ function sectionSavings(section){ return Math.max(0, section.totalBudget - secti
 
 function noteSpent(note){ return note.entries.reduce((s,e) => s + e.amount, 0); }
 
-function pendingAmount(due){
-  const paid = due.payments.reduce((s,p) => s + (Number(p.amount) || 0), 0);
-  return Math.max(0, due.amount - paid);
+function txTotals(due){
+  let principal = 0, settled = 0;
+  due.transactions.forEach(t => { if(t.amount < 0) principal += -t.amount; else settled += t.amount; });
+  return { principal, settled, pending: principal - settled };
 }
-function accruedInterest(due){
-  if(!due.rate) return 0;
-  const days = daysBetween(due.date);
-  return due.amount * (due.rate/100) * (days/365);
+
+function dueTypeLabels(type){
+  return type === 'lent'
+    ? { negBtn:'Lent (-)', posBtn:'Received (+)', principalLabel:'Lent', settledLabel:'Received', bannerLabel:'Amount to receive' }
+    : { negBtn:'Borrowed (-)', posBtn:'Repaid (+)', principalLabel:'Borrowed', settledLabel:'Paid', bannerLabel:'Amount to pay' };
+}
+
+function dueGroupTotal(type){
+  return state.dues.filter(d => d.type === type).reduce((s,d) => s + Math.max(0, txTotals(d).pending), 0);
 }
 
 /* ---------- mutations ---------- */
@@ -618,31 +672,105 @@ function cycleTag(sectionId, noteId, entryId){
   saveData();
 }
 
-function createDue({type, person, amount, date, rate, note}){
+function createLender({type, person}){
   const due = {
     id: uid(),
-    type: type === 'borrowed' ? 'borrowed' : 'lent',
+    type: type === 'lent' ? 'lent' : 'borrowed',
     person: (person || '').trim() || 'Unnamed',
-    amount: Number(amount) || 0,
-    date: date || new Date().toISOString().slice(0,10),
-    rate: Number(rate) || 0,
-    note: (note || '').trim(),
-    payments: [],
+    transactions: [],
     createdAt: new Date().toISOString()
   };
   state.dues.unshift(due);
   state.showNewDue = false;
+  state.duesTab = due.type;
+  state.expandedDueId = due.id;
+  state.showAddTxFor = due.id;
   render();
   saveData();
 }
 
-function addPayment(dueId, amt){
-  const due = state.dues.find(d => d.id === dueId);
-  const n = Number(amt);
-  if(!due || !n || n <= 0) return;
-  due.payments.push({ id: uid(), amount: n, date: new Date().toISOString() });
+function deleteDue(id){
+  state.dues = state.dues.filter(d => d.id !== id);
+  if(state.expandedDueId === id) state.expandedDueId = null;
+  state.confirmDeleteDue = null;
   render();
   saveData();
+}
+
+function renameLender(id, name){
+  const due = state.dues.find(d => d.id === id);
+  if(!due) return;
+  due.person = (name || '').trim() || due.person;
+  state.editLenderId = null;
+  render();
+  saveData();
+}
+
+function addTransaction(dueId, rawValue, buttonSign){
+  const due = state.dues.find(d => d.id === dueId);
+  if(!due) return;
+  const trimmed = (rawValue || '').trim();
+  const match = trimmed.match(/^([+-])?\s*([\d,]+(?:\.\d{1,2})?)\s+([^.]+)(?:\.(.*))?$/);
+  if(!match){
+    state.transactionError = trimmed ? 'Try an amount then a reason, like \u201c5000 medical help\u201d' : null;
+    pendingFocus = 'transaction-input';
+    render();
+    return;
+  }
+  const sign = match[1] || buttonSign;
+  if(!sign){
+    state.transactionError = 'Tap Borrowed or Repaid below, or start with + or -.';
+    pendingFocus = 'transaction-input';
+    render();
+    return;
+  }
+  state.transactionError = null;
+  const amountAbs = parseFloat(match[2].replace(/,/g, ''));
+  const desc = match[3].trim();
+  const comment = match[4] ? match[4].trim() : '';
+  const signedAmount = sign === '-' ? -amountAbs : amountAbs;
+  due.transactions.unshift({ id: uid(), amount: signedAmount, desc, comment, date: new Date().toISOString() });
+  state.showAddTxFor = null;
+  render();
+  saveData();
+}
+
+function deleteTransaction(dueId, txId){
+  const due = state.dues.find(d => d.id === dueId);
+  if(due) due.transactions = due.transactions.filter(t => t.id !== txId);
+  state.confirmDeleteTx = null;
+  render();
+  saveData();
+}
+
+function shareRecords(dueId){
+  const due = state.dues.find(d => d.id === dueId);
+  if(!due) return;
+  const sym = state.settings.defaultCurrency;
+  const labels = dueTypeLabels(due.type);
+  const { principal, settled, pending } = txTotals(due);
+  const lines = [];
+  lines.push(`${due.person} \u2014 ${due.type === 'lent' ? 'Lent' : 'Borrowed'}`);
+  lines.push(`${labels.principalLabel}: ${formatMoney(principal, sym)}   ${labels.settledLabel}: ${formatMoney(settled, sym)}   Pending: ${formatMoney(Math.max(0,pending), sym)}`);
+  lines.push('');
+  due.transactions.slice().reverse().forEach(t => {
+    const sign = t.amount < 0 ? '-' : '+';
+    lines.push(`${formatDate(t.date)}  ${sign}${formatMoney(Math.abs(t.amount), sym)}  ${t.desc}${t.comment ? ' (' + t.comment + ')' : ''}`);
+  });
+  const text = lines.join('\n');
+  if(navigator.share){
+    navigator.share({ title: due.person + ' \u2014 BudgetNotes', text }).catch(() => {});
+  } else {
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = due.person.replace(/[^a-z0-9]+/gi, '-') + '-records.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
 }
 
 function exportData(){
@@ -674,7 +802,7 @@ function importData(file){
       } else {
         state.sections = [];
       }
-      state.dues = Array.isArray(parsed.dues) ? parsed.dues : [];
+      state.dues = (Array.isArray(parsed.dues) ? parsed.dues : []).map(migrateDue);
       state.settings = parsed.settings || state.settings;
       state.importError = null;
       state.showSettings = false;
@@ -918,49 +1046,85 @@ function renderNoteDetail(section, note){
   </div>`;
 }
 
+function txRow(t, due, sym){
+  const isConfirm = state.confirmDeleteTx === t.id;
+  const positive = t.amount >= 0;
+  return `
+  <div class="tx-row ${positive?'positive':'negative'}">
+    <span class="mono tx-amount">${positive?'+':'-'}${formatMoney(Math.abs(t.amount), sym)}</span>
+    <span class="tx-desc">${escapeHtml(t.desc)}${t.comment ? ` <span class="ink-faint">(${escapeHtml(t.comment)})</span>` : ''}</span>
+    <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-tx':'ask-delete-tx'}" data-due-id="${due.id}" data-tx-id="${t.id}" aria-label="Delete transaction">${isConfirm?'Confirm':'\u2715'}</button>
+  </div>`;
+}
+
 function dueCard(due){
-  const pending = pendingAmount(due);
-  const interest = accruedInterest(due);
+  const sym = state.settings.defaultCurrency;
+  const labels = dueTypeLabels(due.type);
+  const { principal, settled, pending } = txTotals(due);
+  const displayPending = Math.max(0, pending);
   const expanded = state.expandedDueId === due.id;
   const isConfirm = state.confirmDeleteDue === due.id;
   const accent = due.type === 'lent' ? 'periwinkle' : 'sand';
-  const sym = state.settings.defaultCurrency;
   return `
   <div class="card due-card">
     <div class="due-top" data-action="toggle-due" data-id="${due.id}" role="button" tabindex="0">
-      <div class="due-person">${escapeHtml(due.person)}</div>
-      <div class="due-amount mono accent-${accent}">${formatMoney(pending, sym)}</div>
+      <div class="due-person-row">
+        <span class="due-person">${escapeHtml(due.person)}</span>
+        <button class="icon-btn ghost" data-action="open-edit-lender" data-id="${due.id}" title="Rename" aria-label="Rename lender">&#9998;</button>
+      </div>
+      <div class="due-amount-row">
+        <span class="due-amount mono ${displayPending<=0?'text-sage':'accent-'+accent}">${displayPending<=0 ? 'Settled \u2713' : formatMoney(displayPending, sym)}</span>
+        <span class="chevron ${expanded?'open':''}">&#9656;</span>
+      </div>
     </div>
-    <div class="due-meta">${due.type==='lent'?'lent':'borrowed'} ${formatMoney(due.amount, sym)} &middot; ${formatDate(due.date)}${due.rate>0?` &middot; ${due.rate}% &middot; est. ${formatMoney(interest, sym)} interest`:''}</div>
-    ${due.note ? `<div class="due-note">${escapeHtml(due.note)}</div>` : ''}
+    <div class="due-stats">
+      <span>${labels.principalLabel}: <b class="mono">${formatMoney(principal, sym)}</b></span>
+      <span>${labels.settledLabel}: <b class="mono">${formatMoney(settled, sym)}</b></span>
+    </div>
+    ${displayPending > 0 ? `
+      <div class="due-banner">
+        <span class="due-banner-amount mono">${formatMoney(displayPending, sym)}</span>
+        <span class="due-banner-label">${labels.bannerLabel}</span>
+      </div>` : ''}
     ${expanded ? `
       <div class="due-expand">
-        <form class="payment-form" data-form="payment" data-due-id="${due.id}">
-          <input name="amount" type="number" min="0" step="0.01" placeholder="Payment amount" />
-          <button type="submit" class="btn-secondary small">Log payment</button>
-        </form>
-        ${due.payments.length>0 ? `<div class="payment-list">${due.payments.map(p=>`<div class="payment-row"><span class="mono">${formatMoney(p.amount, sym)}</span><span class="ink-faint">${formatDate(p.date)}</span></div>`).join('')}</div>` : ''}
-        <button class="btn-secondary small ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-due':'ask-delete-due'}" data-id="${due.id}" style="align-self:flex-start;">${isConfirm?'Confirm delete':'Delete this'}</button>
+        ${due.transactions.length === 0 ? `<p class="ink-faint" style="font-size:13px;margin:0 0 4px;">No transactions yet.</p>` : `<div class="tx-list">${due.transactions.map(t => txRow(t, due, sym)).join('')}</div>`}
+        <button class="btn-secondary small" data-action="open-add-tx" data-id="${due.id}" style="align-self:flex-start;">+ Add Transaction</button>
+        <div class="due-actions-row">
+          <button class="btn-secondary small" data-action="share-due" data-id="${due.id}">Share Records</button>
+          <button class="btn-secondary small ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-due':'ask-delete-due'}" data-id="${due.id}">${isConfirm?'Confirm delete':'Delete Lender'}</button>
+        </div>
       </div>` : ''}
   </div>`;
 }
 
 function renderDuesView(){
+  const sym = state.settings.defaultCurrency;
+  const lentTotal = dueGroupTotal('lent');
+  const borrowedTotal = dueGroupTotal('borrowed');
   const filtered = state.dues.filter(d => d.type === state.duesTab);
   return `
   <div class="view">
-    <div class="view-head">
-      <div class="subtabs">
-        <button class="subtab ${state.duesTab==='lent'?'active':''}" data-action="set-dues-tab" data-duestab="lent">Lent</button>
-        <button class="subtab ${state.duesTab==='borrowed'?'active':''}" data-action="set-dues-tab" data-duestab="borrowed">Borrowed</button>
+    <div class="dues-summary-row">
+      <div class="dues-summary-card ${state.duesTab==='lent'?'active':''}" data-action="set-dues-tab" data-duestab="lent" role="button" tabindex="0">
+        <span class="dues-summary-label accent-periwinkle">&#8593; Lent</span>
+        ${lentTotal<=0 ? `<span class="dues-summary-value text-sage">Settled &#10003;</span>` : `<span class="dues-summary-value mono accent-periwinkle">${formatMoney(lentTotal, sym)}</span>`}
       </div>
-      <button class="btn-primary" data-action="open-new-due">+ Add</button>
+      <div class="dues-summary-card ${state.duesTab==='borrowed'?'active':''}" data-action="set-dues-tab" data-duestab="borrowed" role="button" tabindex="0">
+        <span class="dues-summary-label accent-sand">&#8595; Borrowed</span>
+        ${borrowedTotal<=0 ? `<span class="dues-summary-value text-sage">Settled &#10003;</span>` : `<span class="dues-summary-value mono text-coral">${formatMoney(borrowedTotal, sym)}</span>`}
+      </div>
+    </div>
+    <p class="dues-tagline">Track loans from banks or friends, paid over time as EMIs or installments.</p>
+    <div class="view-head">
+      <h2>${state.duesTab==='lent' ? 'People who owe you' : 'People you owe'}</h2>
+      <button class="btn-primary" data-action="open-new-due">+ Add lender</button>
     </div>
     ${filtered.length===0
       ? emptyState(
-          state.duesTab==='lent' ? 'No loans out' : 'Nothing borrowed',
-          state.duesTab==='lent' ? 'Track money you\u2019ve lent to friends.' : 'Track loans, EMIs, or money you owe.',
-          '+ Add', 'open-new-due')
+          state.duesTab==='lent' ? 'No one owes you yet' : 'You don\u2019t owe anyone yet',
+          state.duesTab==='lent' ? 'Add a lender to start tracking money you\u2019ve lent out.' : 'Add a lender to start tracking a loan, EMI, or money you owe.',
+          '+ Add lender', 'open-new-due')
       : `<div class="due-list">${filtered.map(dueCard).join('')}</div>`}
   </div>`;
 }
@@ -1034,34 +1198,71 @@ function noteModal(){
 }
 
 function newDueModal(){
-  const today = new Date().toISOString().slice(0,10);
   return `
   <div class="overlay">
     <div class="modal">
-      <h3>Add a due</h3>
+      <h3>Add a lender</h3>
       <form data-form="new-due">
         <div class="radio-row">
-          <label><input type="radio" name="type" value="lent" ${state.duesTab==='lent'?'checked':''}/> Lent</label>
-          <label><input type="radio" name="type" value="borrowed" ${state.duesTab==='borrowed'?'checked':''}/> Borrowed</label>
+          <label><input type="radio" name="type" value="lent" ${state.duesTab==='lent'?'checked':''}/> Lent (they owe you)</label>
+          <label><input type="radio" name="type" value="borrowed" ${state.duesTab==='borrowed'?'checked':''}/> Borrowed (you owe them)</label>
         </div>
-        <label>Person / lender
+        <label>Person
           <input name="person" type="text" placeholder="John" required />
-        </label>
-        <label>Amount
-          <input name="amount" type="number" min="0" step="0.01" placeholder="5000" required />
-        </label>
-        <label>Date
-          <input name="date" type="date" value="${today}" />
-        </label>
-        <label>Interest rate % <span class="ink-faint">(optional)</span>
-          <input name="rate" type="number" min="0" step="0.1" placeholder="0" />
-        </label>
-        <label>Note <span class="ink-faint">(optional)</span>
-          <input name="note" type="text" placeholder="Lent for rent" />
         </label>
         <div class="modal-actions">
           <button type="button" class="btn-secondary" data-action="close-modal">Cancel</button>
           <button type="submit" class="btn-primary">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>`;
+}
+
+function addTransactionModal(){
+  const due = state.dues.find(d => d.id === state.showAddTxFor);
+  if(!due) return '';
+  const labels = dueTypeLabels(due.type);
+  return `
+  <div class="overlay">
+    <div class="modal">
+      <h3>Add Transaction</h3>
+      <p class="tx-person-row">Person: <b>${escapeHtml(due.person)}</b></p>
+      <div class="tx-hint-card">
+        <div class="tx-hint-title">Parsed:</div>
+        <div class="tx-hint-line">&bull; Enter amount (e.g., 5000)</div>
+        <div class="tx-hint-line">&bull; Enter reason after a space (e.g., medical help)</div>
+        <div class="tx-hint-line">&bull; add a dot (.) then a comment (e.g., on 3rd Jan)</div>
+      </div>
+      <form data-form="transaction" data-due-id="${due.id}">
+        <input id="transaction-input" name="transaction" type="text" autocomplete="off" placeholder="5000 medical help.on 3rd Jan" />
+        ${state.transactionError ? `<div class="form-error">${escapeHtml(state.transactionError)}</div>` : ''}
+        <div class="tx-buttons-row">
+          <button type="submit" class="btn-tx-neg" data-sign="-">${labels.negBtn}</button>
+          <button type="submit" class="btn-tx-pos" data-sign="+">${labels.posBtn}</button>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" data-action="close-modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>`;
+}
+
+function editLenderModal(){
+  const due = state.dues.find(d => d.id === state.editLenderId);
+  if(!due) return '';
+  return `
+  <div class="overlay">
+    <div class="modal">
+      <h3>Rename</h3>
+      <form data-form="rename-lender" data-due-id="${due.id}">
+        <label>Name
+          <input name="person" type="text" value="${escapeHtml(due.person)}" required />
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" data-action="close-modal">Cancel</button>
+          <button type="submit" class="btn-primary">Save</button>
         </div>
       </form>
     </div>
@@ -1148,6 +1349,8 @@ function render(){
   if(state.showNewSection) html += sectionModal();
   if(state.showNewNoteFor) html += noteModal();
   if(state.showNewDue) html += newDueModal();
+  if(state.showAddTxFor) html += addTransactionModal();
+  if(state.editLenderId) html += editLenderModal();
   if(state.showSettings) html += settingsModal();
   app.innerHTML = html;
 
@@ -1159,13 +1362,18 @@ function render(){
   attachLivePreview();
 }
 
+function closeAllModals(){
+  state.showNewSection = false; state.editSectionId = null;
+  state.showNewNoteFor = null; state.showNewDue = false; state.showSettings = false;
+  state.showAddTxFor = null; state.editLenderId = null; state.transactionError = null;
+}
+
 function init(){
   const app = document.getElementById('app');
 
   app.addEventListener('click', (e) => {
     if(e.target.classList && e.target.classList.contains('overlay')){
-      state.showNewSection = false; state.editSectionId = null;
-      state.showNewNoteFor = null; state.showNewDue = false; state.showSettings = false;
+      closeAllModals();
       render();
       return;
     }
@@ -1176,24 +1384,25 @@ function init(){
     const sectionId = el.dataset.sectionId;
     const noteId = el.dataset.noteId;
     const entryId = el.dataset.entryId;
+    const dueId = el.dataset.dueId;
+    const txId = el.dataset.txId;
     switch(action){
       case 'set-tab':
         state.tab = el.dataset.tab; render(); break;
       case 'open-new-section':
-        state.editSectionId = null; state.showNewSection = true; render(); break;
+        closeAllModals(); state.showNewSection = true; render(); break;
       case 'ask-edit-section':
-        state.editSectionId = id; state.showNewSection = true; render(); break;
+        closeAllModals(); state.editSectionId = id; state.showNewSection = true; render(); break;
       case 'open-new-note-for':
-        state.showNewNoteFor = sectionId; render(); break;
+        closeAllModals(); state.showNewNoteFor = sectionId; render(); break;
       case 'open-new-due':
-        state.showNewDue = true; render(); break;
+        closeAllModals(); state.showNewDue = true; render(); break;
       case 'open-settings':
-        state.showSettings = true; state.importError = null; render(); break;
+        closeAllModals(); state.showSettings = true; state.importError = null; render(); break;
       case 'toggle-theme':
         toggleTheme(); break;
       case 'close-modal':
-        state.showNewSection = false; state.editSectionId = null;
-        state.showNewNoteFor = null; state.showNewDue = false; state.showSettings = false;
+        closeAllModals();
         render(); break;
       case 'toggle-section':
         state.expandedSectionIds[id] = !state.expandedSectionIds[id]; render(); break;
@@ -1219,12 +1428,20 @@ function init(){
         state.duesTab = el.dataset.duestab; render(); break;
       case 'toggle-due':
         state.expandedDueId = state.expandedDueId === id ? null : id; render(); break;
+      case 'open-edit-lender':
+        closeAllModals(); state.editLenderId = id; render(); break;
+      case 'open-add-tx':
+        closeAllModals(); state.showAddTxFor = id; render(); break;
+      case 'ask-delete-tx':
+        state.confirmDeleteTx = txId; render(); break;
+      case 'confirm-delete-tx':
+        deleteTransaction(dueId, txId); break;
+      case 'share-due':
+        shareRecords(id); break;
       case 'ask-delete-due':
         state.confirmDeleteDue = id; render(); break;
       case 'confirm-delete-due':
-        state.dues = state.dues.filter(d => d.id !== id);
-        state.confirmDeleteDue = null;
-        render(); saveData(); break;
+        deleteDue(id); break;
       case 'export-data':
         exportData(); break;
       case 'trigger-import': {
@@ -1261,16 +1478,15 @@ function init(){
     } else if(form.dataset.form === 'entry'){
       addEntry(form.dataset.sectionId, form.dataset.noteId, form.elements['entry'].value);
     } else if(form.dataset.form === 'new-due'){
-      createDue({
+      createLender({
         type: form.elements['type'].value,
-        person: form.elements['person'].value,
-        amount: form.elements['amount'].value,
-        date: form.elements['date'].value,
-        rate: form.elements['rate'].value,
-        note: form.elements['note'].value
+        person: form.elements['person'].value
       });
-    } else if(form.dataset.form === 'payment'){
-      addPayment(form.dataset.dueId, form.elements['amount'].value);
+    } else if(form.dataset.form === 'transaction'){
+      const sign = e.submitter ? e.submitter.dataset.sign : null;
+      addTransaction(form.dataset.dueId, form.elements['transaction'].value, sign);
+    } else if(form.dataset.form === 'rename-lender'){
+      renameLender(form.dataset.dueId, form.elements['person'].value);
     }
   });
 
