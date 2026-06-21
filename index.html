@@ -283,6 +283,7 @@ label input, label select{ margin-top:6px; }
 .modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:8px; }
 .settings-row{ margin-bottom:16px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
 .settings-label{ font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; }
+.copy-hint{ font-size:12px; color:var(--ink-faint); margin:-6px 0 14px; }
 .small-print{ font-size:12px; }
 
 .loading{ text-align:center; padding:80px 20px; color:var(--ink-soft); font-family:var(--font-display); font-size:20px; }
@@ -371,6 +372,7 @@ let state = {
   openNote: null, // { sectionId, noteId }
   showNewSection: false,
   editSectionId: null,
+  sectionCopyFromId: 'scratch',
   showNewNoteFor: null, // sectionId
   showNewDue: false,
   showAddTxFor: null, // dueId
@@ -646,7 +648,21 @@ function deleteTodo(id){
   saveData();
 }
 
-function createSection({name, totalBudget, duration, currency}){
+function createSection({name, totalBudget, duration, currency, copyFromId}){
+  let copiedNotes = [];
+  if(copyFromId){
+    const source = findSection(copyFromId);
+    if(source){
+      copiedNotes = source.notes.map(n => ({
+        id: uid(),
+        title: n.title,
+        icon: n.icon || '',
+        budget: n.budget,
+        entries: [],
+        createdAt: new Date().toISOString()
+      }));
+    }
+  }
   const section = {
     id: uid(),
     name: (name||'').trim() || suggestSectionName(duration),
@@ -654,11 +670,12 @@ function createSection({name, totalBudget, duration, currency}){
     duration: duration || 'monthly',
     currency: currency || state.settings.defaultCurrency || 'Rs ',
     createdAt: new Date().toISOString(),
-    notes: []
+    notes: copiedNotes
   };
   state.sections.unshift(section);
   state.expandedSectionIds[section.id] = true;
   state.showNewSection = false;
+  state.sectionCopyFromId = 'scratch';
   render();
   saveData();
 }
@@ -1281,15 +1298,30 @@ function currencyOptions(selected){
 
 function sectionModal(){
   const editing = state.editSectionId ? findSection(state.editSectionId) : null;
-  const duration = editing ? editing.duration : 'monthly';
+  const copyFromId = !editing ? (state.sectionCopyFromId || 'scratch') : null;
+  const copySource = (copyFromId && copyFromId !== 'scratch') ? findSection(copyFromId) : null;
+
+  const duration = editing ? editing.duration : (copySource ? copySource.duration : 'monthly');
   const name = editing ? editing.name : suggestSectionName(duration);
-  const budget = editing ? editing.totalBudget : '';
-  const currency = editing ? editing.currency : (state.settings.defaultCurrency || 'Rs ');
+  const budget = editing ? editing.totalBudget : (copySource ? copySource.totalBudget : '');
+  const currency = editing ? editing.currency : (copySource ? copySource.currency : (state.settings.defaultCurrency || 'Rs '));
+
+  const showCopyOption = !editing && state.sections.length > 0;
+
   return `
   <div class="overlay">
     <div class="modal">
       <h3>${editing ? 'Edit section' : 'New section'}</h3>
       <form data-form="section" data-edit-id="${editing ? editing.id : ''}">
+        ${showCopyOption ? `
+        <label>Start from
+          <select name="copyFrom">
+            <option value="scratch" ${copyFromId==='scratch'?'selected':''}>Scratch (blank)</option>
+            ${state.sections.map(s => `<option value="${s.id}" ${copyFromId===s.id?'selected':''}>Copy from "${escapeHtml(s.name)}"</option>`).join('')}
+          </select>
+        </label>
+        ${copySource ? `<p class="copy-hint">${copySource.notes.length} ${copySource.notes.length===1?'category':'categories'} will be copied in with their budgets, but no entries.</p>` : ''}
+        ` : ''}
         <label>Duration
           <select name="duration">
             <option value="weekly" ${duration==='weekly'?'selected':''}>Weekly</option>
@@ -1513,7 +1545,7 @@ function render(){
 }
 
 function closeAllModals(){
-  state.showNewSection = false; state.editSectionId = null;
+  state.showNewSection = false; state.editSectionId = null; state.sectionCopyFromId = 'scratch';
   state.showNewNoteFor = null; state.showNewDue = false; state.showSettings = false;
   state.showAddTxFor = null; state.editLenderId = null; state.transactionError = null;
 }
@@ -1630,7 +1662,11 @@ function init(){
       if(currency === 'custom') currency = form.elements['customCurrency'].value || 'Rs ';
       const payload = { name: form.elements['name'].value, totalBudget: form.elements['totalBudget'].value, duration: form.elements['duration'].value, currency };
       if(form.dataset.editId){ updateSection(form.dataset.editId, payload); }
-      else { createSection(payload); }
+      else {
+        const copyFromEl = form.elements['copyFrom'];
+        const copyFromId = (copyFromEl && copyFromEl.value !== 'scratch') ? copyFromEl.value : null;
+        createSection(Object.assign({}, payload, { copyFromId }));
+      }
     } else if(form.dataset.form === 'note'){
       createNoteInSection(form.dataset.sectionId, {
         title: form.elements['title'].value,
@@ -1665,6 +1701,13 @@ function init(){
     }
     if(e.target.id === 'note-budget-input'){
       updateNoteBudget(e.target.dataset.sectionId, e.target.dataset.noteId, e.target.value);
+    }
+    if(e.target.name === 'copyFrom'){
+      state.sectionCopyFromId = e.target.value;
+      render();
+      pendingFocus = null;
+      const nameInput = document.querySelector('form[data-form="section"] input[name="name"]');
+      if(nameInput) nameInput.focus();
     }
     if(e.target.name === 'currency'){
       const form = e.target.closest('form');
