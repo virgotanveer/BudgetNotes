@@ -284,6 +284,14 @@ label input, label select{ margin-top:6px; }
 .settings-row{ margin-bottom:16px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
 .settings-label{ font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:6px; }
 .copy-hint{ font-size:12px; color:var(--ink-faint); margin:-6px 0 14px; }
+.sync-status-row{ display:flex; align-items:center; gap:8px; font-size:13px; margin-bottom:10px; }
+.sync-dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.sync-dot.connected{ background:var(--sage); }
+.sync-dot.connecting{ background:var(--amber); }
+.sync-dot.error{ background:var(--coral); }
+.sync-code-box{ display:flex; align-items:center; gap:8px; background:var(--paper-soft); border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 12px; margin-bottom:10px; }
+.sync-code-text{ flex:1; font-family:var(--font-mono); font-size:13px; word-break:break-all; }
+.sync-actions-row{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
 .small-print{ font-size:12px; }
 
 .loading{ text-align:center; padding:80px 20px; color:var(--ink-soft); font-family:var(--font-display); font-size:20px; }
@@ -302,6 +310,11 @@ label input, label select{ margin-top:6px; }
   *{ transition:none !important; }
 }
 </style>
+
+
+<!-- Firebase (for optional live sync between household members) -->
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 <div id="app"></div>
@@ -360,6 +373,124 @@ if(!window.storage){
 
 const STORAGE_KEY = 'app:data';
 
+/* ---------- Live sync (Firebase Firestore) ----------
+   Two devices share data by both pointing at the same Firestore document,
+   keyed by a long random "household ID" the first device generates and the
+   second device enters. Firestore's realtime listener pushes any change to
+   every connected device within ~1 second, no manual refresh needed.
+   This entire app already serializes its state into one JSON blob (the same
+   blob saved to localStorage), so syncing just means mirroring that blob to
+   a single Firestore document and re-applying it locally when it changes
+   remotely. */
+const CloudSync = (function(){
+  const firebaseConfig = {
+    apiKey: "AIzaSyC69GXaUgBoCgPxvucP_NCUZmWzc-1k64Q",
+    authDomain: "budgetnotes-61f28.firebaseapp.com",
+    projectId: "budgetnotes-61f28",
+    storageBucket: "budgetnotes-61f28.firebasestorage.app",
+    messagingSenderId: "114411632334",
+    appId: "1:114411632334:web:b44ebe5fe53327d937c29f"
+  };
+
+  let app = null, db = null, unsubscribe = null;
+  let lastPushedJSON = null; // used to ignore the echo of our own writes
+  let onRemoteUpdate = null; // callback set by the app: (jsonString) => void
+  let onStatusChange = null; // callback: (status) => void, status in 'connecting'|'connected'|'error'|'offline'
+
+  function available(){
+    return typeof firebase !== 'undefined';
+  }
+
+  function ensureApp(){
+    if(!available()) throw new Error('Firebase SDK not loaded (are you offline?)');
+    if(!app){
+      app = firebase.apps && firebase.apps.length ? firebase.apps[0] : firebase.initializeApp(firebaseConfig);
+      db = firebase.firestore();
+    }
+    return db;
+  }
+
+  function generateHouseholdId(){
+    const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let out = '';
+    const bytes = (window.crypto && window.crypto.getRandomValues) ? window.crypto.getRandomValues(new Uint8Array(24)) : null;
+    for(let i = 0; i < 24; i++){
+      const idx = bytes ? bytes[i] % chars.length : Math.floor(Math.random() * chars.length);
+      out += chars[idx];
+    }
+    return out;
+  }
+
+  function setCallbacks({ remoteUpdate, statusChange }){
+    onRemoteUpdate = remoteUpdate || null;
+    onStatusChange = statusChange || null;
+  }
+
+  function start(householdId){
+    stop(); // tear down any previous listener first
+    if(!householdId) return;
+    try{
+      const database = ensureApp();
+      if(onStatusChange) onStatusChange('connecting');
+      const ref = database.collection('households').doc(householdId);
+      unsubscribe = ref.onSnapshot(
+        (snap) => {
+          if(onStatusChange) onStatusChange('connected');
+          if(!snap.exists) return;
+          const data = snap.data();
+          const json = data && data.payload;
+          if(typeof json !== 'string') return;
+          if(json === lastPushedJSON){
+            // This is just our own write echoing back from the server -- the
+            // local state is already correct, so skip re-applying it (doing
+            // so would needlessly blow away in-progress local UI state).
+            return;
+          }
+          if(onRemoteUpdate) onRemoteUpdate(json);
+        },
+        (err) => {
+          console.warn('CloudSync listener error:', err);
+          if(onStatusChange) onStatusChange('error');
+        }
+      );
+    }catch(e){
+      console.warn('CloudSync start failed:', e);
+      if(onStatusChange) onStatusChange('error');
+    }
+  }
+
+  function stop(){
+    if(unsubscribe){ unsubscribe(); unsubscribe = null; }
+    lastPushedJSON = null;
+  }
+
+  async function push(householdId, jsonString){
+    if(!householdId) return;
+    try{
+      const database = ensureApp();
+      lastPushedJSON = jsonString;
+      await database.collection('households').doc(householdId).set({
+        payload: jsonString,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }catch(e){
+      console.warn('CloudSync push failed:', e);
+      if(onStatusChange) onStatusChange('error');
+    }
+  }
+
+  async function fetchOnce(householdId){
+    const database = ensureApp();
+    const snap = await database.collection('households').doc(householdId).get();
+    if(!snap.exists) return null;
+    const data = snap.data();
+    return (data && typeof data.payload === 'string') ? data.payload : null;
+  }
+
+  return { available, generateHouseholdId, setCallbacks, start, stop, push, fetchOnce };
+})();
+
+
 let state = {
   sections: [],
   dues: [],
@@ -389,6 +520,10 @@ let state = {
   transactionError: null,
   importError: null,
   migrationNotice: null,
+  syncStatus: null, // null|'connecting'|'connected'|'error'
+  syncError: null,
+  syncBusy: false,
+  showJoinHousehold: false,
   error: null,
   loaded: false,
 };
@@ -524,6 +659,22 @@ function migrateDue(d){
   };
 }
 
+function applyRemoteState(jsonString){
+  try{
+    const parsed = JSON.parse(jsonString);
+    state.settings = parsed.settings || state.settings;
+    state.sections = Array.isArray(parsed.sections) ? parsed.sections : [];
+    state.dues = (parsed.dues || []).map(migrateDue);
+    state.todos = Array.isArray(parsed.todos) ? parsed.todos : [];
+    // Cache the synced data locally too, so a later offline open still has it.
+    window.storage.set(STORAGE_KEY, jsonString, false).catch(()=>{});
+    applyTheme();
+    render();
+  }catch(e){
+    console.warn('Failed to apply remote update:', e);
+  }
+}
+
 async function loadData(){
   try{
     const res = await window.storage.get(STORAGE_KEY, false);
@@ -577,13 +728,23 @@ async function loadData(){
   }
   state.loaded = true;
   render();
+
+  CloudSync.setCallbacks({
+    remoteUpdate: applyRemoteState,
+    statusChange: (status) => { state.syncStatus = status; render(); }
+  });
+  if(state.settings.householdId){
+    state.syncStatus = 'connecting';
+    CloudSync.start(state.settings.householdId);
+  }
 }
 
 async function saveData(){
+  const jsonString = JSON.stringify({
+    sections: state.sections, dues: state.dues, todos: state.todos, settings: state.settings
+  });
   try{
-    const result = await window.storage.set(STORAGE_KEY, JSON.stringify({
-      sections: state.sections, dues: state.dues, todos: state.todos, settings: state.settings
-    }), false);
+    const result = await window.storage.set(STORAGE_KEY, jsonString, false);
     const hadError = !!state.error;
     state.error = result ? null : 'Could not save just now. Your latest change may not persist.';
     if(hadError !== !!state.error) render();
@@ -591,6 +752,9 @@ async function saveData(){
     console.error(e);
     state.error = 'Could not save just now. Your latest change may not persist.';
     render();
+  }
+  if(state.settings.householdId){
+    CloudSync.push(state.settings.householdId, jsonString);
   }
 }
 
@@ -874,6 +1038,61 @@ function shareRecords(dueId){
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
+}
+
+async function createHousehold(){
+  if(state.syncBusy) return;
+  state.syncBusy = true; state.syncError = null;
+  render();
+  const id = CloudSync.generateHouseholdId();
+  state.settings.householdId = id;
+  state.syncStatus = 'connecting';
+  render();
+  await saveData(); // pushes the current local data up as the household's starting point
+  CloudSync.start(id);
+  state.syncBusy = false;
+  render();
+}
+
+async function joinHousehold(code){
+  const trimmed = (code || '').trim();
+  if(trimmed.length < 20){
+    state.syncError = 'That doesn\u2019t look like a full household code. Ask your partner to copy it again.';
+    render();
+    return;
+  }
+  if(state.syncBusy) return;
+  state.syncBusy = true; state.syncError = null;
+  render();
+  try{
+    const remoteJson = await CloudSync.fetchOnce(trimmed);
+    if(!remoteJson){
+      state.syncError = 'No household found with that code. Double-check it, or ask your partner to create one first.';
+      state.syncBusy = false;
+      render();
+      return;
+    }
+    applyRemoteState(remoteJson);
+    state.settings.householdId = trimmed; // in case the remote payload's own copy is missing/stale
+    await saveData();
+    state.syncStatus = 'connecting';
+    CloudSync.start(trimmed);
+    state.showJoinHousehold = false;
+  }catch(e){
+    console.warn('Join household failed:', e);
+    state.syncError = 'Could not reach the sync server. Check your connection and try again.';
+  }
+  state.syncBusy = false;
+  render();
+}
+
+function stopSyncing(){
+  CloudSync.stop();
+  delete state.settings.householdId;
+  state.syncStatus = null;
+  state.syncError = null;
+  render();
+  saveData();
 }
 
 function exportData(){
@@ -1451,10 +1670,61 @@ function editLenderModal(){
 
 function settingsModal(){
   const c = state.settings.defaultCurrency;
+  const householdId = state.settings.householdId;
+  const statusLabel = state.syncStatus === 'connected' ? 'Connected \u2014 changes sync live'
+    : state.syncStatus === 'connecting' ? 'Connecting\u2026'
+    : state.syncStatus === 'error' ? 'Connection trouble \u2014 will retry'
+    : '';
+
+  let syncSection;
+  if(householdId){
+    syncSection = `
+      <div class="settings-row" style="display:block;">
+        <div class="settings-label">Sync with partner</div>
+        <div class="sync-status-row">
+          <span class="sync-dot ${state.syncStatus||''}"></span>
+          <span>${escapeHtml(statusLabel)}</span>
+        </div>
+        <div class="sync-code-box">
+          <span class="sync-code-text">${escapeHtml(householdId)}</span>
+          <button type="button" class="icon-btn ghost" data-action="copy-household-code" aria-label="Copy code">Copy</button>
+        </div>
+        <p class="ink-faint small-print" style="margin:0 0 10px;">Share this code with your partner once \u2014 they enter it under "Join a partner's data" to connect.</p>
+        <button type="button" class="btn-secondary small" data-action="stop-syncing">Stop syncing</button>
+      </div>`;
+  } else if(state.showJoinHousehold){
+    syncSection = `
+      <div class="settings-row" style="display:block;">
+        <div class="settings-label">Join a partner's data</div>
+        <form data-form="join-household">
+          <label>Code from your partner
+            <input name="code" type="text" autocomplete="off" placeholder="paste the code here" />
+          </label>
+          ${state.syncError ? `<div class="form-error">${escapeHtml(state.syncError)}</div>` : ''}
+          <div class="sync-actions-row">
+            <button type="button" class="btn-secondary small" data-action="cancel-join-household">Cancel</button>
+            <button type="submit" class="btn-primary small" ${state.syncBusy?'disabled':''}>${state.syncBusy ? 'Joining\u2026' : 'Join'}</button>
+          </div>
+        </form>
+        <p class="ink-faint small-print">This replaces your current data on this device with your partner's, then keeps both in sync from then on.</p>
+      </div>`;
+  } else {
+    syncSection = `
+      <div class="settings-row" style="display:block;">
+        <div class="settings-label">Sync with partner</div>
+        <p class="ink-faint small-print" style="margin-top:0;">Add transactions on two phones and see each other's changes live.</p>
+        <div class="sync-actions-row">
+          <button type="button" class="btn-secondary small" data-action="start-create-household" ${state.syncBusy?'disabled':''}>${state.syncBusy ? 'Creating\u2026' : 'Create &amp; share a code'}</button>
+          <button type="button" class="btn-secondary small" data-action="open-join-household">Join a partner's data</button>
+        </div>
+      </div>`;
+  }
+
   return `
   <div class="overlay">
     <div class="modal">
       <h3>Backup &amp; settings</h3>
+      ${syncSection}
       <div class="settings-row">
         <div>
           <div class="settings-label">Default currency</div>
@@ -1467,7 +1737,7 @@ function settingsModal(){
         <input id="import-file" type="file" accept="application/json" hidden />
       </div>
       ${state.importError ? `<div class="form-error">${escapeHtml(state.importError)}</div>` : ''}
-      <p class="ink-faint small-print">Everything here stays in your account \u2014 nothing is shared.</p>
+      <p class="ink-faint small-print">Everything here stays in your account \u2014 nothing is shared${householdId ? ' beyond the partner you sync with' : ''}.</p>
       <div class="modal-actions">
         <button type="button" class="btn-primary" data-action="close-modal">Done</button>
       </div>
@@ -1548,6 +1818,7 @@ function closeAllModals(){
   state.showNewSection = false; state.editSectionId = null; state.sectionCopyFromId = 'scratch';
   state.showNewNoteFor = null; state.showNewDue = false; state.showSettings = false;
   state.showAddTxFor = null; state.editLenderId = null; state.transactionError = null;
+  state.showJoinHousehold = false; state.syncError = null;
 }
 
 function init(){
@@ -1643,6 +1914,24 @@ function init(){
         if(f) f.click();
         break;
       }
+      case 'start-create-household':
+        createHousehold(); break;
+      case 'open-join-household':
+        state.showJoinHousehold = true; state.syncError = null; render(); break;
+      case 'cancel-join-household':
+        state.showJoinHousehold = false; state.syncError = null; render(); break;
+      case 'stop-syncing':
+        stopSyncing(); break;
+      case 'copy-household-code': {
+        const code = state.settings.householdId;
+        if(code && navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(code).then(() => {
+            el.textContent = 'Copied!';
+            setTimeout(() => { el.textContent = 'Copy'; }, 1500);
+          }).catch(() => {});
+        }
+        break;
+      }
       default: break;
     }
   });
@@ -1688,6 +1977,8 @@ function init(){
       renameLender(form.dataset.dueId, form.elements['person'].value);
     } else if(form.dataset.form === 'todo'){
       addTodo(form.dataset.date, form.elements['todo'].value);
+    } else if(form.dataset.form === 'join-household'){
+      joinHousehold(form.elements['code'].value);
     }
   });
 
@@ -1732,61 +2023,6 @@ function init(){
 }
 
 init();
-})();
-</script>
-<!-- PWA: inline service worker registered via blob URL so no separate file is needed -->
-<script>
-(function(){
-  if(!('serviceWorker' in navigator)) return;
-
-  const CACHE = 'budgetnotes-v1';
-  // The SW script is defined as a string and turned into a blob URL.
-  // This lets us ship a fully offline-capable PWA as a single HTML file.
-  const swCode = `
-    const CACHE_NAME = '${CACHE}';
-    const SELF_URL = self.location.href.replace('?sw=1','').split('?')[0];
-
-    self.addEventListener('install', e => {
-      e.waitUntil(
-        caches.open(CACHE_NAME).then(c => c.add(SELF_URL)).then(() => self.skipWaiting())
-      );
-    });
-
-    self.addEventListener('activate', e => {
-      e.waitUntil(
-        caches.keys().then(keys =>
-          Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
-        ).then(() => self.clients.claim())
-      );
-    });
-
-    self.addEventListener('fetch', e => {
-      // Only handle same-origin page requests; let font CDN etc pass through
-      if(!e.request.url.startsWith(self.location.origin)) return;
-      e.respondWith(
-        fetch(e.request)
-          .then(res => {
-            if(res && res.status === 200 && res.type !== 'opaque'){
-              const clone = res.clone();
-              caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
-            }
-            return res;
-          })
-          .catch(() => caches.match(e.request))
-      );
-    });
-  `;
-
-  const blob = new Blob([swCode], { type: 'application/javascript' });
-  const swUrl = URL.createObjectURL(blob);
-
-  navigator.serviceWorker.register(swUrl, { scope: './' })
-    .then(reg => {
-      console.log('BudgetNotes SW registered, scope:', reg.scope);
-      // Cache the actual page HTML immediately so it works offline
-      if(caches) caches.open('${CACHE}').then(c => c.add(location.href));
-    })
-    .catch(err => console.warn('SW registration failed:', err));
 })();
 </script>
 </body>
