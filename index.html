@@ -145,8 +145,8 @@ body{
 .leading-card{ margin-top:16px; }
 .leading-title{ font-family:var(--font-display); font-size:20px; font-weight:600; margin:0; color:var(--display-color); }
 .leading-sub{ font-size:12px; color:var(--ink-faint); margin:2px 0 14px; }
-.rank-list{ display:flex; flex-direction:column; gap:10px; margin-bottom:14px; }
-.rank-row{ display:grid; grid-template-columns:18px 1fr 90px auto; align-items:center; gap:10px; font-size:13px; }
+.rank-list{ display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+.rank-row{ display:grid; grid-template-columns:22px 1fr 90px auto; align-items:center; gap:8px; font-size:13px; }
 .rank-num{ color:var(--ink-faint); font-weight:700; font-size:12px; }
 .rank-desc{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .rank-bar{ height:8px; border-radius:999px; background:var(--line); overflow:hidden; }
@@ -158,6 +158,22 @@ body{
 .dot-essential{ background:var(--sage); }
 .dot-discretionary{ background:var(--periwinkle); }
 .dot-untagged{ background:var(--ink-faint); }
+
+.today-row{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); font-size:13px; }
+.today-row:last-child{ border-bottom:none; }
+.today-desc{ flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.today-note{ font-size:11px; color:var(--ink-faint); }
+.today-total-row{ display:flex; justify-content:space-between; align-items:baseline; margin-top:12px; padding-top:10px; border-top:1px solid var(--line); font-size:13px; font-weight:700; }
+
+.history-tabs{ display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap; }
+.history-tab{ border:none; background:var(--paper-soft); border-radius:999px; padding:6px 14px; font-size:12px; font-weight:600; color:var(--ink-faint); cursor:pointer; font-family:var(--font-body); border:1px solid var(--line); }
+.history-tab.active{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+:root[data-theme="dark"] .history-tab.active{ background:var(--ink); color:var(--bg); }
+.history-day{ margin-bottom:14px; }
+.history-day-label{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); margin-bottom:6px; }
+.history-entry-row{ display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center; padding:7px 0; border-bottom:1px solid var(--line); font-size:13px; }
+.history-entry-row:last-child{ border-bottom:none; }
+.history-note-chip{ font-size:11px; color:var(--ink-faint); white-space:nowrap; }
 
 /* Sections (Notes tab) */
 .section-list{ display:flex; flex-direction:column; gap:14px; }
@@ -524,6 +540,7 @@ let state = {
   syncError: null,
   syncBusy: false,
   showJoinHousehold: false,
+  historyPeriod: '7d',
   error: null,
   loaded: false,
 };
@@ -1176,6 +1193,41 @@ function allEntriesFlat(){
   return out;
 }
 
+// Returns every entry across all notes, enriched with section/note labels.
+function allEntriesRich(){
+  const out = [];
+  state.sections.forEach(s => s.notes.forEach(n => n.entries.forEach(e =>
+    out.push({ ...e, noteName: n.title, sectionName: s.name, currency: s.currency })
+  )));
+  return out;
+}
+
+// Returns entries whose ISO date falls on the given local YYYY-MM-DD date string.
+function entriesOnDate(dateStr){
+  return allEntriesRich().filter(e => {
+    if(!e.date) return false;
+    const d = new Date(e.date);
+    const local = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    return local === dateStr;
+  });
+}
+
+// Groups entries by day, newest first, within a period window (in days).
+function entriesByDay(maxDays){
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - maxDays + 1);
+  cutoff.setHours(0,0,0,0);
+  const rich = allEntriesRich().filter(e => e.date && new Date(e.date) >= cutoff);
+  const byDay = {};
+  rich.forEach(e => {
+    const d = new Date(e.date);
+    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    if(!byDay[key]) byDay[key] = { dateStr: key, entries: [] };
+    byDay[key].entries.push(e);
+  });
+  return Object.values(byDay).sort((a,b) => b.dateStr.localeCompare(a.dateStr));
+}
+
 function renderHome(){
   const sym = state.settings.defaultCurrency;
   const totalNotes = state.sections.reduce((s,sec) => s + sec.notes.length, 0);
@@ -1199,21 +1251,51 @@ function renderHome(){
     </div>
   </div>`;
 
+  // ---- Today's Expenses ----
+  const todayEntries = entriesOnDate(todayStr());
+  const todayTotal = todayEntries.reduce((s,e) => s + e.amount, 0);
+  let todayCard;
+  if(todayEntries.length === 0){
+    todayCard = `
+    <div class="card leading-card">
+      <h3 class="leading-title">Today's expenses</h3>
+      <p class="leading-sub" style="margin-bottom:0;">${new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})} &mdash; nothing logged yet.</p>
+    </div>`;
+  } else {
+    const sorted = todayEntries.slice().sort((a,b) => b.amount - a.amount);
+    todayCard = `
+    <div class="card leading-card">
+      <h3 class="leading-title">Today's expenses</h3>
+      <p class="leading-sub">${new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})}</p>
+      ${sorted.map(e => `
+        <div class="today-row">
+          <span class="today-desc">${escapeHtml(e.desc)}</span>
+          <span class="today-note">${escapeHtml(e.noteName)}</span>
+          <span class="mono">${formatMoney(e.amount, sym)}</span>
+        </div>`).join('')}
+      <div class="today-total-row">
+        <span>Total today</span>
+        <span class="mono">${formatMoney(todayTotal, sym)}</span>
+      </div>
+    </div>`;
+  }
+
+  // ---- Leading Expenses (top 12) ----
   const groups = groupEntries(allEntriesFlat());
-  const top5 = groups.slice(0,5);
+  const top12 = groups.slice(0,12);
   let leadingCard;
-  if(top5.length === 0){
+  if(top12.length === 0){
     leadingCard = `<div class="card leading-card">${emptyState('No expenses yet', 'Once you log a few entries in your notes, your biggest expenses will show up here.', null, null)}</div>`;
   } else {
-    const max = Math.max(...top5.map(g => g.amount));
+    const max = Math.max(...top12.map(g => g.amount));
     const legend = { essential:0, discretionary:0, untagged:0 };
-    top5.forEach(g => { legend[g.tag] = (legend[g.tag]||0) + g.amount; });
+    top12.forEach(g => { legend[g.tag] = (legend[g.tag]||0) + g.amount; });
     leadingCard = `
     <div class="card leading-card">
       <h3 class="leading-title">Leading expenses</h3>
       <p class="leading-sub">Items that cost you the most</p>
       <div class="rank-list">
-        ${top5.map((g,i) => `
+        ${top12.map((g,i) => `
           <div class="rank-row">
             <span class="rank-num">${i+1}.</span>
             <span class="rank-desc">${escapeHtml(g.desc)}</span>
@@ -1229,7 +1311,49 @@ function renderHome(){
     </div>`;
   }
 
-  return `<div class="view">${statsCard}${leadingCard}</div>`;
+  // ---- History ----
+  const periods = [
+    { key:'7d', label:'7 days' },
+    { key:'30d', label:'30 days' },
+    { key:'90d', label:'3 months' },
+    { key:'365d', label:'1 year' },
+  ];
+  const periodDays = { '7d':7,'30d':30,'90d':90,'365d':365 };
+  const days = periodDays[state.historyPeriod] || 7;
+  const dayGroups = entriesByDay(days);
+  const historyTotal = dayGroups.reduce((s,dg) => s + dg.entries.reduce((s2,e) => s2+e.amount, 0), 0);
+
+  let historyBody;
+  if(dayGroups.length === 0){
+    historyBody = `<p class="ink-faint" style="font-size:13px;margin:0;">No entries in this period.</p>`;
+  } else {
+    historyBody = dayGroups.map(dg => {
+      const dayTotal = dg.entries.reduce((s,e) => s+e.amount, 0);
+      const sorted = dg.entries.slice().sort((a,b) => b.amount - a.amount);
+      return `
+      <div class="history-day">
+        <div class="history-day-label">${formatDate(dg.dateStr + 'T00:00:00')} &mdash; <span class="mono">${formatMoney(dayTotal, sym)}</span></div>
+        ${sorted.map(e => `
+          <div class="history-entry-row">
+            <span>${escapeHtml(e.desc)}</span>
+            <span class="history-note-chip">${escapeHtml(e.noteName)}</span>
+            <span class="mono">${formatMoney(e.amount, sym)}</span>
+          </div>`).join('')}
+      </div>`;
+    }).join('');
+  }
+
+  const historyCard = `
+  <div class="card leading-card">
+    <h3 class="leading-title">History</h3>
+    <p class="leading-sub">All entries &mdash; ${formatMoney(historyTotal, sym)} total</p>
+    <div class="history-tabs">
+      ${periods.map(p => `<button class="history-tab ${state.historyPeriod===p.key?'active':''}" data-action="set-history-period" data-period="${p.key}">${p.label}</button>`).join('')}
+    </div>
+    ${historyBody}
+  </div>`;
+
+  return `<div class="view">${statsCard}${todayCard}${leadingCard}${historyCard}</div>`;
 }
 
 function noteRow(section, note){
@@ -1842,6 +1966,8 @@ function init(){
     switch(action){
       case 'set-tab':
         state.tab = el.dataset.tab; render(); break;
+      case 'set-history-period':
+        state.historyPeriod = el.dataset.period; render(); break;
       case 'open-new-section':
         closeAllModals(); state.showNewSection = true; render(); break;
       case 'ask-edit-section':
