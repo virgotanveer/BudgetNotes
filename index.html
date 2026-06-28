@@ -582,8 +582,10 @@ const Storage = (function(){
     return { keys, prefix, shared: false };
   }
 
-  return { initDB, get, set, delete: del, list };
+   return { initDB, get, set, delete: del, list };
 })();
+
+window.storage = Storage;
 
 /* ---------- UNDO SYSTEM ---------- */
 const UndoManager = (function(){
