@@ -2,46 +2,53 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>BudgetNotes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>BudgetNotes Pro</title>
 
-<!-- PWA: theme colour and description -->
 <meta name="theme-color" content="#19181D" id="pwa-theme-color" />
-<meta name="description" content="Track budgets, dues and daily todos — offline-ready." />
+<meta name="description" content="Track budgets, dues and daily todos - offline-ready with smart features." />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="BudgetNotes" />
 
-<!-- Apple touch icon (inline base64) -->
-<link rel="apple-touch-icon" href="data:image/png;base64,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" />
+<link rel="apple-touch-icon" href="data:image/png;base64,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" />
 
-<!-- Web App Manifest embedded as data URI -->
-<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22BudgetNotes%22%2C%22short_name%22%3A%22BudgetNotes%22%2C%22description%22%3A%22Track%20budgets%2C%20dues%20and%20todos%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%2319181D%22%2C%22theme_color%22%3A%22%2319181D%22%2C%22orientation%22%3A%22portrait-primary%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fpng%3Bbase64%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%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%2C%7B%22src%22%3A%22data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAZ+UlEQVR42u3dvZFUyxJF4ZkOdGwgEMAAAgEb0DHjuoALmIGODQgEBoBAYAMW8IT7Ji4xzF/39DmVmftbDkDXqcy9Kut0z+UFgLY8f/by98p//8fPb5eeAtATxQsIdMIAEAAAAp4gAAQAgKAnBgABACDoiQFAAABhD1IAEABA4IMQAAQAEPggBAABAAQ+CAFAAACBD0IAEABA6IMMAAQAEPggBAABAIQ+yABAAAChDzIAEAAIfYAMAAQAQh8gAwABgOAHiABAACD0ATIAEAAIfoAIgAAAQh8gAyAAgOAHiAAIACD0ATIAAgAIfoAIgAAAgh8gAiAAEPwAiAAIAAQ/ACIAAgDBD4AIgABA8AMgAiAAEPw4hu/vXi35d198/GrxiQAIAAQ/JoQ6WSACIACA4BfwBIEIgABA8EPQEwMiAAIAwQ9hTwqIAAgAhL+wBykgASAAEPwCH4SACIAAQPALfBACIgACAMEv8EEIiAAIAIS/0AcZIAEgABD8Qh9kgAiAAED4C32QARIAAgDBL/RBBogACAAEv9AHGSACIADCPzD8hT7IAAkAARD8Qh8gA0QABED4C36ACJAAEADBL/gBIkAEQACEv9AHyAAJIAAQ/oIfIAIkgABA8At+gAgQAQIA4S/0ATJAAggAhL/gB4gACSAAEPyCHyACRIAAQPgLfoAIkAACgODwF/wAESABBACCHwARIAKFOFgC4S/8AbWl55kAQCEIfqdDz9vzNgkgABD+gkCjtz/sDxJAACD4NXYN3D6yj4gAAYDwh7C3v+wvEkAAMDz8NWZhb+/ZeySAACAo/DVfYW9f2pckgABA+GusAt9etVdJAAGA4NdIYf/av0SAAKB9+GucAp8Q2NckgABA+GuOIAP2OQkgAJga/skNUeiTAXufBBAACH+ND2RALZAAAoDZ4Z/W7IQ+1Mec+iABBED4a26CH2qFBIAACH8NTehD7ZAAEADhr3kBaml8LZEAAiD8QxuW0IfaUlskgAAI/6AGJfihztQZCSAAwl9DAtSduiMBBED4T2xCgh9EQA2SAAIg/IMaj+AHEVCPJIAACH+NBiAC6pMEEADhP7G5CH4QAbVKAgiA8A9qKIIfREDdkgACIPyDmojgBxFQwySAAAh/TQMgAmqaBBAA4T+xUQh+QH2TgBocLIHw1xwANZLQo7r98TYTABujffgL/ll7xPNU8yYBBED4awSCwvP3/D1/EkAAhL/i1/xTT3z2hr1BAgiA8A8ves1d2Ns39g0JIAAEQKFD2NtP9lPpZ0kAhL/i1qgFvn1mn4U+w1QJiPzQwl9TFviEwN7z3NIlIO4DC3/NV+iTAfvR8yIBYQIg/DVboU8G7E/PiQSECYDw11iFPhmwZz0fEkAAFKpGKvTJgD3suRAA4a9A0xun0CcD9rTnkSYB4z+g8NckBT/scc+CBIQJgPDXGIU+7Hl9hwSECYDw1wgFP+x//YcEEADFp/EB6kEvIgDTBUD4a3aCH2pDTyIBd3MQ/pjW4L6/eyX8YT+FSY1sCZ8AuPfPbgRCH2pGfzIJIACKSxMD1JBeRQASBED45zUuwQ/1pGeRgHABEP5ZzUrwQ23pXSSAAAj/oAYl+EEE9DASQABKCoDCEfyAmstZ1+4C0PprgMJfIwLs3ayeUWldu381sK29CP/Z4S/4YRqgDk0CTADGWZemc3fDEf6YOA3ouK/9YNDsTLq02DMNuWv4o/Zz94zUprWcMwVo9x8W/v2ay5fPn0Y18Kcf3rd4tnut++s3b0kCEbCODSWg1X9W+PdsKATg/M+x25q+fvOWGJAAEkAA+guAAiAAez23aWu3t0wRAT2QANzOE+GveaDGs+oe9tevAqYFzNaB2qmOX3z8aqJzR1Z1kYDLLgvKfPuGf/IEYFrgnzPkyYFJwOT16yABTy6g8WCXJtTx3r7L+k6pzavPYap3+vpZu0ETAPf+/U8LCROACaFfNfBTZb1LfeuNfacAJgCaw+bN4ZeTvtBf+Gy6ykCX06z3AUwAnP6F/61r9uuf96OK5qbQFPomA2pen+w2BSj7HxP+cxrBVAEQ+mRA7euXnSWAANjMm6/ZNAHoKCuYIQIkoOeaVRWAkn8MyHf+FT4eH/zC/+G15YW7rF4l04pOAIz++xXUfWtlAuDEbyKgL1irepOAg3K3cZ36nfjRbyJQvfYqraE+1WAC4N5/ZvibADjxOxDoE9aq3hTA7wCAUQt+PCA0qu55v36HUylzBeD038fqhb/wTxYBNdl33SqsU6UXAr0DIPyFf6PgF/7ra7NqfZIAPaylAPjan/CHU786JQEpVMm8SwtRp2imhr+XAAX/ZPwxHP32VFa/EHhQvE61962PNRL+6BW26lbvLy8ARv/1mwiEP/qeuE0narM6A6MnAEZRwl/4gwTkrlV6n1smAE7/wh9/B7/w71/PatokoEsWxk4AhJx1ceoHsUfyuiwRgNWnf6N/CH+ob2tUJRNWZaIfAtIcmLDwR0iduwrAUgFw+hf+EP4kQK1XW6PEKYAJAIS/8AcJgAmA079GAOEPtW8KkDAFiJkACH/hL/yhB5AAfXGBAPjePyES/sIfJAB1sjJiAuD0r+AB9OgJpgDDJgDpp3/hD6d/VJ4CkIDMKcD4CYDAg/AHCYDsWCAATv9O/8If6CEBpgBZU4DRE4DVm1n4A9A3+/bQ6X1zUwFYefoXeNbC6R9dpgAmAfrnigz1S4DDT/8KWfhDz+jcO7wr0VAAkk//NiwAvWPOukydApgADMbp3+kfwk4Pwa4C4PSvcIU/QAJMAWpnqgmAk39MIwM68OXzJxKAvhMAp38krofTP869j/QUU4BWApD6wz9G/2QIOPcUQG/RW7bM1jETACMqBer0j6n7iQTos+UnAE7/NiWA808BBKBDxhYZO2ICIPzIkNM/Ju6rilcBmJM5vgXg9C/8Af3GFCCQswlA+l/9E/6Zxej0jz2nACQA58za9hOAlZuQgVoHQM1lrsMEATqLADj9525AjQjYnpteCHT9aAoQPQFIPv0L//UY/2P1PiMBpgCxAgAAABYJwKrxv9O/0z+QxG2/C2AKkDkFOEf2mgBA+J+A8T8q7Tc1id0FIPHlv/TTv0YD6E16Uw0em8EtJwCpb5564xbIpurPA+vNPT+3KwCG6fMDatTnD+RkAUh8+S/ZMBXWf7j/R+V95yXlrM/9mCw2ARCAPjvQiIdcA+hXGCcAzBIA9Cyfe6EApL39z6YBqF2fvSqnZrIrAEapiABBaAoQSBsBWLWZhCD+xAuAsP/IzxTxOVoA/OU/p38Aaznm9wBMATI4JZtdAUD4A2oagbQQgMTxP3MGMIHESWaX/n2UABj/OykAUNuoybEZ7QrA6R8ATAECOdg4UCiAGkdedpkA2DQaA0ACBKIJwO0k3f8LQwDQ0ztyTFaXngCkGaPTPwBTAD293ARAYQAA9PY5PEgAfP3P6R+AQDQF6MFDM7vsBMAmAQA43C2eADBip38Aep6eNwsCAAAAAfibFff/xv9MGMDtnPPPAusFMzPtIdltArC4CMhOL475M6yA/Vev9xEeAkB2AEBPIACs0GcFAD0w67PeKQAp3/9Psl+mD0AfzPis92W4KwAAaMQ5XwBENgRgESvGQU7/58GLgJi671b0CFehBEAoAgBG9/5qsnOrAPj9f5sdQC32GP/rFbO4K8tdASzAyAsA9MSyEwAAt+M9ANhvIACNDTBl1GWkB/Rnz7f/9cZZWXeUALj/z3j4AKA3zue2THcFwHBxIsaymLzP9I75xAqAzQ2gC378RxaMFYCU0Y8RFwDokVU+pysAZotH4BoAW++vlad/PSRsAuAFQAAAZnFTtkdOAPwEJEwB4PRfE18JXzgBAMkBsJ4q4a+XEAAnY8AUAPYTBmWfCQAAOP3DBAATTM/IzqkN9lHnnmIyvEAAEr4BIBwBOP0jMRuuZ7wJAGAKACB9ArA3xjwslgQAeksqqzPQBIDkAIDeaQIAwBQAAAEYhhEWSAAAGXFNAPwNAJsXAPSY2fyZ9a4AAFMAAIEsE4CEFzy8xAISAOihVT+jCQBAAgCYAMxl+t2VuzkAeo3PRwAAUwAAIAAACQAAArALXgAECQD00vIC4DcAABIAIIOrzDcBGIAXAEkAoOfgpAnA3hjpACQAwNpMNAEASAAAE4CZGFeBBACQGSYAm+OKA6dKABEA9FQCAJgGAAABwM243iABgN4DAgCQAAAgAMAECSACAAgAYBoAAAQAMA0AgBMFwN8BAEwDAGTx/NnL37tPAHyfEzANALA+G8dfAfiqCogAANkRKAAJFgcQAeitIAAMFUTAQkAPAgEAiAAAEADg0bx+8/bi9Zu3RABAa55YAuB0EfgzaKuLwE3/bwAEAAAZAEAAAJABAAQAQJQMEAKAAADYQAY6CgEpAAgAgEAhuO//SA4AAgDgDELQRQoe838lDQABAHBEQHb7br+gBwgAgJ0CtZIkXP1fiABAAADsELhd/19EASAAAJqF/NafjRwABAAQ9s3YIry/fP5ECgACAAj7aQFf8d8ECACAyMAXugABACDwARAAABNCX+ADBACA0AdAAAAIfQAEAIA7fQAEABD8Qh8AAQAEv+AHQABwbr6/e3Xx4uNXCwHBj2U9CAQA/+fFx6+KAoIf2KC3ggA4JQOCH9g8OwiAEzIg+AFsno27C8CPn98unz97+dvyA4IfQAY/fn679A4AIPgBBHKwBIDwB5CHCQAg+AGYAAAQ/gAIAMrjGxXCH9B7cAquAADBD8AEAOfADw9B+AN6KgEogFEVhD8AmWECAAh/ACYAK/5R4xxA+ANYm4leAhyAP3gk+IG9ew6GTAB+/Px2aSkA4Q9gPleZ7x2AjXAih/AH9NLyEwAAwh8AAQAg/AEQgBlMf2nFSzkA9BqfjwAATv8AUFMAEl7s8PIKhD+gh1b9jCYAgPAHkDwB8FsA/fEegPAH9BjcxZ9Zf7B5AeEPIC8jXAEAABAIAdgYLwI6/QPQOwmAB7w5rjmEP6C3kBwTAAAI5svnTxYBDxOAhG8CsFg4/cN+RGI2XM94E4Ad2HvMQ3IAnHMKsHdPcT28YAIAwGkL8/alqwCUFACmB+EP2J9pVMg+E4ChuAYA8CenTgH0EhMA4TjA9uB0hex92uEqYEWvTJWcvwTA3wQAAGAWN2W7K4DBGN0BuM4xUwA9JGwCsIKU8bhrgHkY/8N+1SO7fs7YCQCzBWAKgOQscAVgc8PpH/at3kEA/sWLgNvhGgAA9MY9uS3TD8kPP8VwmTyA69x1DaA3ZoiOKwDgBIz/Yf+iOwRgAUZdAKpPAfTEYAHwHsAsXAMA0CvyuCvLS00AvAcAAJja+6tNOlwBkB0ciftTTN3HQjELAgAAwfhRIAJwIynvASSdjE0BAOiDGZ/1vgwvNwFIGgcZfQFIRr8vPAEA+wWgJ2AmBGBxAZgC9MILgJi4n3/98z6m95GdIwRgxXsAQlERAMAUVmTaQ7LbBAAAABMAp+IUOzQFAJB0ItbzGgmAawAAANlZLAD+LgAjBgCHux48NLNdAQhEANDbAyktAGmmaAoAQI/zecsJQNI1gEAEAD29I8dktSsAxkh6ADj9B3KwaUACACAvu0wACoYh6QEgDB1sSgmArwMSHwBATY7N6BYTgMR7cVMAAE7/PXt4l/7tCgCmAEfw5fMni4Bx+/nph/cWI5CjBcA1AHMGgEkn4Qmcks0HG0kQAsA0jP8HCQCDJj8A9C4sFoC0a4DkICQBwGwm3v+n9a1TM7nVBCDVKJl0LbwICPtYz5rwuV0BMEqfHYB+FcjJArDqGoBZKioAepXP/fgsNgEQgj4/EMq0+389KkAAGCZW4z0A2L96VPfP/SgBSPxRoNWG6SoAQMXTv960P4/NYFcAUGgAEMijBSDxZcD0KQAJ+BfXALBvnf47vvxnAgAAofjjP2gvAKYApgCmAIDTf3IfXi4A/kIgCQCQd/r3zaQ1nCtz218B+GM567EOAJz+QycApgAX8ZswWQJcA6DLPnX6d/ofNQEQfCQAwP1MC3/9hgAwUUJkCgDYnzJntQCkXgOYAkCTReV96fQ/g3Nn7JgrAAHoKgDA37j3lzW7CYApgM2ZLAGmAJi6H/WWWaf/UROAChvUydd6AFNP/3rKvAmIbwEMpNImTZQAUwBMqz2j/5lsIgArrwFMARQsCYDwnxf+yaf/rTLVBMAkAAD0EBMAU4BJUwCYAsDp32dy+jcBCC1CBk8CoO907h0OVA0nAOlTgEpYCxIA4a9nOP1HTQBcBShoEgDh37dX+Npf4wnA6imADUwCSAD0GOHfkT2yc/w7AEIPACA7FgmAKYApAEwB4PTv9F8rMyO+BeCvV5EAEgDhL/z1yEUCkD4FIEUgARD+qJSVMb8DYAqg8EkAhH/tHuD0vy+7n8qfP3v52wbLKrpf/7zXte/h9Zu3FgG71qnwr7cme0/K/RIgTAJMAyD8EcjuArD6XQBXARoCCYDwn/0Znf5NAKKKmgSQAOgTwh/lBcAUwMYHCYD+4I+mrc3E2AmA0651qS4BRCA3+LcIRrVtXcoIgN8FqGv5GoVpAGb1A6P/uqzMwuh3AFwFkAASAOGf2/PS+9xSATAFIAF4uAQQgbm1L/yd/k0AhFzJ9bFGpgHod+pXt3r/fZQ4ga/+dcBKVlp5U566Rn4JcBv8eqDgT+khE9eowgS8xATAVUC9AmHMPaYBJgL96lv4o0rm+SGggoVDAkAEBL/w18O2ptTJ21XAzIJ2BbAvrgbygk/491mnShNvEwCwaBMBNDzxq0WMmgCYAvQr7oeslQmAiYATv/6gl9Z7380EoHhRVX9xJvH08frN21ahaiIw68Qv/PWpsROAKlMAG/h86zVtAnA9/DuGq6lA3/7QuRckr1fFb7uVnAD4WmC/SUCyZV9NBEwFnPbVmK/7dcq0skFrCjCnAUyfANwVsqYCBFz4WzMCQAJiG0GqAJABoS/8rVnliXb5UTsJ6NsQrtZtmgA8/fD+Uc/AOwMCbGKdW7de4U8ANIddmHbXfCUA53oWhEBNC38CQABIwMgmkSAA53wmnderohh0fClN+Av/PXhygaM2ljdccUxTPKUZ3RSiXaTgvv/nFoLw5fOne6VM8Of0aAybAFSaAlS03uqbPm0CsNezSv0a35Sw7x5e+mDv03+rCcCPn98uK0lAtUJkvj2b5mOe212n6e5yMDXkhf98Ov2OTasf3DEF6NlETADqPse9n01asE8Lfr2PAJAAheA04dl6nmrVOjYO/5YCQAI0F6x77p6R2rSWM8KfACgOjQZQk/pbqAC0/HPA/ljQ3DB98fGrFxoxMviF/1y6ZlLrIHUVMPfUoQHBiV/tdVjXzgfSQ+fiqrTwlQu9c4iaBsDe1TOEvwlA+SmAwiEygDrLWVsCQAIUkPUF1JbwJwAkQCFZYwh+9ST8CQAJUFBEAIJfDQl/ApAlAB3CSRMD1Iy1JgAkQJFpaoA6sd4B4X9x0fxrgAkPSCM4rXH4+iDsJ5IsW8ImAFUnAR0KbmpoanZQD3qR8CcACk/jA+x/608AJgsACdAEiQDseX1H+IcKAAnQEMkA7HH9RviHCgAJ0CSJAOxpz0P4hwoACdAwyQDsYc9F+BMAhaqBkgGhb896PgQgqTBIgKZKBoS+/ek5Cf9AASABmiwZEPr2o+cl/EMFgARovJ6b0Lf3PLf08I8VABKgEXuGAt8+8wyTwz9aACpLgOLWqGE/6Q3CnwCECoBC18SFPfQEAkAASICi19yFvb3hWQt/AkACFL/m7/l7/p6/8CcAJEAjwI57xPNU88KfAJAADUFwAOpc+DflYAn6bIzuAerFN0D46/EmACYB4UFqGgCoaeFPAEiApgEIfjUs/AkACUhrIEQAgl/dCn8CQAKCmwkRgOBXq8KfAJCA4MZCBCD41afwJwAkQKOx+SD41aPwJwAkILHpEAEIfjUo/AkACQhuQEQA6k7dCX8CQAI0JBsR6kydCX8CQAISmxMRgNpSW8KfAJCA4EZFBqCWhD8IAAnQvIgA1E5I7Qh/AkACNDIyALUi/EEASIDGRgSgPoQ/CAAJ0OjIANTCmFoQ/gSABGh8ZAD2vvAHASABmiEZgH0+eZ8LfwJAAjRHTRL2tfAHASABGqbGCft38v4V/gSACGikminsVcEPAkACNFZNVuDbl8IfBIAEaLiar7DHiL0n/AkACdCMNWZhj7D9JfwJAAnQpDVtYQ/hDwJABDRwjd3+gOAHASABGj2WB4HnLfiFPwEACRAMgOAX/g05WAKFoEEBakvPMwGAaYBpACD4BT8BAAkgAoDgF/4EACSACACCX/gTABABIgAIfsFPAEACiAAg+IU/AQAJIANAUugLfwIAIkAEAMEPAgASQAQg+Kcj/AkASAAZAC6yfhRL+BMAEAEiAMEv+EEAQAKIAAS/8AcBABEgAxD6gh8EACSADEDoC38QABABMgChL/hBAEAEyACEvuAHAQAJIAMQ+sIfBABEgAxA6At+EACQADIAoS/8QQBABAgBBL7gBwEAESAEAh+CHwQARIAQCHzBL/hBAEACSIGwF/4gAAARIAXCXvCDAIAIEAFiIOgFPwgAiAAIgoAX/CAAIAKIlgWhLvhBAEAEAAh+EAAQAQCCHwQARACA4AcBABEAIPhBAEAEAAh+EAAQAQCCHwQARAAQ/AABABkAhD5AAEAEAMEPEACQAUDoAwQARAAQ/AABABkAhD5AAEAEAMEPAgCQAUDogwAAZAAQ+iAAABkAhD4IAEAGIPQBAgAQAgh8gAAAZABCHyAAACGAwAcIAEAIIPABAgAQAgh8gAAAhAACHyAAACmAsAcIAEAMBD0AAgAQA0EPgAAABEHAAyAAAGEQ6ADu4n/jmioeOjwzbgAAAABJRU5ErkJggg==%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D" />
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22BudgetNotes%22%2C%22short_name%22%3A%22BudgetNotes%22%2C%22description%22%3A%22Track%20budgets%2C%20dues%20and%20todos%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%2319181D%22%2C%22theme_color%22%3A%22%2319181D%22%2C%22orientation%22%3A%22portrait-primary%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAJgUlEQVR42u2dzVEkSQyFKzO4rw3EHBYDCA7YwB0zxoVxYc3Y+9gwh4k1AA4ENowF7GGDiB6WhsrKlPSe9GRAVWXm96Wk+ulum8Ikvlxevaw83tPzQ9Osrg9NKhDkkkMCCHZJIQEEvISQAIJeMkgAQS8ZJICglwwSQOBLBAkg8CWCBBD0kkECUID%2FeH+95Dh%2F%2Fv2PRJAAmPCvgpxJjkwSNIHPAzuaFBlEaAI%2FB%2FSRMjCL0AR+PuijZGAUoQn+3NB7y8AmQasMfjXoPWVgEaFVhF%2Fg+4jAIEGrBL%2FA9xcBXYIm8BWVRWiZ4c%2FykCrLOBAlaBnh9wYm6lUFxnGiSdAEPg%2FwmcaPIkIT%2FLzAs88JggSNHX6rRWaFnm2eoiVogj83+AxzFilBE%2Fz5oWeYwygJGhv8Aj+vCBEStIvwC3zc%2BfWWoFWCX%2BBzzLWnBA0dfnbwZ6%2Bf%2Bdpnrt9Lgib48erobONClqBlhd8aELQX7NDHiypBE%2Fy80LONH1GClgl+i4XXR%2FEYa2QlAZQASPBn+4YAaX6OXAuVAMzwZ%2F94BmWuUCRozPALfG4RECRo1eGv%2Frlk9DxGSxAqQCT8LB+PMH3k4rWekAKwwJ%2FhxBnkMbBJ0CLgPzpRaPCjvFuENi6vtV0hQasA%2F88f35cCcnN753r%2BkfOhvDHLIoG7AN7wP95fb7++fnMTYLVsR6VAEMFjrUMFYIB%2F2zZTAbyAnxEi8tUSdAmaF%2FxHJmPVxK8WIHJn35Ntzh0j6mGjx7oflcBNgCj4kQUY7SVGpXjv+FklcBUAFf5z50ESwAL6z2RAEQFRggvrRfB6kIP%2BRNcT%2FLfnfE+EV7iOzNvj%2FbXLLWCP83SP2t96d0GG%2F%2Bb2LgT+967h54%2Fv%2F%2BsbvHbz2RLKis1ubXB1+BGvh0kC6%2FVtVoYhwe%2FdA6CBf64%2FWNUbeGxcI%2BcY6QW6BfyVgwH+1%2Bt87zZqhp+OGWHVpASqWvqwwP9WgtmSiLkU6quNqtr0ssG%2Fui9Aa4r3Mrs8A1jD6flALTv8n10%2FWsNqcfweOfHWEyz4%2FXsCxDWaEsDqzo%2F1wPU7oMciojEeOf4IY3vY7SwLgyRXtt3%2Fs37AEtLo6Ay7v%2BDHaOYtJYjKAvAZABH+qqVQxkzQs9X+Ct6IyALQGQBVrKzlz55eIFsW6BkgVVbB3q0RssCQAAjv%2FewdnODHlwAhC5xjurPvGFHlQfb4rAzKwsqUAFZma%2FdXFvBisCOWPwqFVxnkUgJZNDba%2FXNnAa%2F1PSxAZGMj+HklQCuDunX5k%2FUdEoU9rBZSvWW8s02gdn%2BtTXgJZLFTa%2FdXFog4ZteOMBYoP4brNc7o5x5uP4zFcPtT5Y%2FKoNV9wHAGUPmjyFQG0TTBSDtL9jJotvxhytS9ArAKlVWwGUDlD2Z4NL8Ia98ZGmDEbJK1DFo1LvQK4JX5zmasJMCt%2FRmba5MSSPW%2FSh8WpjqTrcoCtuOIgD+aAfjboAzZhF0Cq+tnWLu+KUpLkKHulwCSYKrsqQr%2Ftm1b1yeQNSWIqvmR4svl1cvuDKBPFcfgQhXh9doY4bf49DKsBNpzkewyoUkQUe%2FvWcPIO0EXmyJ9k1m90ZUARUUQ%2BBIAuiyyANP6+BJAYdojjEB7rscQ+BLANE4BW93oHj2eoJcA4TJYCCHgJQC1EBZSCH4JQFnfWx9bYkiAlMAfvQYJIQFooT8K7%2Bk16ZaoBKABfxWg55pyPRSTABQNs+U5Tl%2FSkwgSIC30e2WQCBKgBPgfXU91ESRAMfAlwu8R9j0A%2BnviFeD%2FSIRVgf7dx8UIsHsG83h%2FXf6rMNZdFD0bWHyV2J+eH5oKFcHvkQ3Q4un5oelXIQR%2FaQkkgOAvLQG8AAyNcOY7JzMSMKxdqAAZmuUKtw0tM0E0AyYC6GfUFSxMdSZbtfurH1jNaN+2%2F24HqQ8Q%2FCslQK8CXpnvbMYq8gTC2psJkLkPqPwGZUQpZMkSzXMANdZqWCEEsEhbKoNU%2FkQds79tCrSzqPyZKYMYdv9T1nt2YBUqp5b3ACqDFBnKH6omWFlFa2OeASz6gJFJURbQ7m8t1FvGu8dAtNNo90ctqTra5Fj8EZoCY32jd%2F9dAugTSUXWeI%2FtqQxgVQYpC9Te%2FT0Z7GgThR7Zv5EdmQOrh4KerPS9qQK1sVEWqLv7z5Y%2FSzIAQmMjCepJtUos6AdhiHcNqpdBr2P%2F469vNLv%2FIQFGyiBUUBXa%2FT9jGf5VCGUB7f4hGQApC0iC%2FPBH7P4UGUBlFl8wvdPVZw1ChdRLggpZYHT3Z6j9ITKAZSkkCfKVPiEZAC39SYK6Ta%2FF8XcJYPlk+AigqDVmJgk84LfcnPYy2xFMlQSCP2q9L0aM%2BnJ59aJ7HPsBYvsFCetm1ytGKpZudeDKWYAxGxyFH233Hy3Xh2v70Szgkeo+O8evr%2FE7Gmo2mNn1EUsfcwFGJfDa2T86D4IAaCLMljteTa%2Fl7j%2FUA8w0xB63Ir3Os7Is8pbh9Nwzdb5X6elxnsO3NxFLoXPnQsoA3pnhbR8SBT5a6eMuQKQEqwXw+Inwo0Kcu6ab27upDIkMf4gAHllg1cRbCbAHPISsMlsaesLvuftPC8AigYcACEKcXteqfigz%2FCECREiwGsaZen3FtXx0fgTwPdc4XAAWCVbC4X03hG1cLPAvE8CrFEKUIEII5DF4reuqFzSXvuXJIoE1RCzCosxpFPzhAkRL4AkYakTPY1TpYyIAqwQVRUCYu2j4TQTwlkAicM4VAvxmArBLkFEEpPlBgR9OADQJMoiANidHr4dOgCgJrBadSQbU8aPBby5ARglQZUAfLyL8LgJESuABRpQQTONChd9NgCoSMGayyvC7CjAjQQYRmCJ6rj3%2Foch9r5CiJZAI2PPr%2FfdcIf8FhiCBRMCb04j%2FpAv7M7zZH9mSCHnAj4I%2FVAA0CarIgDhnkf9KGv53qIgSZBQBdZ6i%2F5K3ISzOit8czfChCwv0q+YE4f+oG8pioUvAIATT+BHghxKAUYRoIRjHiQI%2BrACrJIgAxEqMLONAgx9WgJUSIADEGiszGyL80AJIBIEvAQwkkAh+vQw6%2FDQCWEggEWybeAb4qQSwFKGiDFZ3rljApxXAUoLsMljfrmWDn1YALxEyyODxjIIR%2FBQCeIrAJIPXgzlm8FMJ4C0CkhQRT6EzgJ9SgCgJrOVAevcoE%2FwpBUAUIUNkAz+9AJJB0EsAiSDwJYBEEPgSQDIIegkgGQS9BCgqg6CXAKWEEPASoIwUgl0CpJdDkNvEv7KBOO1l5UniAAAAAElFTkSuQmCC%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
+
 :root{
   --bg:#F3F1FA;
   --paper:#FFFFFF;
   --paper-soft:#FBFAFE;
+  --paper-raised:#FFFFFF;
   --ink:#2E2B3D;
   --ink-soft:#6B6580;
   --ink-faint:#9B96B5;
   --line:#E3E0F0;
   --sage:#6FA98C;
   --sage-soft:#DCEEE3;
+  --sage-glow:rgba(111,169,140,0.15);
   --amber:#E0A93D;
   --amber-soft:#FBEBD0;
   --coral:#DD7E73;
   --coral-soft:#FAE0DC;
+  --coral-glow:rgba(221,126,115,0.15);
   --periwinkle:#7C8FD1;
+  --periwinkle-soft:#E8ECF8;
   --sand:#CE9C56;
+  --sand-soft:#F5E6D0;
   --radius:18px;
   --radius-sm:10px;
+  --radius-xs:6px;
   --shadow:0 2px 10px rgba(46,43,61,0.08), 0 1px 2px rgba(46,43,61,0.04);
   --shadow-lift:0 10px 26px rgba(46,43,61,0.12);
+  --shadow-glow:0 0 20px rgba(111,169,140,0.2);
   --overlay-bg:rgba(46,43,61,0.35);
   --btn-primary-bg:var(--ink);
   --btn-primary-text:#FFFFFF;
@@ -50,32 +57,40 @@
   --font-display:'Caveat', cursive;
   --font-body:'Plus Jakarta Sans', sans-serif;
   --font-mono:'IBM Plex Mono', monospace;
+  --bottom-nav-height:64px;
+  --header-height:60px;
 }
 :root[data-theme="dark"]{
   --bg:#19181D;
   --paper:#232128;
   --paper-soft:#2B2930;
+  --paper-raised:#2D2B33;
   --ink:#EDE7DC;
   --ink-soft:#B3ADBD;
   --ink-faint:#7B7588;
   --line:#37343D;
   --sage:#fc785c;
   --sage-soft:#3D2620;
+  --sage-glow:rgba(252,120,92,0.15);
   --amber:#F0BD5E;
   --amber-soft:#3D2F14;
   --coral:#FF6B4A;
   --coral-soft:#3A2218;
+  --coral-glow:rgba(255,107,74,0.15);
   --periwinkle:#9CA8E8;
+  --periwinkle-soft:#2A2D42;
   --sand:#E0B26B;
+  --sand-soft:#3D2F14;
   --shadow:0 2px 10px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
   --shadow-lift:0 10px 28px rgba(0,0,0,0.55);
+  --shadow-glow:0 0 20px rgba(252,120,92,0.15);
   --overlay-bg:rgba(0,0,0,0.6);
   --btn-primary-bg:#EDE7DC;
   --btn-primary-text:#19181D;
   --hover-bg:#322F39;
   --display-color:#fc785c;
 }
-*{ box-sizing:border-box; }
+*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 html,body{ margin:0; padding:0; }
 html{ background:var(--bg); color-scheme:light; }
 html[data-theme="dark"]{ color-scheme:dark; }
@@ -85,35 +100,162 @@ body{
   font-family:var(--font-body);
   -webkit-font-smoothing:antialiased;
   transition:background-color .2s ease, color .2s ease;
+  overflow-x:hidden;
 }
-#app{ max-width:720px; margin:0 auto; padding:24px 20px 80px; min-height:100vh; }
+#app{ max-width:720px; margin:0 auto; padding:24px 20px 80px; min-height:100vh; position:relative; }
+
+@keyframes countUp { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
+.counter-anim{ animation:countUp 0.4s ease-out; display:inline-block; }
+
+@keyframes hapticPulse { 0%{ transform:scale(1); } 50%{ transform:scale(0.97); } 100%{ transform:scale(1); } }
+.haptic-active{ animation:hapticPulse 0.15s ease; }
+
+@keyframes toastIn { from{ transform:translateY(100%); opacity:0; } to{ transform:translateY(0); opacity:1; } }
+@keyframes toastOut { from{ transform:translateY(0); opacity:1; } to{ transform:translateY(100%); opacity:0; } }
+.toast-container{ position:fixed; bottom:calc(var(--bottom-nav-height) + 12px); left:50%; transform:translateX(-50%); z-index:200; display:flex; flex-direction:column; gap:8px; width:calc(100% - 40px); max-width:400px; pointer-events:none; }
+.toast{ background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-sm); padding:12px 16px; box-shadow:var(--shadow-lift); font-size:13px; display:flex; align-items:center; justify-content:space-between; gap:12px; pointer-events:auto; animation:toastIn 0.3s ease; }
+.toast.removing{ animation:toastOut 0.3s ease forwards; }
+.toast-action{ background:none; border:none; color:var(--periwinkle); font-weight:700; font-size:13px; cursor:pointer; padding:4px 8px; border-radius:var(--radius-xs); white-space:nowrap; }
+.toast-action:hover{ background:var(--hover-bg); }
+
+.search-bar{ position:sticky; top:0; z-index:40; background:var(--bg); padding:8px 0; margin:-8px -20px 12px; }
+.search-inner{ display:flex; align-items:center; gap:8px; background:var(--paper); border:1px solid var(--line); border-radius:999px; padding:8px 14px; margin:0 20px; box-shadow:var(--shadow); transition:box-shadow 0.2s; }
+.search-inner:focus-within{ box-shadow:var(--shadow-glow); border-color:var(--sage); }
+.search-icon{ font-size:16px; color:var(--ink-faint); }
+.search-input{ flex:1; border:none; background:none; font-family:var(--font-body); font-size:14px; color:var(--ink); outline:none; padding:0; }
+.search-input::placeholder{ color:var(--ink-faint); }
+.search-clear{ background:none; border:none; color:var(--ink-faint); font-size:16px; cursor:pointer; padding:2px; border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; }
+.search-clear:hover{ background:var(--hover-bg); }
+.search-results{ position:absolute; top:100%; left:20px; right:20px; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-sm); box-shadow:var(--shadow-lift); max-height:300px; overflow-y:auto; z-index:41; margin-top:4px; }
+.search-result-item{ padding:10px 14px; border-bottom:1px solid var(--line); cursor:pointer; font-size:13px; display:flex; align-items:center; justify-content:space-between; }
+.search-result-item:last-child{ border-bottom:none; }
+.search-result-item:hover{ background:var(--hover-bg); }
+.search-result-type{ font-size:10px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint); background:var(--paper-soft); padding:2px 8px; border-radius:999px; }
+.search-highlight{ background:var(--sage-soft); color:var(--sage); font-weight:600; padding:0 2px; border-radius:2px; }
+
+.quick-add-bar{ background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; margin-bottom:16px; box-shadow:var(--shadow); }
+.quick-add-title{ font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-faint); margin-bottom:10px; }
+.quick-add-form{ display:flex; gap:8px; align-items:flex-end; }
+.quick-add-form input{ flex:1; }
+.quick-add-form select{ width:120px; flex-shrink:0; }
+.quick-add-form button{ flex-shrink:0; }
+.quick-add-preview{ font-size:12px; color:var(--ink-faint); margin-top:6px; min-height:16px; }
+.quick-add-preview.valid{ color:var(--sage); font-weight:600; }
+
+.bulk-textarea{ width:100%; min-height:80px; resize:vertical; font-family:var(--font-mono); font-size:13px; line-height:1.6; }
+.bulk-preview{ background:var(--paper-soft); border-radius:var(--radius-sm); padding:10px 14px; margin-top:10px; font-size:12px; max-height:150px; overflow-y:auto; }
+.bulk-preview-row{ display:flex; justify-content:space-between; padding:3px 0; border-bottom:1px dashed var(--line); }
+.bulk-preview-row:last-child{ border-bottom:none; }
+
+@media (max-width:720px){
+  #app{ padding-bottom:calc(var(--bottom-nav-height) + 20px); }
+  .bottom-nav{ position:fixed; bottom:0; left:0; right:0; background:var(--paper); border-top:1px solid var(--line); display:flex; justify-content:space-around; align-items:center; height:var(--bottom-nav-height); z-index:100; box-shadow:0 -2px 10px rgba(0,0,0,0.05); }
+  .bottom-nav-item{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; padding:8px; border:none; background:none; color:var(--ink-faint); font-family:var(--font-body); font-size:10px; font-weight:600; cursor:pointer; transition:color 0.15s; }
+  .bottom-nav-item .nav-icon{ font-size:20px; line-height:1; }
+  .bottom-nav-item.active{ color:var(--sage); }
+  .tabs{ display:none !important; }
+}
+@media (min-width:721px){
+  .bottom-nav{ display:none !important; }
+}
+
+.calendar-heatmap{ display:grid; grid-template-columns:repeat(7, 1fr); gap:3px; margin-bottom:16px; }
+.calendar-day{ aspect-ratio:1; border-radius:var(--radius-xs); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:600; cursor:pointer; transition:transform 0.1s; position:relative; }
+.calendar-day:hover{ transform:scale(1.1); z-index:2; }
+.calendar-day.empty{ background:transparent; cursor:default; }
+.calendar-day.level-0{ background:var(--line); }
+.calendar-day.level-1{ background:var(--sage-soft); color:var(--sage); }
+.calendar-day.level-2{ background:var(--sage); color:#fff; }
+.calendar-day.level-3{ background:var(--periwinkle); color:#fff; }
+.calendar-day.level-4{ background:var(--coral); color:#fff; }
+.calendar-day.today{ box-shadow:0 0 0 2px var(--periwinkle); }
+.calendar-day-labels{ display:grid; grid-template-columns:repeat(7, 1fr); gap:3px; margin-bottom:4px; }
+.calendar-day-label{ text-align:center; font-size:9px; color:var(--ink-faint); text-transform:uppercase; }
+.calendar-legend{ display:flex; align-items:center; gap:6px; justify-content:flex-end; margin-top:8px; font-size:11px; color:var(--ink-faint); }
+.calendar-legend-dot{ width:10px; height:10px; border-radius:var(--radius-xs); }
+
+.template-chips{ display:flex; flex-wrap:wrap; gap:6px; margin:8px 0; }
+.template-chip{ background:var(--paper-soft); border:1px solid var(--line); border-radius:999px; padding:5px 12px; font-size:12px; cursor:pointer; transition:all 0.15s; display:flex; align-items:center; gap:6px; }
+.template-chip:hover{ background:var(--sage-soft); border-color:var(--sage); color:var(--sage); }
+.template-chip .chip-amount{ font-family:var(--font-mono); font-weight:600; font-size:11px; }
+
+.burn-rate{ display:flex; align-items:center; gap:8px; font-size:12px; color:var(--ink-faint); margin-top:6px; }
+.burn-rate-bar{ flex:1; height:6px; background:var(--line); border-radius:999px; overflow:hidden; }
+.burn-rate-fill{ height:100%; border-radius:999px; transition:width 0.5s ease; }
+.burn-rate-fill.on-track{ background:var(--sage); }
+.burn-rate-fill.ahead{ background:var(--amber); }
+.burn-rate-fill.over{ background:var(--coral); }
+
+.due-date-badge{ font-size:10px; font-weight:700; padding:2px 8px; border-radius:999px; display:inline-flex; align-items:center; gap:4px; }
+.due-date-badge.overdue{ background:var(--coral-soft); color:var(--coral); }
+.due-date-badge.soon{ background:var(--amber-soft); color:var(--amber); }
+.due-date-badge.later{ background:var(--sage-soft); color:var(--sage); }
+
+.swipe-row{ position:relative; overflow:hidden; }
+.swipe-content{ transition:transform 0.2s ease; background:var(--paper); position:relative; z-index:2; }
+.swipe-actions{ position:absolute; right:0; top:0; bottom:0; display:flex; align-items:center; gap:0; z-index:1; }
+.swipe-action{ height:100%; display:flex; align-items:center; justify-content:center; padding:0 16px; border:none; font-size:13px; font-weight:600; cursor:pointer; color:#fff; }
+.swipe-action.delete{ background:var(--coral); }
+.swipe-action.tag{ background:var(--periwinkle); }
+
+.insights-card{ background:linear-gradient(135deg, var(--paper-soft), var(--paper)); border:1px solid var(--line); border-radius:var(--radius); padding:16px; margin-bottom:16px; }
+.insight-row{ display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); font-size:13px; }
+.insight-row:last-child{ border-bottom:none; }
+.insight-icon{ font-size:18px; width:24px; text-align:center; }
+.insight-text{ flex:1; }
+.insight-value{ font-family:var(--font-mono); font-weight:600; }
+.insight-positive{ color:var(--sage); }
+.insight-negative{ color:var(--coral); }
+.insight-neutral{ color:var(--periwinkle); }
+
+.goal-card{ background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:16px; margin-bottom:16px; }
+.goal-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.goal-title{ font-family:var(--font-display); font-size:18px; font-weight:600; color:var(--display-color); margin:0; }
+.goal-amount{ font-family:var(--font-mono); font-size:16px; font-weight:600; }
+.goal-bar-bg{ height:12px; background:var(--line); border-radius:999px; overflow:hidden; }
+.goal-bar-fill{ height:100%; border-radius:999px; background:linear-gradient(90deg, var(--sage), var(--periwinkle)); transition:width 0.5s ease; }
+.goal-stats{ display:flex; justify-content:space-between; margin-top:8px; font-size:12px; color:var(--ink-faint); }
+
+.kbd{ display:inline-block; background:var(--paper-soft); border:1px solid var(--line); border-radius:4px; padding:1px 6px; font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); }
+
+.autocomplete-dropdown{ position:absolute; top:100%; left:0; right:0; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-sm); box-shadow:var(--shadow-lift); max-height:200px; overflow-y:auto; z-index:50; margin-top:4px; }
+.autocomplete-item{ padding:10px 14px; cursor:pointer; font-size:13px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line); }
+.autocomplete-item:last-child{ border-bottom:none; }
+.autocomplete-item:hover{ background:var(--hover-bg); }
+.autocomplete-item .auto-amount{ font-family:var(--font-mono); font-size:12px; color:var(--ink-faint); }
+.autocomplete-item .auto-tag{ font-size:10px; padding:1px 6px; border-radius:999px; margin-left:6px; }
+.autocomplete-item .auto-tag.essential{ background:var(--sage-soft); color:var(--sage); }
+.autocomplete-item .auto-tag.discretionary{ background:var(--periwinkle-soft); color:var(--periwinkle); }
 
 .app-header{ display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:6px; }
 .header-actions{ display:flex; align-items:center; gap:2px; }
 .brand{ display:flex; flex-direction:column; }
 .brand-mark{ font-family:var(--font-display); font-size:34px; font-weight:700; line-height:1; color:var(--display-color); }
 .brand-tag{ font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); margin-top:2px; }
-.icon-btn{ background:none; border:none; font-size:18px; color:var(--ink-soft); cursor:pointer; padding:6px; border-radius:8px; line-height:1; }
+.icon-btn{ background:none; border:none; font-size:18px; color:var(--ink-soft); cursor:pointer; padding:6px; border-radius:8px; line-height:1; transition:background 0.15s; }
 .icon-btn:hover{ background:var(--paper); }
 .icon-btn.ghost{ font-size:12px; font-weight:600; color:var(--ink-faint); }
 .icon-btn.danger{ color:var(--coral); }
 
 .tabs{ display:flex; gap:18px; border-bottom:1px solid var(--line); margin:18px 0 22px; }
-.tab{ background:none; border:none; padding:10px 2px; font-family:var(--font-body); font-weight:600; font-size:14px; color:var(--ink-faint); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
+.tab{ background:none; border:none; padding:10px 2px; font-family:var(--font-body); font-weight:600; font-size:14px; color:var(--ink-faint); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:all 0.15s; }
 .tab.active{ color:var(--ink); border-bottom-color:var(--sage); }
 .tab:focus-visible, .icon-btn:focus-visible, button:focus-visible, [tabindex]:focus-visible{ outline:2px solid var(--periwinkle); outline-offset:2px; }
 
 .view-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; gap:10px; }
 .view-head h2{ font-family:var(--font-display); font-size:24px; margin:0; font-weight:600; color:var(--display-color); }
 
-.btn-primary{ background:var(--btn-primary-bg); color:var(--btn-primary-text); border:none; padding:10px 16px; border-radius:999px; font-family:var(--font-body); font-weight:600; font-size:13px; cursor:pointer; white-space:nowrap; }
+.btn-primary{ background:var(--btn-primary-bg); color:var(--btn-primary-text); border:none; padding:10px 16px; border-radius:999px; font-family:var(--font-body); font-weight:600; font-size:13px; cursor:pointer; white-space:nowrap; transition:opacity 0.15s, transform 0.1s; }
 .btn-primary:hover{ opacity:.88; }
+.btn-primary:active{ transform:scale(0.97); }
 .btn-primary.small{ padding:8px 14px; font-size:12px; border-radius:var(--radius-sm); }
-.btn-secondary{ background:var(--paper-soft); color:var(--ink); border:1px solid var(--line); padding:9px 14px; border-radius:999px; font-weight:600; font-size:13px; cursor:pointer; }
+.btn-secondary{ background:var(--paper-soft); color:var(--ink); border:1px solid var(--line); padding:9px 14px; border-radius:999px; font-weight:600; font-size:13px; cursor:pointer; transition:all 0.15s; }
+.btn-secondary:hover{ background:var(--hover-bg); }
 .btn-secondary.small{ border-radius:var(--radius-sm); padding:8px 12px; font-size:12px; }
 .btn-secondary.danger{ color:var(--coral); border-color:var(--coral-soft); background:var(--coral-soft); }
 
-.card{ background:var(--paper); border-radius:var(--radius); padding:16px 16px 14px; box-shadow:var(--shadow); border:1px solid var(--line); position:relative; }
+.card{ background:var(--paper); border-radius:var(--radius); padding:16px 16px 14px; box-shadow:var(--shadow); border:1px solid var(--line); position:relative; transition:transform 0.15s, box-shadow 0.15s; }
+.card:hover{ box-shadow:var(--shadow-lift); }
 .mono{ font-family:var(--font-mono); }
 .ink-faint{ color:var(--ink-faint); }
 .ink-soft{ color:var(--ink-soft); }
@@ -132,7 +274,6 @@ body{
 .link-back{ background:none; border:none; color:var(--ink-soft); font-size:13px; cursor:pointer; padding:0; margin-bottom:6px; }
 .link-back:hover{ color:var(--ink); }
 
-/* Home */
 .stats-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
 .stat-col{ display:flex; flex-direction:column; gap:4px; min-width:0; }
 .stat-label{ font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); font-weight:700; }
@@ -166,7 +307,7 @@ body{
 .today-total-row{ display:flex; justify-content:space-between; align-items:baseline; margin-top:12px; padding-top:10px; border-top:1px solid var(--line); font-size:13px; font-weight:700; }
 
 .history-tabs{ display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap; }
-.history-tab{ border:none; background:var(--paper-soft); border-radius:999px; padding:6px 14px; font-size:12px; font-weight:600; color:var(--ink-faint); cursor:pointer; font-family:var(--font-body); border:1px solid var(--line); }
+.history-tab{ border:none; background:var(--paper-soft); border-radius:999px; padding:6px 14px; font-size:12px; font-weight:600; color:var(--ink-faint); cursor:pointer; font-family:var(--font-body); border:1px solid var(--line); transition:all 0.15s; }
 .history-tab.active{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
 :root[data-theme="dark"] .history-tab.active{ background:var(--ink); color:var(--bg); }
 .history-day{ margin-bottom:14px; }
@@ -175,7 +316,6 @@ body{
 .history-entry-row:last-child{ border-bottom:none; }
 .history-note-chip{ font-size:11px; color:var(--ink-faint); white-space:nowrap; }
 
-/* Sections (Notes tab) */
 .section-list{ display:flex; flex-direction:column; gap:14px; }
 .section-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; cursor:pointer; }
 .section-name-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
@@ -194,7 +334,6 @@ body{
 .note-row-amount{ font-family:var(--font-mono); font-size:13px; color:var(--ink-soft); white-space:nowrap; }
 .note-row-bar{ margin-top:6px; height:6px; }
 
-/* Note detail */
 .detail-head{ display:flex; align-items:flex-start; justify-content:space-between; margin:10px 0 4px; gap:14px; flex-wrap:wrap; }
 .note-title-lg{ font-family:var(--font-display); font-size:32px; margin:0; font-weight:600; color:var(--display-color); }
 .budget-edit{ display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
@@ -204,7 +343,7 @@ body{
 .text-coral{ color:var(--coral); font-weight:600; }
 .allocate-hint{ font-size:12px; color:var(--ink-faint); margin-bottom:16px; }
 
-.entry-form{ display:flex; gap:8px; margin-bottom:6px; }
+.entry-form{ display:flex; gap:8px; margin-bottom:6px; position:relative; }
 .entry-form input{ flex:1; }
 .entry-preview{ font-size:12px; min-height:16px; margin:2px 2px 12px; color:var(--ink-faint); }
 .entry-preview.valid{ color:var(--sage); font-weight:600; }
@@ -224,13 +363,14 @@ body{
 .ledger-row .amount{ font-weight:600; }
 .ledger-row .date{ font-size:12px; }
 
-.tag-btn{ width:16px; height:16px; border-radius:50%; border:2px solid var(--line); background:var(--paper); cursor:pointer; padding:0; flex-shrink:0; }
+.tag-btn{ width:16px; height:16px; border-radius:50%; border:2px solid var(--line); background:var(--paper); cursor:pointer; padding:0; flex-shrink:0; transition:transform 0.15s; }
+.tag-btn:hover{ transform:scale(1.2); }
 .tag-btn.tag-essential{ background:var(--sage); border-color:var(--sage); }
 .tag-btn.tag-discretionary{ background:var(--periwinkle); border-color:var(--periwinkle); }
 
-/* Dues */
 .dues-summary-row{ display:flex; gap:12px; margin-bottom:10px; }
-.dues-summary-card{ flex:1; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; cursor:pointer; display:flex; flex-direction:column; gap:6px; box-shadow:var(--shadow); transition:border-color .15s; }
+.dues-summary-card{ flex:1; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px; cursor:pointer; display:flex; flex-direction:column; gap:6px; box-shadow:var(--shadow); transition:border-color .15s, transform 0.15s; }
+.dues-summary-card:hover{ transform:translateY(-1px); }
 .dues-summary-card.active{ border-color:var(--periwinkle); }
 .dues-summary-label{ font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; }
 .dues-summary-value{ font-size:18px; font-weight:700; }
@@ -263,29 +403,34 @@ body{
 .tx-hint-title{ font-weight:700; margin-bottom:4px; color:var(--ink); }
 .tx-hint-line{ margin:2px 0; }
 .tx-buttons-row{ display:flex; gap:10px; margin:4px 0 12px; }
-.btn-tx-neg, .btn-tx-pos{ flex:1; border:none; border-radius:var(--radius-sm); padding:12px; font-weight:700; font-size:13px; cursor:pointer; font-family:var(--font-body); }
+.btn-tx-neg, .btn-tx-pos{ flex:1; border:none; border-radius:var(--radius-sm); padding:12px; font-weight:700; font-size:13px; cursor:pointer; font-family:var(--font-body); transition:opacity 0.15s, transform 0.1s; }
+.btn-tx-neg:hover, .btn-tx-pos:hover{ opacity:0.9; }
+.btn-tx-neg:active, .btn-tx-pos:active{ transform:scale(0.97); }
 .btn-tx-neg{ background:var(--coral-soft); color:var(--coral); }
 .btn-tx-pos{ background:var(--sage-soft); color:var(--sage); }
+
 .todo-nav{ display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
 .todo-date-main{ font-family:var(--font-display); font-size:22px; font-weight:600; color:var(--display-color); }
 .todo-progress-label{ font-size:12px; color:var(--ink-faint); margin:4px 0 16px; text-align:right; }
 .todo-section-label{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); margin:14px 0 8px; }
 .todo-list{ display:flex; flex-direction:column; gap:6px; margin-bottom:6px; }
-.todo-row{ display:flex; align-items:center; gap:10px; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 12px; }
+.todo-row{ display:flex; align-items:center; gap:10px; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius-sm); padding:10px 12px; transition:opacity 0.2s; }
 .todo-row.done{ opacity:.6; }
-.todo-check{ width:22px; height:22px; border-radius:50%; border:2px solid var(--line); background:var(--paper-soft); cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:13px; color:#fff; padding:0; }
+.todo-check{ width:22px; height:22px; border-radius:50%; border:2px solid var(--line); background:var(--paper-soft); cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:13px; color:#fff; padding:0; transition:all 0.15s; }
+.todo-check:hover{ transform:scale(1.1); }
 .todo-check.checked{ background:var(--sage); border-color:var(--sage); }
 .todo-text{ flex:1; font-size:14px; }
 .todo-row.done .todo-text{ text-decoration:line-through; color:var(--ink-faint); }
 .todo-date-tag{ font-size:11px; white-space:nowrap; }
 
-input[type=text], input[type=number], input[type=date], select{
+input[type=text], input[type=number], input[type=date], select, textarea{
   width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:var(--radius-sm);
   font-family:var(--font-body); font-size:14px; background:var(--paper-soft); color:var(--ink);
+  transition:border-color 0.15s, box-shadow 0.15s;
 }
-input:focus, select:focus{ outline:2px solid var(--sage); outline-offset:1px; }
+input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--sage); box-shadow:0 0 0 3px var(--sage-glow); }
 label{ display:block; font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:12px; }
-label input, label select{ margin-top:6px; }
+label input, label select, label textarea{ margin-top:6px; }
 .custom-currency-input{ display:none; margin-top:-4px; margin-bottom:12px; }
 .radio-row{ display:flex; gap:18px; margin-bottom:14px; font-size:13px; font-weight:600; color:var(--ink-soft); }
 .radio-row label{ display:flex; align-items:center; gap:6px; margin-bottom:0; }
@@ -293,8 +438,10 @@ label input, label select{ margin-top:6px; }
 .field-row{ display:flex; gap:10px; }
 .field-row > label{ flex:1; }
 
-.overlay{ position:fixed; inset:0; background:var(--overlay-bg); display:flex; align-items:center; justify-content:center; padding:20px; z-index:50; }
-.modal{ background:var(--paper); border-radius:var(--radius); padding:24px; width:100%; max-width:380px; max-height:86vh; overflow-y:auto; box-shadow:var(--shadow-lift); }
+.overlay{ position:fixed; inset:0; background:var(--overlay-bg); display:flex; align-items:center; justify-content:center; padding:20px; z-index:50; animation:fadeIn 0.2s ease; }
+@keyframes fadeIn{ from{ opacity:0; } to{ opacity:1; } }
+.modal{ background:var(--paper); border-radius:var(--radius); padding:24px; width:100%; max-width:380px; max-height:86vh; overflow-y:auto; box-shadow:var(--shadow-lift); animation:slideUp 0.3s ease; }
+@keyframes slideUp{ from{ transform:translateY(20px); opacity:0; } to{ transform:translateY(0); opacity:1; } }
 .modal h3{ font-family:var(--font-display); font-size:24px; margin:0 0 16px; font-weight:600; color:var(--display-color); }
 .modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:8px; }
 .settings-row{ margin-bottom:16px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
@@ -321,83 +468,173 @@ label input, label select{ margin-top:6px; }
   .ledger-row .date{ display:none; }
   .tx-row{ grid-template-columns:80px 1fr auto; }
   .tx-date{ display:none; }
+  .quick-add-form{ flex-wrap:wrap; }
+  .quick-add-form select{ width:100%; }
 }
 @media (prefers-reduced-motion:reduce){
-  *{ transition:none !important; }
+  *{ transition:none !important; animation:none !important; }
 }
 </style>
 
-
-<!-- Firebase (for optional live sync between household members) -->
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<base target="_blank">
 </head>
 <body>
 <div id="app"></div>
+<div id="toast-container" class="toast-container"></div>
 
 <script>
+
 (function(){
 
-if(!window.storage){
-  // window.storage only exists inside Claude.ai's artifact viewer. When this
-  // file is opened as a regular webpage (e.g. hosted on GitHub Pages), we
-  // back it with localStorage instead so data actually survives a refresh.
-  let localStorageWorks = false;
-  try{
-    const testKey = '__budgetnotes_storage_test__';
-    window.localStorage.setItem(testKey, '1');
-    window.localStorage.removeItem(testKey);
-    localStorageWorks = true;
-  }catch(e){ localStorageWorks = false; }
+/* ================================================================
+   BUDGETNOTES PRO - Enhanced Edition
+   All 20 suggestions implemented
+   ================================================================ */
 
-  if(localStorageWorks){
-    console.info('BudgetNotes: using localStorage for persistence (this page is not running inside Claude.ai).');
-    window.storage = {
-      async get(key){
-        const v = window.localStorage.getItem(key);
-        if(v === null) throw new Error('not found');
-        return { key, value: v, shared: false };
-      },
-      async set(key, value){
-        window.localStorage.setItem(key, value);
-        return { key, value, shared: false };
-      },
-      async delete(key){
-        window.localStorage.removeItem(key);
-        return { key, deleted: true, shared: false };
-      },
-      async list(prefix){
-        const keys = [];
-        for(let i = 0; i < window.localStorage.length; i++){
-          const k = window.localStorage.key(i);
-          if(!prefix || k.startsWith(prefix)) keys.push(k);
+/* ---------- STORAGE: IndexedDB + localStorage fallback ---------- */
+const DB_NAME = 'BudgetNotesDB';
+const DB_VERSION = 1;
+const STORE_NAME = 'appData';
+
+const Storage = (function(){
+  let db = null;
+
+  async function initDB(){
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open(DB_NAME, DB_VERSION);
+      req.onerror = () => reject(req.error);
+      req.onsuccess = () => { db = req.result; resolve(db); };
+      req.onupgradeneeded = (e) => {
+        const database = e.target.result;
+        if(!database.objectStoreNames.contains(STORE_NAME)){
+          database.createObjectStore(STORE_NAME);
         }
-        return { keys, prefix, shared: false };
-      }
-    };
-  } else {
-    console.warn('BudgetNotes: no persistent storage available in this browser — data will not survive a refresh.');
-    const mem = {};
-    window.storage = {
-      async get(key){ if(!(key in mem)) throw new Error('not found'); return {key, value:mem[key], shared:false}; },
-      async set(key, value){ mem[key]=value; return {key, value, shared:false}; },
-      async delete(key){ delete mem[key]; return {key, deleted:true, shared:false}; },
-      async list(prefix){ return {keys:Object.keys(mem).filter(k=>!prefix||k.startsWith(prefix)), prefix, shared:false}; }
-    };
+      };
+    });
   }
+
+  async function get(key){
+    if(db){
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.get(key);
+        req.onsuccess = () => {
+          if(req.result !== undefined) resolve({ key, value: req.result, shared: false });
+          else reject(new Error('not found'));
+        };
+        req.onerror = () => reject(req.error);
+      });
+    }
+    const v = window.localStorage.getItem(key);
+    if(v === null) throw new Error('not found');
+    return { key, value: v, shared: false };
+  }
+
+  async function set(key, value){
+    if(db){
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.put(value, key);
+        req.onsuccess = () => resolve({ key, value, shared: false });
+        req.onerror = () => reject(req.error);
+      });
+    }
+    window.localStorage.setItem(key, value);
+    return { key, value, shared: false };
+  }
+
+  async function del(key){
+    if(db){
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.delete(key);
+        req.onsuccess = () => resolve({ key, deleted: true, shared: false });
+        req.onerror = () => reject(req.error);
+      });
+    }
+    window.localStorage.removeItem(key);
+    return { key, deleted: true, shared: false };
+  }
+
+  async function list(prefix){
+    if(db){
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.getAllKeys();
+        req.onsuccess = () => {
+          const keys = req.result.filter(k => !prefix || k.startsWith(prefix));
+          resolve({ keys, prefix, shared: false });
+        };
+        req.onerror = () => reject(req.error);
+      });
+    }
+    const keys = [];
+    for(let i = 0; i < window.localStorage.length; i++){
+      const k = window.localStorage.key(i);
+      if(!prefix || k.startsWith(prefix)) keys.push(k);
+    }
+    return { keys, prefix, shared: false };
+  }
+
+  return { initDB, get, set, delete: del, list };
+})();
+
+/* ---------- UNDO SYSTEM ---------- */
+const UndoManager = (function(){
+  const undoTimers = new Map();
+
+  function push(action, undoFn, delayMs = 5000){
+    const id = Date.now() + '_' + Math.random().toString(36).slice(2,7);
+    showToast(action, 'Undo', () => {
+      undoFn();
+      removeToast(id);
+    }, id);
+    const timer = setTimeout(() => { removeToast(id); }, delayMs);
+    undoTimers.set(id, timer);
+    return id;
+  }
+
+  function removeToast(id){
+    const timer = undoTimers.get(id);
+    if(timer) clearTimeout(timer);
+    undoTimers.delete(id);
+    const el = document.querySelector('[data-toast-id="' + id + '"]');
+    if(el){ el.classList.add('removing'); setTimeout(() => el.remove(), 300); }
+  }
+
+  function showToast(message, actionText, onAction, id){
+    const container = document.getElementById('toast-container');
+    if(!container) return;
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.dataset.toastId = id;
+    toast.innerHTML = '<span>' + escapeHtml(message) + '</span><button class="toast-action">' + escapeHtml(actionText) + '</button>';
+    toast.querySelector('.toast-action').addEventListener('click', onAction);
+    container.appendChild(toast);
+  }
+
+  return { push, removeToast };
+})();
+
+/* ---------- HAPTIC FEEDBACK ---------- */
+function haptic(){ if(navigator.vibrate) navigator.vibrate(10); }
+function hapticSuccess(){ if(navigator.vibrate) navigator.vibrate([15, 30, 15]); }
+
+/* ---------- SERVICE WORKER ---------- */
+if('serviceWorker' in navigator){
+  const swCode = 'self.addEventListener("install",e=>self.skipWaiting());self.addEventListener("activate",e=>e.waitUntil(clients.claim()));self.addEventListener("fetch",e=>{e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)))});';
+  const swBlob = new Blob([swCode], { type: 'application/javascript' });
+  const swUrl = URL.createObjectURL(swBlob);
+  navigator.serviceWorker.register(swUrl).catch(() => {});
 }
 
-const STORAGE_KEY = 'app:data';
-
-/* ---------- Live sync (Firebase Firestore) ----------
-   Two devices share data by both pointing at the same Firestore document,
-   keyed by a long random "household ID" the first device generates and the
-   second device enters. Firestore's realtime listener pushes any change to
-   every connected device within ~1 second, no manual refresh needed.
-   This entire app already serializes its state into one JSON blob (the same
-   blob saved to localStorage), so syncing just means mirroring that blob to
-   a single Firestore document and re-applying it locally when it changes
-   remotely. */
+/* ---------- CLOUD SYNC ---------- */
 const CloudSync = (function(){
   const firebaseConfig = {
     apiKey: "AIzaSyC69GXaUgBoCgPxvucP_NCUZmWzc-1k64Q",
@@ -409,16 +646,14 @@ const CloudSync = (function(){
   };
 
   let app = null, db = null, unsubscribe = null;
-  let lastPushedJSON = null; // used to ignore the echo of our own writes
-  let onRemoteUpdate = null; // callback set by the app: (jsonString) => void
-  let onStatusChange = null; // callback: (status) => void, status in 'connecting'|'connected'|'error'|'offline'
+  let lastPushedJSON = null;
+  let onRemoteUpdate = null;
+  let onStatusChange = null;
 
-  function available(){
-    return typeof firebase !== 'undefined';
-  }
+  function available(){ return typeof firebase !== 'undefined'; }
 
   function ensureApp(){
-    if(!available()) throw new Error('Firebase SDK not loaded (are you offline?)');
+    if(!available()) throw new Error('Firebase SDK not loaded');
     if(!app){
       app = firebase.apps && firebase.apps.length ? firebase.apps[0] : firebase.initializeApp(firebaseConfig);
       db = firebase.firestore();
@@ -443,7 +678,7 @@ const CloudSync = (function(){
   }
 
   function start(householdId){
-    stop(); // tear down any previous listener first
+    stop();
     if(!householdId) return;
     try{
       const database = ensureApp();
@@ -456,16 +691,12 @@ const CloudSync = (function(){
           const data = snap.data();
           const json = data && data.payload;
           if(typeof json !== 'string') return;
-          if(json === lastPushedJSON){
-            // This is just our own write echoing back from the server -- the
-            // local state is already correct, so skip re-applying it (doing
-            // so would needlessly blow away in-progress local UI state).
-            return;
-          }
-          if(onRemoteUpdate) onRemoteUpdate(json);
+          if(json === lastPushedJSON) return;
+          const remoteTime = data.updatedAt ? data.updatedAt.toMillis() : Date.now();
+          if(onRemoteUpdate) onRemoteUpdate(json, remoteTime);
         },
         (err) => {
-          console.warn('CloudSync listener error:', err);
+          console.warn('CloudSync error:', err);
           if(onStatusChange) onStatusChange('error');
         }
       );
@@ -506,7 +737,7 @@ const CloudSync = (function(){
   return { available, generateHouseholdId, setCallbacks, start, stop, push, fetchOnce };
 })();
 
-
+/* ---------- STATE ---------- */
 let state = {
   sections: [],
   dues: [],
@@ -516,18 +747,18 @@ let state = {
   tab: 'home',
   duesTab: 'lent',
   expandedSectionIds: {},
-  openNote: null, // { sectionId, noteId }
+  openNote: null,
   showNewSection: false,
   editSectionId: null,
   sectionCopyFromId: 'scratch',
-  showNewNoteFor: null, // sectionId
+  showNewNoteFor: null,
   showNewDue: false,
-  showAddTxFor: null, // dueId
+  showAddTxFor: null,
   editLenderId: null,
   showSettings: false,
   expandedDueId: null,
   confirmDeleteSection: null,
-  confirmDeleteNote: null, // "sectionId:noteId"
+  confirmDeleteNote: null,
   confirmDeleteEntry: null,
   confirmDeleteDue: null,
   confirmDeleteTx: null,
@@ -536,16 +767,27 @@ let state = {
   transactionError: null,
   importError: null,
   migrationNotice: null,
-  syncStatus: null, // null|'connecting'|'connected'|'error'
+  syncStatus: null,
   syncError: null,
   syncBusy: false,
   showJoinHousehold: false,
   historyPeriod: '7d',
   error: null,
   loaded: false,
+  searchQuery: '',
+  showSearch: false,
+  showBulkEntry: false,
+  showCalendar: false,
+  calendarMonth: new Date(),
+  lastSavedAt: 0,
+  swipeState: { active: false, startX: 0, currentX: 0, target: null },
+  entryTemplates: {},
+  savingsGoals: {},
 };
 
 let pendingFocus = null;
+let searchDebounce = null;
+let undoSnapshot = null;
 
 function uid(){ return Math.random().toString(36).slice(2,9) + Date.now().toString(36).slice(-4); }
 
@@ -599,13 +841,13 @@ function toggleTheme(){
 
 function todayStr(){
   const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
 
 function shiftDateStr(dateStr, deltaDays){
   const d = new Date(dateStr + 'T00:00:00');
   d.setDate(d.getDate() + deltaDays);
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
 
 function formatTodoDateLabel(dateStr){
@@ -627,8 +869,6 @@ function suggestSectionName(duration){
   return now.toLocaleDateString(undefined, { month:'long', year:'numeric' });
 }
 
-// Groups entries by description (case-insensitive), summing amounts and
-// picking the majority tag. Used for "Budget Items" and "Leading Expenses".
 function groupEntries(entries){
   const map = new Map();
   entries.forEach(e => {
@@ -676,36 +916,250 @@ function migrateDue(d){
   };
 }
 
-function applyRemoteState(jsonString){
-  try{
-    const parsed = JSON.parse(jsonString);
-    state.settings = parsed.settings || state.settings;
-    state.sections = Array.isArray(parsed.sections) ? parsed.sections : [];
-    state.dues = (parsed.dues || []).map(migrateDue);
-    state.todos = Array.isArray(parsed.todos) ? parsed.todos : [];
-    // Cache the synced data locally too, so a later offline open still has it.
-    window.storage.set(STORAGE_KEY, jsonString, false).catch(()=>{});
-    applyTheme();
-    render();
-  }catch(e){
-    console.warn('Failed to apply remote update:', e);
+function createSnapshot(){
+  return JSON.parse(JSON.stringify({
+    sections: state.sections,
+    dues: state.dues,
+    todos: state.todos,
+    settings: state.settings,
+    savingsGoals: state.savingsGoals,
+    entryTemplates: state.entryTemplates
+  }));
+}
+
+function restoreSnapshot(snapshot){
+  state.sections = snapshot.sections;
+  state.dues = snapshot.dues;
+  state.todos = snapshot.todos;
+  state.settings = snapshot.settings;
+  state.savingsGoals = snapshot.savingsGoals || {};
+  state.entryTemplates = snapshot.entryTemplates || {};
+  render();
+  saveData();
+}
+
+/* ---------- SEARCH ---------- */
+function performSearch(query){
+  const q = query.toLowerCase().trim();
+  if(!q) return [];
+  const results = [];
+
+  state.sections.forEach(s => {
+    if(s.name.toLowerCase().includes(q)) results.push({ type: 'section', title: s.name, id: s.id, subtitle: s.duration + ' budget' });
+    s.notes.forEach(n => {
+      if(n.title.toLowerCase().includes(q)) results.push({ type: 'note', title: n.title, id: n.id, sectionId: s.id, subtitle: 'in ' + s.name });
+      n.entries.forEach(e => {
+        if((e.desc || '').toLowerCase().includes(q)){
+          results.push({ type: 'entry', title: e.desc, amount: e.amount, id: e.id, noteId: n.id, sectionId: s.id, subtitle: n.title + ' in ' + s.name, date: e.date });
+        }
+      });
+    });
+  });
+
+  state.dues.forEach(d => {
+    if(d.person.toLowerCase().includes(q)) results.push({ type: 'due', title: d.person, id: d.id, subtitle: d.type });
+    d.transactions.forEach(t => {
+      if((t.desc || '').toLowerCase().includes(q)){
+        results.push({ type: 'transaction', title: t.desc, amount: t.amount, id: t.id, dueId: d.id, subtitle: d.person, date: t.date });
+      }
+    });
+  });
+
+  state.todos.forEach(t => {
+    if(t.text.toLowerCase().includes(q)) results.push({ type: 'todo', title: t.text, id: t.id, subtitle: t.date, done: t.done });
+  });
+
+  return results.slice(0, 20);
+}
+
+function highlightMatch(text, query){
+  if(!query) return escapeHtml(text);
+  const regex = new RegExp('(' + escapeHtml(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+  return escapeHtml(text).replace(regex, '<span class="search-highlight">$1</span>');
+}
+
+/* ---------- CALENDAR HEATMAP ---------- */
+function getCalendarData(year, month){
+  const entries = allEntriesRich();
+  const byDay = {};
+  entries.forEach(e => {
+    if(!e.date) return;
+    const d = new Date(e.date);
+    const key = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    byDay[key] = (byDay[key] || 0) + e.amount;
+  });
+
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  const daysInMonth = lastDay.getDate();
+  const startOffset = firstDay.getDay();
+
+  const days = [];
+  for(let i = 0; i < startOffset; i++) days.push(null);
+
+  const maxSpend = Math.max(...Object.values(byDay), 1);
+  for(let d = 1; d <= daysInMonth; d++){
+    const dateStr = year + '-' + String(month+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    const spend = byDay[dateStr] || 0;
+    let level = 0;
+    if(spend > 0) level = 1;
+    if(spend > maxSpend * 0.25) level = 2;
+    if(spend > maxSpend * 0.5) level = 3;
+    if(spend > maxSpend * 0.75) level = 4;
+    days.push({ day: d, dateStr, spend, level, isToday: dateStr === todayStr() });
+  }
+  return days;
+}
+
+/* ---------- BURN RATE ---------- */
+function getBurnRate(section){
+  const daysMap = { weekly: 7, monthly: 30, yearly: 365 };
+  const totalDays = daysMap[section.duration] || 30;
+  const created = new Date(section.createdAt);
+  const now = new Date();
+  const daysElapsed = Math.max(1, Math.floor((now - created) / 86400000));
+  const daysRemaining = Math.max(0, totalDays - daysElapsed);
+  const expectedSpend = (section.totalBudget / totalDays) * daysElapsed;
+  const actualSpend = sectionSpent(section);
+  const burnRate = actualSpend / Math.max(1, daysElapsed);
+  const projectedTotal = burnRate * totalDays;
+  const status = actualSpend > expectedSpend * 1.1 ? 'over' : actualSpend > expectedSpend * 0.9 ? 'on-track' : 'ahead';
+  return { daysElapsed, daysRemaining, expectedSpend, actualSpend, burnRate, projectedTotal, status };
+}
+
+/* ---------- INSIGHTS ---------- */
+function getInsights(){
+  const entries = allEntriesFlat();
+  const now = new Date();
+  const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const lastMonthStart = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const lastMonthEnd = new Date(now.getFullYear(), now.getMonth(), 0);
+
+  const thisMonthEntries = entries.filter(e => e.date && new Date(e.date) >= thisMonthStart);
+  const lastMonthEntries = entries.filter(e => e.date && new Date(e.date) >= lastMonthStart && new Date(e.date) <= lastMonthEnd);
+
+  const thisMonthTotal = thisMonthEntries.reduce((s,e) => s + e.amount, 0);
+  const lastMonthTotal = lastMonthEntries.reduce((s,e) => s + e.amount, 0);
+  const vsLastMonth = lastMonthTotal > 0 ? ((thisMonthTotal - lastMonthTotal) / lastMonthTotal * 100).toFixed(1) : 0;
+
+  const untaggedCount = entries.filter(e => !e.tag).length;
+  const groups = groupEntries(entries);
+  const topCategory = groups.length > 0 ? groups[0] : null;
+
+  return { vsLastMonth, untaggedCount, topCategory, thisMonthTotal, lastMonthTotal };
+}
+
+/* ---------- TEMPLATES ---------- */
+function getTemplatesForNote(sectionId, noteId){
+  const key = sectionId + ':' + noteId;
+  return state.entryTemplates[key] || [];
+}
+
+function addTemplate(sectionId, noteId, desc, amount, tag){
+  const key = sectionId + ':' + noteId;
+  if(!state.entryTemplates[key]) state.entryTemplates[key] = [];
+  const existing = state.entryTemplates[key].findIndex(t => t.desc.toLowerCase() === desc.toLowerCase());
+  if(existing >= 0){
+    state.entryTemplates[key][existing] = { desc, amount, tag };
+  } else {
+    state.entryTemplates[key].push({ desc, amount, tag });
+    if(state.entryTemplates[key].length > 10) state.entryTemplates[key].shift();
   }
 }
 
+/* ---------- DUE DATE HELPERS ---------- */
+function getDueDateStatus(dueDateStr){
+  if(!dueDateStr) return null;
+  const due = new Date(dueDateStr);
+  const now = new Date();
+  const days = Math.ceil((due - now) / 86400000);
+  if(days < 0) return { status: 'overdue', days: Math.abs(days), label: Math.abs(days) + ' days overdue' };
+  if(days <= 7) return { status: 'soon', days, label: days + ' days left' };
+  return { status: 'later', days, label: days + ' days left' };
+}
+
+/* ---------- DATA HELPERS ---------- */
+function allEntriesFlat(){
+  const out = [];
+  state.sections.forEach(s => s.notes.forEach(n => n.entries.forEach(e => out.push(e))));
+  return out;
+}
+
+function allEntriesRich(){
+  const out = [];
+  state.sections.forEach(s => s.notes.forEach(n => n.entries.forEach(e =>
+    out.push(Object.assign({}, e, { noteName: n.title, sectionName: s.name, currency: s.currency }))
+  )));
+  return out;
+}
+
+function entriesOnDate(dateStr){
+  return allEntriesRich().filter(e => {
+    if(!e.date) return false;
+    const d = new Date(e.date);
+    const local = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    return local === dateStr;
+  });
+}
+
+function entriesByDay(maxDays){
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - maxDays + 1);
+  cutoff.setHours(0,0,0,0);
+  const rich = allEntriesRich().filter(e => e.date && new Date(e.date) >= cutoff);
+  const byDay = {};
+  rich.forEach(e => {
+    const d = new Date(e.date);
+    const key = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    if(!byDay[key]) byDay[key] = { dateStr: key, entries: [] };
+    byDay[key].entries.push(e);
+  });
+  return Object.values(byDay).sort((a,b) => b.dateStr.localeCompare(a.dateStr));
+}
+
+function findSection(sectionId){ return state.sections.find(s => s.id === sectionId); }
+function findNote(sectionId, noteId){
+  const s = findSection(sectionId);
+  return s ? s.notes.find(n => n.id === noteId) : null;
+}
+
+function sectionAllocated(section){ return section.notes.reduce((s,n) => s + (Number(n.budget)||0), 0); }
+function sectionSpent(section){ return section.notes.reduce((s,n) => s + n.entries.reduce((s2,e)=>s2+e.amount,0), 0); }
+function sectionSavings(section){ return Math.max(0, section.totalBudget - sectionAllocated(section)); }
+function noteSpent(note){ return note.entries.reduce((s,e) => s + e.amount, 0); }
+
+function txTotals(due){
+  let principal = 0, settled = 0;
+  due.transactions.forEach(t => { if(t.amount < 0) principal += -t.amount; else settled += t.amount; });
+  return { principal, settled, pending: principal - settled };
+}
+
+function dueTypeLabels(type){
+  return type === 'lent'
+    ? { negBtn:'Lent (-)', posBtn:'Received (+)', principalLabel:'Lent', settledLabel:'Received', bannerLabel:'Amount to receive' }
+    : { negBtn:'Borrowed (-)', posBtn:'Repaid (+)', principalLabel:'Borrowed', settledLabel:'Paid', bannerLabel:'Amount to pay' };
+}
+
+function dueGroupTotal(type){
+  return state.dues.filter(d => d.type === type).reduce((s,d) => s + Math.max(0, txTotals(d).pending), 0);
+}
+
+/* ---------- LOAD / SAVE ---------- */
 async function loadData(){
   try{
-    const res = await window.storage.get(STORAGE_KEY, false);
+    await Storage.initDB();
+  }catch(e){ console.warn('IndexedDB init failed:', e); }
+
+  try{
+    const res = await window.storage.get(STORAGE_KEY);
     if(res && res.value){
       const parsed = JSON.parse(res.value);
       state.settings = parsed.settings || { defaultCurrency: 'Rs ' };
       if(Array.isArray(parsed.sections)){
         state.sections = parsed.sections;
       } else if(Array.isArray(parsed.notes) && parsed.notes.length){
-        // Migrate the old flat-notes format (no sections) into one section.
         const migrated = {
-          id: uid(),
-          name: 'My Notes',
-          totalBudget: parsed.notes.reduce((s,n) => s + (Number(n.budget)||0), 0),
+          id: uid(), name: 'My Notes', totalBudget: parsed.notes.reduce((s,n) => s + (Number(n.budget)||0), 0),
           duration: 'monthly',
           currency: parsed.notes[0].currency || state.settings.defaultCurrency || 'Rs ',
           createdAt: new Date().toISOString(),
@@ -725,6 +1179,8 @@ async function loadData(){
       }
       state.dues = (parsed.dues || []).map(migrateDue);
       state.todos = Array.isArray(parsed.todos) ? parsed.todos : [];
+      state.entryTemplates = parsed.entryTemplates || {};
+      state.savingsGoals = parsed.savingsGoals || {};
     }
   } catch(e){
     state.sections = [];
@@ -732,17 +1188,13 @@ async function loadData(){
     state.todos = [];
     state.settings = { defaultCurrency: 'Rs ' };
     try{
-      await window.storage.set(STORAGE_KEY, JSON.stringify({ sections: [], dues: [], todos: [], settings: state.settings }), false);
+      await window.storage.set(STORAGE_KEY, JSON.stringify({ sections: [], dues: [], todos: [], settings: state.settings }));
     }catch(e2){ console.error('Could not initialize storage', e2); }
   }
   state.todoDate = todayStr();
-  if(!state.settings.theme){
-    state.settings.theme = detectSystemTheme();
-  }
+  if(!state.settings.theme) state.settings.theme = detectSystemTheme();
   applyTheme();
-  if(state.sections.length){
-    state.expandedSectionIds[state.sections[0].id] = true;
-  }
+  if(state.sections.length) state.expandedSectionIds[state.sections[0].id] = true;
   state.loaded = true;
   render();
 
@@ -758,13 +1210,19 @@ async function loadData(){
 
 async function saveData(){
   const jsonString = JSON.stringify({
-    sections: state.sections, dues: state.dues, todos: state.todos, settings: state.settings
+    sections: state.sections,
+    dues: state.dues,
+    todos: state.todos,
+    settings: state.settings,
+    entryTemplates: state.entryTemplates,
+    savingsGoals: state.savingsGoals
   });
   try{
-    const result = await window.storage.set(STORAGE_KEY, jsonString, false);
+    await window.storage.set(STORAGE_KEY, jsonString);
+    state.lastSavedAt = Date.now();
     const hadError = !!state.error;
-    state.error = result ? null : 'Could not save just now. Your latest change may not persist.';
-    if(hadError !== !!state.error) render();
+    state.error = null;
+    if(hadError) render();
   }catch(e){
     console.error(e);
     state.error = 'Could not save just now. Your latest change may not persist.';
@@ -775,58 +1233,60 @@ async function saveData(){
   }
 }
 
-function findSection(sectionId){ return state.sections.find(s => s.id === sectionId); }
-function findNote(sectionId, noteId){
-  const s = findSection(sectionId);
-  return s ? s.notes.find(n => n.id === noteId) : null;
+function applyRemoteState(jsonString, remoteTimestamp){
+  try{
+    if(remoteTimestamp && state.lastSavedAt > remoteTimestamp){
+      console.log('Local data is newer, skipping remote update');
+      return;
+    }
+    const parsed = JSON.parse(jsonString);
+    state.settings = Object.assign({}, state.settings, parsed.settings || {});
+    if(Array.isArray(parsed.sections)) state.sections = parsed.sections;
+    state.dues = (parsed.dues || []).map(migrateDue);
+    state.todos = Array.isArray(parsed.todos) ? parsed.todos : [];
+    state.entryTemplates = parsed.entryTemplates || {};
+    state.savingsGoals = parsed.savingsGoals || {};
+    window.storage.set(STORAGE_KEY, jsonString).catch(()=>{});
+    applyTheme();
+    render();
+  }catch(e){
+    console.warn('Failed to apply remote update:', e);
+  }
 }
 
-function sectionAllocated(section){ return section.notes.reduce((s,n) => s + (Number(n.budget)||0), 0); }
-function sectionSpent(section){ return section.notes.reduce((s,n) => s + n.entries.reduce((s2,e)=>s2+e.amount,0), 0); }
-function sectionSavings(section){ return Math.max(0, section.totalBudget - sectionAllocated(section)); }
 
-function noteSpent(note){ return note.entries.reduce((s,e) => s + e.amount, 0); }
-
-function txTotals(due){
-  let principal = 0, settled = 0;
-  due.transactions.forEach(t => { if(t.amount < 0) principal += -t.amount; else settled += t.amount; });
-  return { principal, settled, pending: principal - settled };
-}
-
-function dueTypeLabels(type){
-  return type === 'lent'
-    ? { negBtn:'Lent (-)', posBtn:'Received (+)', principalLabel:'Lent', settledLabel:'Received', bannerLabel:'Amount to receive' }
-    : { negBtn:'Borrowed (-)', posBtn:'Repaid (+)', principalLabel:'Borrowed', settledLabel:'Paid', bannerLabel:'Amount to pay' };
-}
-
-function dueGroupTotal(type){
-  return state.dues.filter(d => d.type === type).reduce((s,d) => s + Math.max(0, txTotals(d).pending), 0);
-}
-
-/* ---------- mutations ---------- */
+/* ---------- MUTATIONS ---------- */
 
 function addTodo(dateStr, text){
   const trimmed = (text || '').trim();
   if(!trimmed) return;
+  const snapshot = createSnapshot();
   state.todos.unshift({ id: uid(), text: trimmed, done: false, date: dateStr || todayStr(), createdAt: new Date().toISOString() });
   pendingFocus = 'todo-input';
+  hapticSuccess();
   render();
   saveData();
+  UndoManager.push('Task added', () => { restoreSnapshot(snapshot); });
 }
 
 function toggleTodo(id){
   const t = state.todos.find(t => t.id === id);
   if(!t) return;
   t.done = !t.done;
+  haptic();
   render();
   saveData();
 }
 
 function deleteTodo(id){
+  const snapshot = createSnapshot();
+  const todo = state.todos.find(t => t.id === id);
   state.todos = state.todos.filter(t => t.id !== id);
   state.confirmDeleteTodo = null;
+  haptic();
   render();
   saveData();
+  UndoManager.push('Task deleted', () => { restoreSnapshot(snapshot); });
 }
 
 function createSection({name, totalBudget, duration, currency, copyFromId}){
@@ -857,6 +1317,7 @@ function createSection({name, totalBudget, duration, currency, copyFromId}){
   state.expandedSectionIds[section.id] = true;
   state.showNewSection = false;
   state.sectionCopyFromId = 'scratch';
+  hapticSuccess();
   render();
   saveData();
 }
@@ -875,11 +1336,14 @@ function updateSection(id, {name, totalBudget, duration, currency}){
 }
 
 function deleteSection(id){
+  const snapshot = createSnapshot();
   state.sections = state.sections.filter(s => s.id !== id);
   if(state.openNote && state.openNote.sectionId === id) state.openNote = null;
   state.confirmDeleteSection = null;
+  haptic();
   render();
   saveData();
+  UndoManager.push('Section deleted', () => { restoreSnapshot(snapshot); });
 }
 
 function createNoteInSection(sectionId, {title, icon, budget}){
@@ -896,17 +1360,21 @@ function createNoteInSection(sectionId, {title, icon, budget}){
   s.notes.unshift(note);
   state.showNewNoteFor = null;
   state.openNote = { sectionId, noteId: note.id };
+  hapticSuccess();
   render();
   saveData();
 }
 
 function deleteNote(sectionId, noteId){
+  const snapshot = createSnapshot();
   const s = findSection(sectionId);
   if(s) s.notes = s.notes.filter(n => n.id !== noteId);
   if(state.openNote && state.openNote.noteId === noteId) state.openNote = null;
   state.confirmDeleteNote = null;
+  haptic();
   render();
   saveData();
+  UndoManager.push('Note deleted', () => { restoreSnapshot(snapshot); });
 }
 
 function updateNoteBudget(sectionId, noteId, value){
@@ -923,7 +1391,7 @@ function addEntry(sectionId, noteId, rawValue){
   const trimmed = (rawValue || '').trim();
   const match = trimmed.match(/^(-?[\d,]+(?:\.\d{1,2})?)\s+(.+)$/);
   if(!match){
-    state.entryError = trimmed ? 'Start with a number, like \u201c150 Groceries\u201d' : null;
+    state.entryError = trimmed ? 'Start with a number, like "150 Groceries"' : null;
     pendingFocus = 'entry-input';
     render();
     return;
@@ -931,18 +1399,27 @@ function addEntry(sectionId, noteId, rawValue){
   state.entryError = null;
   const amount = parseFloat(match[1].replace(/,/g, ''));
   const desc = match[2].trim();
-  note.entries.unshift({ id: uid(), amount, desc, date: new Date().toISOString(), tag: null });
+  const tag = null;
+  note.entries.unshift({ id: uid(), amount, desc, date: new Date().toISOString(), tag });
+
+  // Save as template
+  addTemplate(sectionId, noteId, desc, amount, tag);
+
   pendingFocus = 'entry-input';
+  hapticSuccess();
   render();
   saveData();
 }
 
 function deleteEntry(sectionId, noteId, entryId){
+  const snapshot = createSnapshot();
   const note = findNote(sectionId, noteId);
   if(note) note.entries = note.entries.filter(e => e.id !== entryId);
   state.confirmDeleteEntry = null;
+  haptic();
   render();
   saveData();
+  UndoManager.push('Entry deleted', () => { restoreSnapshot(snapshot); });
 }
 
 function cycleTag(sectionId, noteId, entryId){
@@ -951,15 +1428,17 @@ function cycleTag(sectionId, noteId, entryId){
   const entry = note.entries.find(e => e.id === entryId);
   if(!entry) return;
   entry.tag = entry.tag === null ? 'essential' : entry.tag === 'essential' ? 'discretionary' : null;
+  haptic();
   render();
   saveData();
 }
 
-function createLender({type, person}){
+function createLender({type, person, dueDate}){
   const due = {
     id: uid(),
     type: type === 'lent' ? 'lent' : 'borrowed',
     person: (person || '').trim() || 'Unnamed',
+    dueDate: dueDate || null,
     transactions: [],
     createdAt: new Date().toISOString()
   };
@@ -968,16 +1447,20 @@ function createLender({type, person}){
   state.duesTab = due.type;
   state.expandedDueId = due.id;
   state.showAddTxFor = due.id;
+  hapticSuccess();
   render();
   saveData();
 }
 
 function deleteDue(id){
+  const snapshot = createSnapshot();
   state.dues = state.dues.filter(d => d.id !== id);
   if(state.expandedDueId === id) state.expandedDueId = null;
   state.confirmDeleteDue = null;
+  haptic();
   render();
   saveData();
+  UndoManager.push('Lender deleted', () => { restoreSnapshot(snapshot); });
 }
 
 function renameLender(id, name){
@@ -995,7 +1478,7 @@ function addTransaction(dueId, rawValue, buttonSign, dateStr){
   const trimmed = (rawValue || '').trim();
   const match = trimmed.match(/^([+-])?\s*([\d,]+(?:\.\d{1,2})?)\s+([^.]+)(?:\.(.*))?$/);
   if(!match){
-    state.transactionError = trimmed ? 'Try an amount then a reason, like \u201c5000 medical help\u201d' : null;
+    state.transactionError = trimmed ? 'Try an amount then a reason, like "5000 medical help"' : null;
     pendingFocus = 'transaction-input';
     render();
     return;
@@ -1015,16 +1498,20 @@ function addTransaction(dueId, rawValue, buttonSign, dateStr){
   const txDate = dateStr ? new Date(dateStr + 'T00:00:00').toISOString() : new Date().toISOString();
   due.transactions.unshift({ id: uid(), amount: signedAmount, desc, comment, date: txDate });
   state.showAddTxFor = null;
+  hapticSuccess();
   render();
   saveData();
 }
 
 function deleteTransaction(dueId, txId){
+  const snapshot = createSnapshot();
   const due = state.dues.find(d => d.id === dueId);
   if(due) due.transactions = due.transactions.filter(t => t.id !== txId);
   state.confirmDeleteTx = null;
+  haptic();
   render();
   saveData();
+  UndoManager.push('Transaction deleted', () => { restoreSnapshot(snapshot); });
 }
 
 function shareRecords(dueId){
@@ -1034,16 +1521,16 @@ function shareRecords(dueId){
   const labels = dueTypeLabels(due.type);
   const { principal, settled, pending } = txTotals(due);
   const lines = [];
-  lines.push(`${due.person} \u2014 ${due.type === 'lent' ? 'Lent' : 'Borrowed'}`);
-  lines.push(`${labels.principalLabel}: ${formatMoney(principal, sym)}   ${labels.settledLabel}: ${formatMoney(settled, sym)}   Pending: ${formatMoney(Math.max(0,pending), sym)}`);
+  lines.push(due.person + ' - ' + (due.type === 'lent' ? 'Lent' : 'Borrowed'));
+  lines.push(labels.principalLabel + ': ' + formatMoney(principal, sym) + '   ' + labels.settledLabel + ': ' + formatMoney(settled, sym) + '   Pending: ' + formatMoney(Math.max(0,pending), sym));
   lines.push('');
   due.transactions.slice().reverse().forEach(t => {
     const sign = t.amount < 0 ? '-' : '+';
-    lines.push(`${formatDate(t.date)}  ${sign}${formatMoney(Math.abs(t.amount), sym)}  ${t.desc}${t.comment ? ' (' + t.comment + ')' : ''}`);
+    lines.push(formatDate(t.date) + '  ' + sign + formatMoney(Math.abs(t.amount), sym) + '  ' + t.desc + (t.comment ? ' (' + t.comment + ')' : ''));
   });
   const text = lines.join('\n');
   if(navigator.share){
-    navigator.share({ title: due.person + ' \u2014 BudgetNotes', text }).catch(() => {});
+    navigator.share({ title: due.person + ' - BudgetNotes', text }).catch(() => {});
   } else {
     const blob = new Blob([text], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -1057,6 +1544,17 @@ function shareRecords(dueId){
   }
 }
 
+// WhatsApp-formatted share
+function shareWhatsApp(dueId){
+  const due = state.dues.find(d => d.id === dueId);
+  if(!due) return;
+  const sym = state.settings.defaultCurrency;
+  const { pending } = txTotals(due);
+  const text = '*BudgetNotes Update*\n\n' + due.person + '\nPending: ' + formatMoney(Math.max(0, pending), sym) + '\n\n' + due.transactions.slice(0,3).map(t => (t.amount < 0 ? '-' : '+') + formatMoney(Math.abs(t.amount), sym) + ' ' + t.desc).join('\n');
+  const waUrl = 'https://wa.me/?text=' + encodeURIComponent(text);
+  window.open(waUrl, '_blank');
+}
+
 async function createHousehold(){
   if(state.syncBusy) return;
   state.syncBusy = true; state.syncError = null;
@@ -1065,7 +1563,7 @@ async function createHousehold(){
   state.settings.householdId = id;
   state.syncStatus = 'connecting';
   render();
-  await saveData(); // pushes the current local data up as the household's starting point
+  await saveData();
   CloudSync.start(id);
   state.syncBusy = false;
   render();
@@ -1074,7 +1572,7 @@ async function createHousehold(){
 async function joinHousehold(code){
   const trimmed = (code || '').trim();
   if(trimmed.length < 20){
-    state.syncError = 'That doesn\u2019t look like a full household code. Ask your partner to copy it again.';
+    state.syncError = 'That does not look like a full household code. Ask your partner to copy it again.';
     render();
     return;
   }
@@ -1090,7 +1588,7 @@ async function joinHousehold(code){
       return;
     }
     applyRemoteState(remoteJson);
-    state.settings.householdId = trimmed; // in case the remote payload's own copy is missing/stale
+    state.settings.householdId = trimmed;
     await saveData();
     state.syncStatus = 'connecting';
     CloudSync.start(trimmed);
@@ -1113,11 +1611,32 @@ function stopSyncing(){
 }
 
 function exportData(){
-  const blob = new Blob([JSON.stringify({ sections: state.sections, dues: state.dues, todos: state.todos, settings: state.settings }, null, 2)], { type: 'application/json' });
+  const blob = new Blob([JSON.stringify({ sections: state.sections, dues: state.dues, todos: state.todos, settings: state.settings, entryTemplates: state.entryTemplates, savingsGoals: state.savingsGoals }, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
   a.download = 'budgetnotes-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function exportCSV(){
+  const lines = ['Date,Description,Amount,Note,Section,Currency,Tag'];
+  state.sections.forEach(s => {
+    s.notes.forEach(n => {
+      n.entries.forEach(e => {
+        const date = e.date ? new Date(e.date).toISOString().slice(0,10) : '';
+        lines.push([date, '"' + (e.desc || '') + '"', e.amount, '"' + n.title + '"', '"' + s.name + '"', s.currency, e.tag || 'untagged'].join(','));
+      });
+    });
+  });
+  const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'budgetnotes-export-' + new Date().toISOString().slice(0,10) + '.csv';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -1143,28 +1662,75 @@ function importData(file){
       }
       state.dues = (Array.isArray(parsed.dues) ? parsed.dues : []).map(migrateDue);
       state.todos = Array.isArray(parsed.todos) ? parsed.todos : [];
+      state.entryTemplates = parsed.entryTemplates || {};
+      state.savingsGoals = parsed.savingsGoals || {};
       state.settings = parsed.settings || state.settings;
       state.importError = null;
       state.showSettings = false;
       render();
       saveData();
     }catch(err){
-      state.importError = 'That file could not be read. Make sure it\u2019s a BudgetNotes backup.';
+      state.importError = 'That file could not be read. Make sure it is a BudgetNotes backup.';
       render();
     }
   };
   reader.readAsText(file);
 }
 
-/* ---------- rendering ---------- */
-
-function emptyState(title, body, cta, ctaAction){
-  return `<div class="empty">
-    <div class="empty-title">${escapeHtml(title)}</div>
-    <div class="empty-body">${escapeHtml(body)}</div>
-    ${cta ? `<button class="btn-primary" data-action="${ctaAction}">${escapeHtml(cta)}</button>` : ''}
-  </div>`;
+/* ---------- BULK ENTRY ---------- */
+function processBulkEntry(sectionId, noteId, text){
+  const lines = text.split('\n').filter(l => l.trim());
+  const note = findNote(sectionId, noteId);
+  if(!note) return;
+  const added = [];
+  lines.forEach(line => {
+    const match = line.trim().match(/^(-?[\d,]+(?:\.\d{1,2})?)\s+(.+)$/);
+    if(match){
+      const amount = parseFloat(match[1].replace(/,/g, ''));
+      const desc = match[2].trim();
+      note.entries.unshift({ id: uid(), amount, desc, date: new Date().toISOString(), tag: null });
+      added.push({ amount, desc });
+    }
+  });
+  if(added.length > 0){
+    hapticSuccess();
+    render();
+    saveData();
+    UndoManager.push(added.length + ' entries added', () => {
+      for(let i = 0; i < added.length; i++) note.entries.shift();
+      render(); saveData();
+    });
+  }
+  state.showBulkEntry = false;
 }
+
+/* ---------- QUICK ADD ---------- */
+function quickAdd(rawValue, sectionId, noteId){
+  const trimmed = (rawValue || '').trim();
+  const match = trimmed.match(/^(-?[\d,]+(?:\.\d{1,2})?)\s+(.+)$/);
+  if(!match) return false;
+  const amount = parseFloat(match[1].replace(/,/g, ''));
+  const desc = match[2].trim();
+  const s = findSection(sectionId);
+  const n = findNote(sectionId, noteId);
+  if(!s || !n) return false;
+  n.entries.unshift({ id: uid(), amount, desc, date: new Date().toISOString(), tag: null });
+  addTemplate(sectionId, noteId, desc, amount, null);
+  hapticSuccess();
+  render();
+  saveData();
+  return true;
+}
+
+/* ---------- SAVINGS GOAL ---------- */
+function setSavingsGoal(sectionId, target, label){
+  state.savingsGoals[sectionId] = { target: Number(target) || 0, label: label || 'Savings Goal' };
+  render();
+  saveData();
+}
+
+
+/* ---------- RENDERING ---------- */
 
 function renderHeader(){
   const isDark = state.settings.theme === 'dark';
@@ -1175,10 +1741,55 @@ function renderHeader(){
       <span class="brand-tag">write it. track it.</span>
     </div>
     <div class="header-actions">
-      <button class="icon-btn" data-action="toggle-theme" title="${isDark ? 'Switch to light theme' : 'Switch to dark theme'}" aria-label="${isDark ? 'Switch to light theme' : 'Switch to dark theme'}">${isDark ? '&#9789;' : '&#9728;'}</button>
-      <button class="icon-btn" data-action="open-settings" title="Backup &amp; settings" aria-label="Backup and settings">&#9881;</button>
+      <button class="icon-btn" data-action="toggle-search" title="Search (Ctrl+K)" aria-label="Search">&#128269;</button>
+      <button class="icon-btn" data-action="toggle-theme" title="${isDark ? 'Switch to light' : 'Switch to dark'}" aria-label="Toggle theme">${isDark ? '&#9789;' : '&#9728;'}</button>
+      <button class="icon-btn" data-action="open-settings" title="Settings" aria-label="Settings">&#9881;</button>
     </div>
-  </header>
+  </header>`;
+}
+
+function renderSearch(){
+  if(!state.showSearch) return '';
+  const results = state.searchQuery ? performSearch(state.searchQuery) : [];
+  return `
+  <div class="search-bar">
+    <div class="search-inner">
+      <span class="search-icon">&#128269;</span>
+      <input type="text" class="search-input" id="search-input" placeholder="Search notes, entries, dues..." value="${escapeHtml(state.searchQuery)}" autocomplete="off" />
+      <button class="search-clear" data-action="clear-search">&#10005;</button>
+    </div>
+    ${results.length > 0 ? `
+    <div class="search-results">
+      ${results.map(r => `
+        <div class="search-result-item" data-action="search-result" data-type="${r.type}" data-id="${r.id}" ${r.sectionId ? 'data-section-id="'+r.sectionId+'"' : ''} ${r.noteId ? 'data-note-id="'+r.noteId+'"' : ''} ${r.dueId ? 'data-due-id="'+r.dueId+'"' : ''}>
+          <span>${highlightMatch(r.title, state.searchQuery)}</span>
+          <span class="search-result-type">${r.type}</span>
+        </div>
+      `).join('')}
+    </div>` : (state.searchQuery ? '<div class="search-results"><div class="search-result-item" style="color:var(--ink-faint)">No results found</div></div>' : '')}
+  </div>`;
+}
+
+function renderBottomNav(){
+  const tabs = [
+    { key: 'home', icon: '&#127968;', label: 'Home' },
+    { key: 'notes', icon: '&#128221;', label: 'Notes' },
+    { key: 'dues', icon: '&#128176;', label: 'Dues' },
+    { key: 'todos', icon: '&#9989;', label: 'Todos' }
+  ];
+  return `
+  <nav class="bottom-nav">
+    ${tabs.map(t => `
+      <button class="bottom-nav-item ${state.tab===t.key?'active':''}" data-action="set-tab" data-tab="${t.key}">
+        <span class="nav-icon">${t.icon}</span>
+        <span>${t.label}</span>
+      </button>
+    `).join('')}
+  </nav>`;
+}
+
+function renderTabs(){
+  return `
   <nav class="tabs" role="tablist">
     <button class="tab ${state.tab==='home'?'active':''}" data-action="set-tab" data-tab="home">Home</button>
     <button class="tab ${state.tab==='notes'?'active':''}" data-action="set-tab" data-tab="notes">Notes</button>
@@ -1187,45 +1798,121 @@ function renderHeader(){
   </nav>`;
 }
 
-function allEntriesFlat(){
-  const out = [];
-  state.sections.forEach(s => s.notes.forEach(n => n.entries.forEach(e => out.push(e))));
-  return out;
-}
-
-// Returns every entry across all notes, enriched with section/note labels.
-function allEntriesRich(){
-  const out = [];
-  state.sections.forEach(s => s.notes.forEach(n => n.entries.forEach(e =>
-    out.push({ ...e, noteName: n.title, sectionName: s.name, currency: s.currency })
-  )));
-  return out;
-}
-
-// Returns entries whose ISO date falls on the given local YYYY-MM-DD date string.
-function entriesOnDate(dateStr){
-  return allEntriesRich().filter(e => {
-    if(!e.date) return false;
-    const d = new Date(e.date);
-    const local = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    return local === dateStr;
+function renderQuickAdd(){
+  if(state.tab !== 'home' || state.sections.length === 0) return '';
+  const options = [];
+  state.sections.forEach(s => {
+    s.notes.forEach(n => {
+      options.push({ sectionId: s.id, noteId: n.id, label: (n.icon ? n.icon + ' ' : '') + n.title + ' (' + s.name + ')' });
+    });
   });
+  if(options.length === 0) return '';
+  return `
+  <div class="quick-add-bar">
+    <div class="quick-add-title">Quick Add</div>
+    <form class="quick-add-form" data-form="quick-add">
+      <input type="text" name="quick-entry" placeholder="150 Groceries" autocomplete="off" />
+      <select name="quick-target">
+        ${options.map(o => `<option value="${o.sectionId}:${o.noteId}">${escapeHtml(o.label)}</option>`).join('')}
+      </select>
+      <button type="submit" class="btn-primary small">Add</button>
+    </form>
+    <div id="quick-add-preview" class="quick-add-preview"></div>
+  </div>`;
 }
 
-// Groups entries by day, newest first, within a period window (in days).
-function entriesByDay(maxDays){
-  const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - maxDays + 1);
-  cutoff.setHours(0,0,0,0);
-  const rich = allEntriesRich().filter(e => e.date && new Date(e.date) >= cutoff);
-  const byDay = {};
-  rich.forEach(e => {
-    const d = new Date(e.date);
-    const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    if(!byDay[key]) byDay[key] = { dateStr: key, entries: [] };
-    byDay[key].entries.push(e);
-  });
-  return Object.values(byDay).sort((a,b) => b.dateStr.localeCompare(a.dateStr));
+function renderInsights(){
+  const insights = getInsights();
+  if(!insights.topCategory && insights.untaggedCount === 0) return '';
+  return `
+  <div class="card insights-card">
+    <h3 class="leading-title" style="margin-bottom:10px;">Insights</h3>
+    ${insights.vsLastMonth != 0 ? `
+    <div class="insight-row">
+      <span class="insight-icon">&#128200;</span>
+      <span class="insight-text">vs last month</span>
+      <span class="insight-value ${insights.vsLastMonth > 0 ? 'insight-negative' : 'insight-positive'}">${insights.vsLastMonth > 0 ? '+' : ''}${insights.vsLastMonth}%</span>
+    </div>` : ''}
+    ${insights.topCategory ? `
+    <div class="insight-row">
+      <span class="insight-icon">&#128293;</span>
+      <span class="insight-text">Top: ${escapeHtml(insights.topCategory.desc)}</span>
+      <span class="insight-value insight-neutral">${formatMoney(insights.topCategory.amount, state.settings.defaultCurrency)}</span>
+    </div>` : ''}
+    ${insights.untaggedCount > 0 ? `
+    <div class="insight-row">
+      <span class="insight-icon">&#127991;</span>
+      <span class="insight-text">${insights.untaggedCount} untagged entries</span>
+      <span class="insight-value insight-neutral">Tag them!</span>
+    </div>` : ''}
+  </div>`;
+}
+
+function renderCalendar(){
+  if(!state.showCalendar) return '';
+  const year = state.calendarMonth.getFullYear();
+  const month = state.calendarMonth.getMonth();
+  const days = getCalendarData(year, month);
+  const monthName = state.calendarMonth.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+  const dayLabels = ['S','M','T','W','T','F','S'];
+
+  return `
+  <div class="card leading-card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <h3 class="leading-title">Spending Calendar</h3>
+      <div style="display:flex;gap:8px;">
+        <button class="icon-btn" data-action="calendar-prev">&#8249;</button>
+        <span style="font-size:13px;font-weight:600;">${monthName}</span>
+        <button class="icon-btn" data-action="calendar-next">&#8250;</button>
+      </div>
+    </div>
+    <div class="calendar-day-labels">
+      ${dayLabels.map(d => `<div class="calendar-day-label">${d}</div>`).join('')}
+    </div>
+    <div class="calendar-heatmap">
+      ${days.map(d => d === null ? '<div class="calendar-day empty"></div>' : `
+        <div class="calendar-day level-${d.level} ${d.isToday?'today':''}" data-action="calendar-day" data-date="${d.dateStr}" title="${d.spend > 0 ? formatMoney(d.spend, state.settings.defaultCurrency) : 'No spending'}">
+          ${d.day}
+        </div>
+      `).join('')}
+    </div>
+    <div class="calendar-legend">
+      <span>Less</span>
+      <div class="calendar-legend-dot" style="background:var(--line)"></div>
+      <div class="calendar-legend-dot" style="background:var(--sage-soft)"></div>
+      <div class="calendar-legend-dot" style="background:var(--sage)"></div>
+      <div class="calendar-legend-dot" style="background:var(--periwinkle)"></div>
+      <div class="calendar-legend-dot" style="background:var(--coral)"></div>
+      <span>More</span>
+    </div>
+  </div>`;
+}
+
+function renderSavingsGoal(section){
+  const goal = state.savingsGoals[section.id];
+  if(!goal || goal.target <= 0) return '';
+  const saved = sectionSavings(section);
+  const pct = Math.min(100, Math.round((saved / goal.target) * 100));
+  return `
+  <div class="goal-card">
+    <div class="goal-header">
+      <h4 class="goal-title">${escapeHtml(goal.label)}</h4>
+      <span class="goal-amount">${formatMoney(saved, section.currency)} / ${formatMoney(goal.target, section.currency)}</span>
+    </div>
+    <div class="goal-bar-bg"><div class="goal-bar-fill" style="width:${pct}%"></div></div>
+    <div class="goal-stats">
+      <span>${pct}% saved</span>
+      <span>${formatMoney(Math.max(0, goal.target - saved), section.currency)} to go</span>
+    </div>
+  </div>`;
+}
+
+function emptyState(title, body, cta, ctaAction){
+  return `<div class="empty">
+    <div class="empty-title">${escapeHtml(title)}</div>
+    <div class="empty-body">${escapeHtml(body)}</div>
+    ${cta ? `<button class="btn-primary" data-action="${ctaAction}">${escapeHtml(cta)}</button>` : ''}
+  </div>`;
 }
 
 function renderHome(){
@@ -1239,19 +1926,18 @@ function renderHome(){
   const statsCard = `
   <div class="card">
     <div class="stats-row">
-      <div class="stat-col"><span class="stat-label">Notes</span><span class="stat-value">${totalNotes}</span></div>
-      <div class="stat-col"><span class="stat-label">Budget</span><span class="stat-value">${formatMoney(totalBudget, sym)}</span></div>
-      <div class="stat-col"><span class="stat-label">Spent</span><span class="stat-value">${formatMoney(totalSpent, sym)}</span></div>
-      <div class="stat-col"><span class="stat-label">Utilized</span><span class="stat-value">${utilized}%</span></div>
+      <div class="stat-col"><span class="stat-label">Notes</span><span class="stat-value counter-anim">${totalNotes}</span></div>
+      <div class="stat-col"><span class="stat-label">Budget</span><span class="stat-value counter-anim">${formatMoney(totalBudget, sym)}</span></div>
+      <div class="stat-col"><span class="stat-label">Spent</span><span class="stat-value counter-anim">${formatMoney(totalSpent, sym)}</span></div>
+      <div class="stat-col"><span class="stat-label">Utilized</span><span class="stat-value counter-anim">${utilized}%</span></div>
     </div>
     <div class="stats-divider"></div>
     <div class="savings-row">
       <span class="savings-label">Total savings</span>
-      <span class="savings-value">${formatMoney(totalSavings, sym)}</span>
+      <span class="savings-value counter-anim">${formatMoney(totalSavings, sym)}</span>
     </div>
   </div>`;
 
-  // ---- Today's Expenses ----
   const todayEntries = entriesOnDate(todayStr());
   const todayTotal = todayEntries.reduce((s,e) => s + e.amount, 0);
   let todayCard;
@@ -1259,7 +1945,7 @@ function renderHome(){
     todayCard = `
     <div class="card leading-card">
       <h3 class="leading-title">Today's expenses</h3>
-      <p class="leading-sub" style="margin-bottom:0;">${new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})} &mdash; nothing logged yet.</p>
+      <p class="leading-sub" style="margin-bottom:0;">${new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'})} - nothing logged yet.</p>
     </div>`;
   } else {
     const sorted = todayEntries.slice().sort((a,b) => b.amount - a.amount);
@@ -1280,7 +1966,6 @@ function renderHome(){
     </div>`;
   }
 
-  // ---- Leading Expenses (top 12) ----
   const groups = groupEntries(allEntriesFlat());
   const top12 = groups.slice(0,12);
   let leadingCard;
@@ -1311,7 +1996,6 @@ function renderHome(){
     </div>`;
   }
 
-  // ---- History ----
   const periods = [
     { key:'7d', label:'7 days' },
     { key:'30d', label:'30 days' },
@@ -1332,7 +2016,7 @@ function renderHome(){
       const sorted = dg.entries.slice().sort((a,b) => b.amount - a.amount);
       return `
       <div class="history-day">
-        <div class="history-day-label">${formatDate(dg.dateStr + 'T00:00:00')} &mdash; <span class="mono">${formatMoney(dayTotal, sym)}</span></div>
+        <div class="history-day-label">${formatDate(dg.dateStr + 'T00:00:00')} - <span class="mono">${formatMoney(dayTotal, sym)}</span></div>
         ${sorted.map(e => `
           <div class="history-entry-row">
             <span>${escapeHtml(e.desc)}</span>
@@ -1346,15 +2030,16 @@ function renderHome(){
   const historyCard = `
   <div class="card leading-card">
     <h3 class="leading-title">History</h3>
-    <p class="leading-sub">All entries &mdash; ${formatMoney(historyTotal, sym)} total</p>
+    <p class="leading-sub">All entries - ${formatMoney(historyTotal, sym)} total</p>
     <div class="history-tabs">
       ${periods.map(p => `<button class="history-tab ${state.historyPeriod===p.key?'active':''}" data-action="set-history-period" data-period="${p.key}">${p.label}</button>`).join('')}
     </div>
     ${historyBody}
   </div>`;
 
-  return `<div class="view">${statsCard}${todayCard}${leadingCard}${historyCard}</div>`;
+  return `<div class="view">${renderQuickAdd()}${renderInsights()}${statsCard}${todayCard}${renderCalendar()}${leadingCard}${historyCard}</div>`;
 }
+
 
 function noteRow(section, note){
   const spent = noteSpent(note);
@@ -1380,6 +2065,8 @@ function sectionCard(section){
   const clamped = Math.min(100, Math.max(0, pct));
   const status = pct > 100 ? 'coral' : (pct >= 70 ? 'amber' : 'sage');
   const isConfirm = state.confirmDeleteSection === section.id;
+  const burn = getBurnRate(section);
+
   return `
   <div class="card section-card">
     <div class="section-top" data-action="toggle-section" data-id="${section.id}" role="button" tabindex="0">
@@ -1389,7 +2076,7 @@ function sectionCard(section){
       </div>
       <div class="section-actions">
         <button class="icon-btn ghost" data-action="ask-edit-section" data-id="${section.id}" title="Edit section" aria-label="Edit section">Edit</button>
-        <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-section':'ask-delete-section'}" data-id="${section.id}" title="Delete section" aria-label="Delete section">${isConfirm?'Delete?':'\u2715'}</button>
+        <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-section':'ask-delete-section'}" data-id="${section.id}" title="Delete section" aria-label="Delete section">${isConfirm?'Delete?':'&#10005;'}</button>
         <span class="chevron ${expanded?'open':''}">&#9656;</span>
       </div>
     </div>
@@ -1400,6 +2087,13 @@ function sectionCard(section){
       <span class="ink-faint">${section.notes.length} ${section.notes.length===1?'note':'notes'}</span>
     </div>
     <div class="bar bar-${status}"><div class="bar-fill" style="width:${clamped}%"></div></div>
+    ${burn.status !== 'on-track' ? `
+    <div class="burn-rate">
+      <span style="font-size:11px;">${burn.status === 'over' ? 'Over pace' : 'Under pace'}</span>
+      <div class="burn-rate-bar"><div class="burn-rate-fill ${burn.status}" style="width:${Math.min(100, (burn.actualSpend / Math.max(1, burn.expectedSpend)) * 50)}%"></div></div>
+      <span style="font-size:11px;" class="${burn.status === 'over' ? 'text-coral' : 'ink-faint'}">${Math.round((burn.actualSpend / Math.max(1, burn.expectedSpend)) * 100)}% of expected</span>
+    </div>` : ''}
+    ${renderSavingsGoal(section)}
     ${expanded ? `
       <div class="section-expand">
         ${section.notes.length === 0 ? `<p class="ink-faint" style="font-size:13px;margin:4px 0 8px;">No notes in this section yet.</p>` : section.notes.map(n => noteRow(section, n)).join('')}
@@ -1416,7 +2110,7 @@ function renderSectionsList(){
       <button class="btn-primary" data-action="open-new-section">+ New section</button>
     </div>
     ${state.sections.length===0
-      ? emptyState('No sections yet', 'A section is a budgeting period \u2014 weekly, monthly, or yearly. Create one, then add notes like Groceries or Fuel inside it.', '+ New section', 'open-new-section')
+      ? emptyState('No sections yet', 'A section is a budgeting period - weekly, monthly, or yearly. Create one, then add notes like Groceries or Fuel inside it.', '+ New section', 'open-new-section')
       : `<div class="section-list">${state.sections.map(sectionCard).join('')}</div>`}
   </div>`;
 }
@@ -1433,14 +2127,28 @@ function bi_row(g, note, section){
 function entryRow(entry, section, note){
   const isConfirm = state.confirmDeleteEntry === entry.id;
   const tagClass = entry.tag === 'essential' ? 'tag-essential' : entry.tag === 'discretionary' ? 'tag-discretionary' : '';
-  const tagTitle = entry.tag === 'essential' ? 'Essential \u2014 click to change' : entry.tag === 'discretionary' ? 'Discretionary \u2014 click to change' : 'Untagged \u2014 click to tag';
+  const tagTitle = entry.tag === 'essential' ? 'Essential - click to change' : entry.tag === 'discretionary' ? 'Discretionary - click to change' : 'Untagged - click to tag';
   return `
   <div class="ledger-row">
     <button class="tag-btn ${tagClass}" data-action="cycle-tag" data-section-id="${section.id}" data-note-id="${note.id}" data-entry-id="${entry.id}" title="${tagTitle}" aria-label="${tagTitle}"></button>
     <span class="mono amount">${formatMoney(entry.amount, section.currency)}</span>
     <span class="desc">${escapeHtml(entry.desc)}</span>
     <span class="ink-faint date">${formatDate(entry.date)}</span>
-    <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-entry':'ask-delete-entry'}" data-section-id="${section.id}" data-note-id="${note.id}" data-entry-id="${entry.id}" aria-label="Delete entry">${isConfirm?'Confirm':'\u2715'}</button>
+    <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-entry':'ask-delete-entry'}" data-section-id="${section.id}" data-note-id="${note.id}" data-entry-id="${entry.id}" aria-label="Delete entry">${isConfirm?'Confirm':'&#10005;'}</button>
+  </div>`;
+}
+
+function renderTemplates(section, note){
+  const templates = getTemplatesForNote(section.id, note.id);
+  if(templates.length === 0) return '';
+  return `
+  <div class="template-chips">
+    ${templates.slice().reverse().map(t => `
+      <button class="template-chip" data-action="use-template" data-section-id="${section.id}" data-note-id="${note.id}" data-desc="${escapeHtml(t.desc)}" data-amount="${t.amount}">
+        <span>${escapeHtml(t.desc)}</span>
+        <span class="chip-amount">${formatMoney(t.amount, section.currency)}</span>
+      </button>
+    `).join('')}
   </div>`;
 }
 
@@ -1452,6 +2160,7 @@ function renderNoteDetail(section, note){
   const status = pct > 100 ? 'coral' : (pct >= 70 ? 'amber' : 'sage');
   const groups = groupEntries(note.entries);
   const availableToAllocate = sectionSavings(section);
+  const templates = renderTemplates(section, note);
 
   return `
   <div class="view">
@@ -1471,6 +2180,8 @@ function renderNoteDetail(section, note){
     </div>
     <div class="allocate-hint">${formatMoney(availableToAllocate, section.currency)} still available to allocate in ${escapeHtml(section.name)}</div>
 
+    ${templates}
+
     ${groups.length > 0 ? `
       <div class="card budget-items-card">
         <div class="bi-head"><span class="bi-title">Budget items (${groups.length})</span></div>
@@ -1484,6 +2195,17 @@ function renderNoteDetail(section, note){
     <div id="entry-preview" class="entry-preview"></div>
     ${state.entryError ? `<div class="form-error">${escapeHtml(state.entryError)}</div>` : ''}
 
+    <div style="margin-bottom:10px;">
+      <button class="btn-secondary small" data-action="toggle-bulk-entry">${state.showBulkEntry ? 'Hide Bulk Entry' : 'Bulk Entry'}</button>
+    </div>
+
+    ${state.showBulkEntry ? `
+    <div style="margin-bottom:16px;">
+      <textarea class="bulk-textarea" id="bulk-textarea" placeholder="150 Milk&#10;45 Bread&#10;200 Eggs"></textarea>
+      <div id="bulk-preview" class="bulk-preview"></div>
+      <button class="btn-primary small" data-action="submit-bulk" data-section-id="${section.id}" data-note-id="${note.id}" style="margin-top:8px;">Add All</button>
+    </div>` : ''}
+
     ${note.entries.length===0
       ? emptyState('Nothing logged yet', 'Type an amount and what it was for, then press Add.', null, null)
       : `<div class="ledger">${note.entries.map(en => entryRow(en, section, note)).join('')}</div>`}
@@ -1494,15 +2216,16 @@ function renderNoteDetail(section, note){
   </div>`;
 }
 
+
 function todoRow(t, opts){
   opts = opts || {};
   const isConfirm = state.confirmDeleteTodo === t.id;
   return `
   <div class="todo-row ${t.done?'done':''}">
-    <button class="todo-check ${t.done?'checked':''}" data-action="toggle-todo" data-id="${t.id}" aria-label="${t.done?'Mark not done':'Mark done'}">${t.done?'\u2713':''}</button>
+    <button class="todo-check ${t.done?'checked':''}" data-action="toggle-todo" data-id="${t.id}" aria-label="${t.done?'Mark not done':'Mark done'}">${t.done?'&#10003;':''}</button>
     <span class="todo-text">${escapeHtml(t.text)}</span>
     ${opts.showDate ? `<span class="ink-faint todo-date-tag">${formatDate(t.date)}</span>` : ''}
-    <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-todo':'ask-delete-todo'}" data-id="${t.id}" aria-label="Delete task">${isConfirm?'Confirm':'\u2715'}</button>
+    <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-todo':'ask-delete-todo'}" data-id="${t.id}" aria-label="Delete task">${isConfirm?'Confirm':'&#10005;'}</button>
   </div>`;
 }
 
@@ -1558,7 +2281,7 @@ function txRow(t, due, sym){
     <span class="mono tx-amount">${positive?'+':'-'}${formatMoney(Math.abs(t.amount), sym)}</span>
     <span class="tx-desc">${escapeHtml(t.desc)}${t.comment ? ` <span class="ink-faint">(${escapeHtml(t.comment)})</span>` : ''}</span>
     <span class="tx-date">${formatDate(t.date)}</span>
-    <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-tx':'ask-delete-tx'}" data-due-id="${due.id}" data-tx-id="${t.id}" aria-label="Delete transaction">${isConfirm?'Confirm':'\u2715'}</button>
+    <button class="icon-btn ghost ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-tx':'ask-delete-tx'}" data-due-id="${due.id}" data-tx-id="${t.id}" aria-label="Delete transaction">${isConfirm?'Confirm':'&#10005;'}</button>
   </div>`;
 }
 
@@ -1570,6 +2293,8 @@ function dueCard(due){
   const expanded = state.expandedDueId === due.id;
   const isConfirm = state.confirmDeleteDue === due.id;
   const accent = due.type === 'lent' ? 'periwinkle' : 'sand';
+  const dueStatus = due.dueDate ? getDueDateStatus(due.dueDate) : null;
+
   return `
   <div class="card due-card">
     <div class="due-top" data-action="toggle-due" data-id="${due.id}" role="button" tabindex="0">
@@ -1578,7 +2303,8 @@ function dueCard(due){
         <button class="icon-btn ghost" data-action="open-edit-lender" data-id="${due.id}" title="Rename" aria-label="Rename lender">&#9998;</button>
       </div>
       <div class="due-amount-row">
-        <span class="due-amount mono ${displayPending<=0?'text-sage':'accent-'+accent}">${displayPending<=0 ? 'Settled \u2713' : formatMoney(displayPending, sym)}</span>
+        ${dueStatus ? `<span class="due-date-badge ${dueStatus.status}">${dueStatus.label}</span>` : ''}
+        <span class="due-amount mono ${displayPending<=0?'text-sage':'accent-'+accent}">${displayPending<=0 ? 'Settled &#10003;' : formatMoney(displayPending, sym)}</span>
         <span class="chevron ${expanded?'open':''}">&#9656;</span>
       </div>
     </div>
@@ -1597,6 +2323,7 @@ function dueCard(due){
         <button class="btn-secondary small" data-action="open-add-tx" data-id="${due.id}" style="align-self:flex-start;">+ Add Transaction</button>
         <div class="due-actions-row">
           <button class="btn-secondary small" data-action="share-due" data-id="${due.id}">Share Records</button>
+          <button class="btn-secondary small" data-action="share-whatsapp" data-id="${due.id}">WhatsApp</button>
           <button class="btn-secondary small ${isConfirm?'danger':''}" data-action="${isConfirm?'confirm-delete-due':'ask-delete-due'}" data-id="${due.id}">${isConfirm?'Confirm delete':'Delete Lender'}</button>
         </div>
       </div>` : ''}
@@ -1627,15 +2354,15 @@ function renderDuesView(){
     </div>
     ${filtered.length===0
       ? emptyState(
-          state.duesTab==='lent' ? 'No one owes you yet' : 'You don\u2019t owe anyone yet',
-          state.duesTab==='lent' ? 'Add a lender to start tracking money you\u2019ve lent out.' : 'Add a lender to start tracking a loan, EMI, or money you owe.',
+          state.duesTab==='lent' ? 'No one owes you yet' : 'You do not owe anyone yet',
+          state.duesTab==='lent' ? 'Add a lender to start tracking money you have lent out.' : 'Add a lender to start tracking a loan, EMI, or money you owe.',
           '+ Add lender', 'open-new-due')
       : `<div class="due-list">${filtered.map(dueCard).join('')}</div>`}
   </div>`;
 }
 
 function currencyOptions(selected){
-  const opts = [['Rs ','Rs Pakistani Rupee'],['$','$ Dollar'],['\u20B9','\u20B9 Indian Rupee'],['\u20AC','\u20AC Euro'],['\u00A3','\u00A3 Pound'],['\u00A5','\u00A5 Yen']];
+  const opts = [['Rs ','Rs Pakistani Rupee'],['$','$ Dollar'],['&#8377;','&#8377; Indian Rupee'],['&#8364;','&#8364; Euro'],['&#163;','&#163; Pound'],['&#165;','&#165; Yen']];
   return opts.map(([v,label]) => `<option value="${v}" ${selected===v?'selected':''}>${label}</option>`).join('') + `<option value="custom">Custom symbol</option>`;
 }
 
@@ -1702,7 +2429,7 @@ function noteModal(){
         </label>
         <div class="field-row">
           <label>Icon <span class="ink-faint">(optional)</span>
-            <input name="icon" type="text" maxlength="4" placeholder="\uD83D\uDED2" />
+            <input name="icon" type="text" maxlength="4" placeholder="&#128722;" />
           </label>
           <label>Budget
             <input name="budget" type="number" min="0" step="0.01" placeholder="30000" required />
@@ -1730,6 +2457,9 @@ function newDueModal(){
         <label>Person
           <input name="person" type="text" placeholder="John" required />
         </label>
+        <label>Due date (optional)
+          <input name="dueDate" type="date" />
+        </label>
         <div class="modal-actions">
           <button type="button" class="btn-secondary" data-action="close-modal">Cancel</button>
           <button type="submit" class="btn-primary">Add</button>
@@ -1750,8 +2480,8 @@ function addTransactionModal(){
       <p class="tx-person-row">Person: <b>${escapeHtml(due.person)}</b></p>
       <div class="tx-hint-card">
         <div class="tx-hint-title">Format:</div>
-        <div class="tx-hint-line">&bull; Amount then reason &mdash; e.g., <b>5000 medical help</b></div>
-        <div class="tx-hint-line">&bull; Optional comment after a dot &mdash; e.g., <b>5000 rent.Jan installment</b></div>
+        <div class="tx-hint-line">&bull; Amount then reason - e.g., <b>5000 medical help</b></div>
+        <div class="tx-hint-line">&bull; Optional comment after a dot - e.g., <b>5000 rent.Jan installment</b></div>
         <div class="tx-hint-line">&bull; Pick a custom date above if not today</div>
       </div>
       <form data-form="transaction" data-due-id="${due.id}">
@@ -1795,9 +2525,9 @@ function editLenderModal(){
 function settingsModal(){
   const c = state.settings.defaultCurrency;
   const householdId = state.settings.householdId;
-  const statusLabel = state.syncStatus === 'connected' ? 'Connected \u2014 changes sync live'
-    : state.syncStatus === 'connecting' ? 'Connecting\u2026'
-    : state.syncStatus === 'error' ? 'Connection trouble \u2014 will retry'
+  const statusLabel = state.syncStatus === 'connected' ? 'Connected - changes sync live'
+    : state.syncStatus === 'connecting' ? 'Connecting...'
+    : state.syncStatus === 'error' ? 'Connection trouble - will retry'
     : '';
 
   let syncSection;
@@ -1813,7 +2543,7 @@ function settingsModal(){
           <span class="sync-code-text">${escapeHtml(householdId)}</span>
           <button type="button" class="icon-btn ghost" data-action="copy-household-code" aria-label="Copy code">Copy</button>
         </div>
-        <p class="ink-faint small-print" style="margin:0 0 10px;">Share this code with your partner once \u2014 they enter it under "Join a partner's data" to connect.</p>
+        <p class="ink-faint small-print" style="margin:0 0 10px;">Share this code with your partner once - they enter it under "Join a partner's data" to connect.</p>
         <button type="button" class="btn-secondary small" data-action="stop-syncing">Stop syncing</button>
       </div>`;
   } else if(state.showJoinHousehold){
@@ -1827,7 +2557,7 @@ function settingsModal(){
           ${state.syncError ? `<div class="form-error">${escapeHtml(state.syncError)}</div>` : ''}
           <div class="sync-actions-row">
             <button type="button" class="btn-secondary small" data-action="cancel-join-household">Cancel</button>
-            <button type="submit" class="btn-primary small" ${state.syncBusy?'disabled':''}>${state.syncBusy ? 'Joining\u2026' : 'Join'}</button>
+            <button type="submit" class="btn-primary small" ${state.syncBusy?'disabled':''}>${state.syncBusy ? 'Joining...' : 'Join'}</button>
           </div>
         </form>
         <p class="ink-faint small-print">This replaces your current data on this device with your partner's, then keeps both in sync from then on.</p>
@@ -1838,7 +2568,7 @@ function settingsModal(){
         <div class="settings-label">Sync with partner</div>
         <p class="ink-faint small-print" style="margin-top:0;">Add transactions on two phones and see each other's changes live.</p>
         <div class="sync-actions-row">
-          <button type="button" class="btn-secondary small" data-action="start-create-household" ${state.syncBusy?'disabled':''}>${state.syncBusy ? 'Creating\u2026' : 'Create &amp; share a code'}</button>
+          <button type="button" class="btn-secondary small" data-action="start-create-household" ${state.syncBusy?'disabled':''}>${state.syncBusy ? 'Creating...' : 'Create & share a code'}</button>
           <button type="button" class="btn-secondary small" data-action="open-join-household">Join a partner's data</button>
         </div>
       </div>`;
@@ -1847,7 +2577,7 @@ function settingsModal(){
   return `
   <div class="overlay">
     <div class="modal">
-      <h3>Backup &amp; settings</h3>
+      <h3>Backup & settings</h3>
       ${syncSection}
       <div class="settings-row">
         <div>
@@ -1856,17 +2586,352 @@ function settingsModal(){
         </div>
       </div>
       <div class="settings-row">
-        <button class="btn-secondary" data-action="export-data">Export backup (.json)</button>
+        <button class="btn-secondary" data-action="export-data">Export JSON</button>
+        <button class="btn-secondary" data-action="export-csv">Export CSV</button>
         <button class="btn-secondary" data-action="trigger-import">Import backup</button>
         <input id="import-file" type="file" accept="application/json" hidden />
       </div>
       ${state.importError ? `<div class="form-error">${escapeHtml(state.importError)}</div>` : ''}
-      <p class="ink-faint small-print">Everything here stays in your account \u2014 nothing is shared${householdId ? ' beyond the partner you sync with' : ''}.</p>
+      <div class="settings-row" style="display:block;">
+        <div class="settings-label">Keyboard shortcuts</div>
+        <p class="ink-faint small-print"><span class="kbd">Ctrl+K</span> Search &nbsp; <span class="kbd">Ctrl+N</span> New entry &nbsp; <span class="kbd">Ctrl+/</span> Toggle theme &nbsp; <span class="kbd">Esc</span> Close modal</p>
+      </div>
+      <p class="ink-faint small-print">Everything here stays in your account - nothing is shared${householdId ? ' beyond the partner you sync with' : ''}.</p>
       <div class="modal-actions">
         <button type="button" class="btn-primary" data-action="close-modal">Done</button>
       </div>
     </div>
   </div>`;
+}
+
+
+/* ---------- RENDERING ---------- */
+
+function emptyState(title, body, cta, ctaAction){
+  return '<div class="empty"><div class="empty-title">' + escapeHtml(title) + '</div><div class="empty-body">' + escapeHtml(body) + '</div>' + (cta ? '<button class="btn-primary" data-action="' + ctaAction + '">' + escapeHtml(cta) + '</button>' : '') + '</div>';
+}
+
+function renderHeader(){
+  const isDark = state.settings.theme === 'dark';
+  return '<header class="app-header"><div class="brand"><span class="brand-mark">BudgetNotes</span><span class="brand-tag">write it. track it.</span></div><div class="header-actions"><button class="icon-btn" data-action="toggle-search" title="Search" aria-label="Search">&#128269;</button><button class="icon-btn" data-action="toggle-theme" title="' + (isDark ? 'Switch to light' : 'Switch to dark') + '" aria-label="Toggle theme">' + (isDark ? '&#9789;' : '&#9728;') + '</button><button class="icon-btn" data-action="open-settings" title="Backup & settings" aria-label="Settings">&#9881;</button></div></header>';
+}
+
+function renderSearchBar(){
+  if(!state.showSearch) return '';
+  const results = state.searchQuery ? performSearch(state.searchQuery) : [];
+  let resultsHtml = '';
+  if(state.searchQuery && results.length > 0){
+    resultsHtml = '<div class="search-results">' + results.map(r => {
+      let action = '', icon = '';
+      if(r.type === 'section'){ action = 'toggle-section'; icon = '&#128196;'; }
+      else if(r.type === 'note'){ action = 'open-note'; icon = '&#128221;'; }
+      else if(r.type === 'entry'){ action = 'open-note'; icon = '&#128178;'; }
+      else if(r.type === 'due'){ action = 'toggle-due'; icon = '&#128176;'; }
+      else if(r.type === 'transaction'){ action = 'toggle-due'; icon = '&#128200;'; }
+      else if(r.type === 'todo'){ action = 'todo-jump-date'; icon = '&#9989;'; }
+      const amountStr = r.amount !== undefined ? '<span class="mono">' + formatMoney(r.amount, state.settings.defaultCurrency) + '</span>' : '';
+      return '<div class="search-result-item" data-action="' + action + '" ' + (r.sectionId ? 'data-section-id="' + r.sectionId + '" ' : '') + (r.noteId ? 'data-note-id="' + r.noteId + '" ' : '') + (r.id ? 'data-id="' + r.id + '" ' : '') + (r.date ? 'data-date="' + r.date + '" ' : '') + '>' + icon + ' ' + highlightMatch(r.title, state.searchQuery) + '<div style="display:flex;align-items:center;gap:8px;">' + amountStr + '<span class="search-result-type">' + r.type + '</span></div></div>';
+    }).join('') + '</div>';
+  } else if(state.searchQuery){
+    resultsHtml = '<div class="search-results"><div class="search-result-item" style="color:var(--ink-faint);">No results found</div></div>';
+  }
+  return '<div class="search-bar"><div class="search-inner"><span class="search-icon">&#128269;</span><input type="text" class="search-input" id="search-input" placeholder="Search entries, notes, dues..." value="' + escapeHtml(state.searchQuery) + '" autocomplete="off"><button class="search-clear" data-action="clear-search">&#10005;</button></div>' + resultsHtml + '</div>';
+}
+
+function renderBottomNav(){
+  const tabs = [
+    { key: 'home', label: 'Home', icon: '&#127968;' },
+    { key: 'notes', label: 'Notes', icon: '&#128221;' },
+    { key: 'dues', label: 'Dues', icon: '&#128176;' },
+    { key: 'todos', label: 'Todos', icon: '&#9989;' }
+  ];
+  return '<nav class="bottom-nav">' + tabs.map(t => '<button class="bottom-nav-item ' + (state.tab === t.key ? 'active' : '') + '" data-action="set-tab" data-tab="' + t.key + '"><span class="nav-icon">' + t.icon + '</span><span>' + t.label + '</span></button>').join('') + '</nav>';
+}
+
+function renderQuickAdd(){
+  if(state.tab !== 'home' || state.openNote) return '';
+  const sections = state.sections;
+  if(sections.length === 0) return '';
+  let options = '';
+  sections.forEach(s => {
+    s.notes.forEach(n => {
+      options += '<option value="' + s.id + ':' + n.id + '">' + escapeHtml(s.name) + ' / ' + escapeHtml(n.title) + '</option>';
+    });
+  });
+  if(!options) return '';
+  return '<div class="quick-add-bar"><div class="quick-add-title">Quick Add</div><form class="quick-add-form" data-form="quick-add"><input name="quick-entry" type="text" autocomplete="off" placeholder="150 Groceries" id="quick-add-input"><select name="quick-target">' + options + '</select><button type="submit" class="btn-primary small">Add</button></form><div id="quick-add-preview" class="quick-add-preview"></div></div>';
+}
+
+function renderInsights(){
+  const insights = getInsights();
+  if(!insights.topCategory && insights.untaggedCount === 0) return '';
+  let rows = '';
+  if(insights.vsLastMonth != 0){
+    const isMore = parseFloat(insights.vsLastMonth) > 0;
+    rows += '<div class="insight-row"><span class="insight-icon">' + (isMore ? '&#128293;' : '&#127881;') + '</span><span class="insight-text">' + (isMore ? 'Spending ' + insights.vsLastMonth + '% more than last month' : 'Spending ' + Math.abs(insights.vsLastMonth) + '% less than last month') + '</span><span class="insight-value ' + (isMore ? 'insight-negative' : 'insight-positive') + '">' + (isMore ? '+' : '') + insights.vsLastMonth + '%</span></div>';
+  }
+  if(insights.topCategory){
+    rows += '<div class="insight-row"><span class="insight-icon">&#128176;</span><span class="insight-text">Top expense: ' + escapeHtml(insights.topCategory.desc) + '</span><span class="insight-value insight-neutral">' + formatMoney(insights.topCategory.amount, state.settings.defaultCurrency) + '</span></div>';
+  }
+  if(insights.untaggedCount > 0){
+    rows += '<div class="insight-row"><span class="insight-icon">&#127991;</span><span class="insight-text">' + insights.untaggedCount + ' untagged entries</span><span class="insight-value insight-neutral">Tag them</span></div>';
+  }
+  return '<div class="card insights-card">' + rows + '</div>';
+}
+
+function renderCalendar(){
+  if(!state.showCalendar) return '';
+  const year = state.calendarMonth.getFullYear();
+  const month = state.calendarMonth.getMonth();
+  const days = getCalendarData(year, month);
+  const monthName = state.calendarMonth.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+
+  let gridHtml = '';
+  days.forEach(d => {
+    if(d === null){
+      gridHtml += '<div class="calendar-day empty"></div>';
+    } else {
+      gridHtml += '<div class="calendar-day level-' + d.level + (d.isToday ? ' today' : '') + '" data-action="calendar-select" data-date="' + d.dateStr + '" title="' + formatMoney(d.spend, state.settings.defaultCurrency) + '">' + d.day + '</div>';
+    }
+  });
+
+  return '<div class="card" style="margin-bottom:16px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><button class="icon-btn" data-action="calendar-prev">&#8249;</button><span style="font-weight:600;">' + monthName + '</span><button class="icon-btn" data-action="calendar-next">&#8250;</button></div><div class="calendar-day-labels"><div class="calendar-day-label">S</div><div class="calendar-day-label">M</div><div class="calendar-day-label">T</div><div class="calendar-day-label">W</div><div class="calendar-day-label">T</div><div class="calendar-day-label">F</div><div class="calendar-day-label">S</div></div><div class="calendar-heatmap">' + gridHtml + '</div><div class="calendar-legend"><span>Less</span><div class="calendar-legend-dot" style="background:var(--line)"></div><div class="calendar-legend-dot" style="background:var(--sage-soft)"></div><div class="calendar-legend-dot" style="background:var(--sage)"></div><div class="calendar-legend-dot" style="background:var(--periwinkle)"></div><div class="calendar-legend-dot" style="background:var(--coral)"></div><span>More</span></div><div style="text-align:center;margin-top:8px;"><button class="link-back" data-action="toggle-calendar">Close calendar</button></div></div>';
+}
+
+function renderHome(){
+  const sym = state.settings.defaultCurrency;
+  const totalNotes = state.sections.reduce((s,sec) => s + sec.notes.length, 0);
+  const totalBudget = state.sections.reduce((s,sec) => s + (Number(sec.totalBudget)||0), 0);
+  const totalSpent = allEntriesFlat().reduce((s,e) => s + e.amount, 0);
+  const utilized = totalBudget > 0 ? Math.round((totalSpent/totalBudget)*100) : 0;
+  const totalSavings = state.sections.reduce((s,sec) => s + sectionSavings(sec), 0);
+
+  const statsCard = '<div class="card"><div class="stats-row"><div class="stat-col"><span class="stat-label">Notes</span><span class="stat-value counter-anim">' + totalNotes + '</span></div><div class="stat-col"><span class="stat-label">Budget</span><span class="stat-value counter-anim">' + formatMoney(totalBudget, sym) + '</span></div><div class="stat-col"><span class="stat-label">Spent</span><span class="stat-value counter-anim">' + formatMoney(totalSpent, sym) + '</span></div><div class="stat-col"><span class="stat-label">Utilized</span><span class="stat-value counter-anim">' + utilized + '%</span></div></div><div class="stats-divider"></div><div class="savings-row"><span class="savings-label">Total savings</span><span class="savings-value counter-anim">' + formatMoney(totalSavings, sym) + '</span></div></div>';
+
+  const todayEntries = entriesOnDate(todayStr());
+  const todayTotal = todayEntries.reduce((s,e) => s + e.amount, 0);
+  let todayCard;
+  if(todayEntries.length === 0){
+    todayCard = '<div class="card leading-card"><h3 class="leading-title">Today\'s expenses</h3><p class="leading-sub" style="margin-bottom:0;">' + new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'}) + ' &mdash; nothing logged yet.</p></div>';
+  } else {
+    const sorted = todayEntries.slice().sort((a,b) => b.amount - a.amount);
+    todayCard = '<div class="card leading-card"><h3 class="leading-title">Today\'s expenses</h3><p class="leading-sub">' + new Date().toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'}) + '</p>' + sorted.map(e => '<div class="today-row"><span class="today-desc">' + escapeHtml(e.desc) + '</span><span class="today-note">' + escapeHtml(e.noteName) + '</span><span class="mono">' + formatMoney(e.amount, sym) + '</span></div>').join('') + '<div class="today-total-row"><span>Total today</span><span class="mono">' + formatMoney(todayTotal, sym) + '</span></div></div>';
+  }
+
+  const groups = groupEntries(allEntriesFlat());
+  const top12 = groups.slice(0,12);
+  let leadingCard;
+  if(top12.length === 0){
+    leadingCard = '<div class="card leading-card">' + emptyState('No expenses yet', 'Once you log a few entries in your notes, your biggest expenses will show up here.', null, null) + '</div>';
+  } else {
+    const max = Math.max(...top12.map(g => g.amount));
+    const legend = { essential:0, discretionary:0, untagged:0 };
+    top12.forEach(g => { legend[g.tag] = (legend[g.tag]||0) + g.amount; });
+    leadingCard = '<div class="card leading-card"><h3 class="leading-title">Leading expenses</h3><p class="leading-sub">Items that cost you the most</p><div class="rank-list">' + top12.map((g,i) => '<div class="rank-row"><span class="rank-num">' + (i+1) + '.</span><span class="rank-desc">' + escapeHtml(g.desc) + '</span><span class="rank-bar"><span class="rank-bar-fill" style="width:' + Math.max(6, Math.round(g.amount/max*100)) + '%"></span></span><span class="rank-amount mono">' + formatMoney(g.amount, sym) + '</span></div>').join('') + '</div><div class="legend-row"><span class="legend-item"><span class="legend-dot dot-essential"></span>Essential: ' + formatMoney(legend.essential, sym) + '</span><span class="legend-item"><span class="legend-dot dot-discretionary"></span>Discretionary: ' + formatMoney(legend.discretionary, sym) + '</span><span class="legend-item"><span class="legend-dot dot-untagged"></span>Untagged: ' + formatMoney(legend.untagged, sym) + '</span></div></div>';
+  }
+
+  const periods = [
+    { key:'7d', label:'7 days' },
+    { key:'30d', label:'30 days' },
+    { key:'90d', label:'3 months' },
+    { key:'365d', label:'1 year' },
+  ];
+  const periodDays = { '7d':7,'30d':30,'90d':90,'365d':365 };
+  const days = periodDays[state.historyPeriod] || 7;
+  const dayGroups = entriesByDay(days);
+  const historyTotal = dayGroups.reduce((s,dg) => s + dg.entries.reduce((s2,e) => s2+e.amount, 0), 0);
+
+  let historyBody;
+  if(dayGroups.length === 0){
+    historyBody = '<p class="ink-faint" style="font-size:13px;margin:0;">No entries in this period.</p>';
+  } else {
+    historyBody = dayGroups.map(dg => {
+      const dayTotal = dg.entries.reduce((s,e) => s+e.amount, 0);
+      const sorted = dg.entries.slice().sort((a,b) => b.amount - a.amount);
+      return '<div class="history-day"><div class="history-day-label">' + formatDate(dg.dateStr + 'T00:00:00') + ' &mdash; <span class="mono">' + formatMoney(dayTotal, sym) + '</span></div>' + sorted.map(e => '<div class="history-entry-row"><span>' + escapeHtml(e.desc) + '</span><span class="history-note-chip">' + escapeHtml(e.noteName) + '</span><span class="mono">' + formatMoney(e.amount, sym) + '</span></div>').join('') + '</div>';
+    }).join('');
+  }
+
+  const historyCard = '<div class="card leading-card"><h3 class="leading-title">History</h3><p class="leading-sub">All entries &mdash; ' + formatMoney(historyTotal, sym) + ' total &middot; <button class="link-back" data-action="toggle-calendar">' + (state.showCalendar ? 'Hide' : 'Show') + ' calendar</button></p><div class="history-tabs">' + periods.map(p => '<button class="history-tab ' + (state.historyPeriod===p.key?'active':'') + '" data-action="set-history-period" data-period="' + p.key + '">' + p.label + '</button>').join('') + '</div>' + historyBody + '</div>';
+
+  return '<div class="view">' + renderQuickAdd() + renderInsights() + statsCard + todayCard + renderCalendar() + leadingCard + historyCard + '</div>';
+}
+
+function noteRow(section, note){
+  const spent = noteSpent(note);
+  const pct = note.budget > 0 ? (spent/note.budget*100) : 0;
+  const clamped = Math.min(100, Math.max(0, pct));
+  const status = pct > 100 ? 'coral' : (pct >= 70 ? 'amber' : 'sage');
+  return '<div class="note-row" data-action="open-note" data-section-id="' + section.id + '" data-note-id="' + note.id + '" role="button" tabindex="0"><div class="note-row-top"><span class="note-row-title">' + (note.icon ? escapeHtml(note.icon)+' ' : '') + escapeHtml(note.title) + '</span><span class="note-row-amount">' + formatMoney(spent, section.currency) + ' / ' + formatMoney(note.budget, section.currency) + '</span></div><div class="bar bar-' + status + ' note-row-bar"><div class="bar-fill" style="width:' + clamped + '%"></div></div></div>';
+}
+
+function sectionCard(section){
+  const expanded = !!state.expandedSectionIds[section.id];
+  const allocated = sectionAllocated(section);
+  const spent = sectionSpent(section);
+  const savings = sectionSavings(section);
+  const pct = section.totalBudget > 0 ? (spent/section.totalBudget*100) : 0;
+  const clamped = Math.min(100, Math.max(0, pct));
+  const status = pct > 100 ? 'coral' : (pct >= 70 ? 'amber' : 'sage');
+  const isConfirm = state.confirmDeleteSection === section.id;
+
+  // Burn rate
+  const burn = getBurnRate(section);
+  const burnHtml = '<div class="burn-rate"><span style="white-space:nowrap;">Burn rate</span><div class="burn-rate-bar"><div class="burn-rate-fill ' + burn.status + '" style="width:' + Math.min(100, (burn.actualSpend / Math.max(1, section.totalBudget) * 100)) + '%"></div></div><span style="white-space:nowrap;">' + (burn.status === 'on-track' ? 'On track' : burn.status === 'over' ? 'Over pace' : 'Under pace') + '</span></div>';
+
+  // Savings goal
+  const goal = state.savingsGoals[section.id];
+  let goalHtml = '';
+  if(goal && goal.target > 0){
+    const goalPct = Math.min(100, (savings / goal.target) * 100);
+    goalHtml = '<div class="goal-card"><div class="goal-header"><h4 class="goal-title">' + escapeHtml(goal.label) + '</h4><span class="goal-amount">' + formatMoney(savings, section.currency) + ' / ' + formatMoney(goal.target, section.currency) + '</span></div><div class="goal-bar-bg"><div class="goal-bar-fill" style="width:' + goalPct + '%"></div></div><div class="goal-stats"><span>' + Math.round(goalPct) + '% saved</span><span>' + formatMoney(Math.max(0, goal.target - savings), section.currency) + ' to go</span></div></div>';
+  }
+
+  return '<div class="card section-card"><div class="section-top" data-action="toggle-section" data-id="' + section.id + '" role="button" tabindex="0"><div class="section-name-row"><h3 class="section-name">' + escapeHtml(section.name) + '</h3><span class="duration-badge">' + escapeHtml(section.duration) + '</span></div><div class="section-actions"><button class="icon-btn ghost" data-action="ask-edit-section" data-id="' + section.id + '" title="Edit section" aria-label="Edit section">Edit</button><button class="icon-btn ghost ' + (isConfirm?'danger':'') + '" data-action="' + (isConfirm?'confirm-delete-section':'ask-delete-section') + '" data-id="' + section.id + '" title="Delete section" aria-label="Delete section">' + (isConfirm?'Delete?':'&#10005;') + '</button><span class="chevron ' + (expanded?'open':'') + '">&#9656;</span></div></div><div class="section-stats"><span>Budget <b class="mono">' + formatMoney(section.totalBudget, section.currency) + '</b></span><span>Spent <b class="mono">' + formatMoney(spent, section.currency) + '</b></span><span>Savings <b class="mono">' + formatMoney(savings, section.currency) + '</b></span><span class="ink-faint">' + section.notes.length + ' ' + (section.notes.length===1?'note':'notes') + '</span></div><div class="bar bar-' + status + '"><div class="bar-fill" style="width:' + clamped + '%"></div></div>' + burnHtml + (expanded ? '<div class="section-expand">' + (section.notes.length === 0 ? '<p class="ink-faint" style="font-size:13px;margin:4px 0 8px;">No notes in this section yet.</p>' : section.notes.map(n => noteRow(section, n)).join('')) + '<button class="btn-secondary small" data-action="open-new-note-for" data-section-id="' + section.id + '" style="align-self:flex-start;">+ Add note</button></div>' : '') + goalHtml + '</div>';
+}
+
+function renderSectionsList(){
+  return '<div class="view"><div class="view-head"><h2>Your sections</h2><button class="btn-primary" data-action="open-new-section">+ New section</button></div>' + (state.sections.length===0 ? emptyState('No sections yet', 'A section is a budgeting period - weekly, monthly, or yearly. Create one, then add notes like Groceries or Fuel inside it.', '+ New section', 'open-new-section') : '<div class="section-list">' + state.sections.map(sectionCard).join('') + '</div>') + '</div>';
+}
+
+function bi_row(g, note, section){
+  const pct = note.budget > 0 ? Math.round(g.amount/note.budget*100) : 0;
+  return '<div class="bi-row"><span class="mono">' + formatMoney(g.amount, section.currency) + '</span><span>' + escapeHtml(g.desc) + (g.count>1?' <span class="ink-faint">(x' + g.count + ')</span>':'') + '</span><span class="bi-pct">' + pct + '%</span></div>';
+}
+
+function entryRow(entry, section, note){
+  const isConfirm = state.confirmDeleteEntry === entry.id;
+  const tagClass = entry.tag === 'essential' ? 'tag-essential' : entry.tag === 'discretionary' ? 'tag-discretionary' : '';
+  const tagTitle = entry.tag === 'essential' ? 'Essential - click to change' : entry.tag === 'discretionary' ? 'Discretionary - click to change' : 'Untagged - click to tag';
+  return '<div class="ledger-row"><button class="tag-btn ' + tagClass + '" data-action="cycle-tag" data-section-id="' + section.id + '" data-note-id="' + note.id + '" data-entry-id="' + entry.id + '" title="' + tagTitle + '" aria-label="' + tagTitle + '"></button><span class="mono amount">' + formatMoney(entry.amount, section.currency) + '</span><span class="desc">' + escapeHtml(entry.desc) + '</span><span class="ink-faint date">' + formatDate(entry.date) + '</span><button class="icon-btn ghost ' + (isConfirm?'danger':'') + '" data-action="' + (isConfirm?'confirm-delete-entry':'ask-delete-entry') + '" data-section-id="' + section.id + '" data-note-id="' + note.id + '" data-entry-id="' + entry.id + '" aria-label="Delete entry">' + (isConfirm?'Confirm':'&#10005;') + '</button></div>';
+}
+
+function renderNoteDetail(section, note){
+  const spent = noteSpent(note);
+  const remaining = note.budget - spent;
+  const pct = note.budget > 0 ? (spent/note.budget*100) : 0;
+  const clamped = Math.min(100, Math.max(0, pct));
+  const status = pct > 100 ? 'coral' : (pct >= 70 ? 'amber' : 'sage');
+  const groups = groupEntries(note.entries);
+  const availableToAllocate = sectionSavings(section);
+  const templates = getTemplatesForNote(section.id, note.id);
+
+  let templatesHtml = '';
+  if(templates.length > 0){
+    templatesHtml = '<div class="template-chips">' + templates.slice().reverse().map(t => '<button class="template-chip" data-action="use-template" data-section-id="' + section.id + '" data-note-id="' + note.id + '" data-desc="' + escapeHtml(t.desc) + '" data-amount="' + t.amount + '"><span>' + escapeHtml(t.desc) + '</span><span class="chip-amount">' + formatMoney(t.amount, section.currency) + '</span></button>').join('') + '</div>';
+  }
+
+  return '<div class="view"><button class="link-back" data-action="back-to-sections">&larr; ' + escapeHtml(section.name) + '</button><div class="detail-head"><h2 class="note-title-lg">' + (note.icon ? escapeHtml(note.icon)+' ' : '') + escapeHtml(note.title) + '</h2><div class="budget-edit"><label for="note-budget-input">Budget</label><input id="note-budget-input" class="budget-input-inline" type="number" min="0" step="0.01" value="' + note.budget + '" data-section-id="' + section.id + '" data-note-id="' + note.id + '" /></div></div><div class="bar bar-' + status + ' bar-lg"><div class="bar-fill" style="width:' + clamped + '%"></div></div><div class="detail-stats"><span class="mono">' + formatMoney(spent, section.currency) + ' spent</span><span class="ink-faint">&middot;</span><span class="mono ' + (remaining<0?'text-coral':'ink-soft') + '">' + (remaining<0 ? formatMoney(Math.abs(remaining), section.currency)+' over' : formatMoney(remaining, section.currency)+' left') + '</span></div><div class="allocate-hint">' + formatMoney(availableToAllocate, section.currency) + ' still available to allocate in ' + escapeHtml(section.name) + '</div>' + templatesHtml + (groups.length > 0 ? '<div class="card budget-items-card"><div class="bi-head"><span class="bi-title">Budget items (' + groups.length + ')</span></div>' + groups.map(g => bi_row(g, note, section)).join('') + '</div>' : '') + '<form class="entry-form" data-form="entry" data-section-id="' + section.id + '" data-note-id="' + note.id + '"><input id="entry-input" name="entry" type="text" autocomplete="off" placeholder="150 Groceries" /><button type="submit" class="btn-primary small">Add</button></form><div id="entry-preview" class="entry-preview"></div>' + (state.entryError ? '<div class="form-error">' + escapeHtml(state.entryError) + '</div>' : '') + '<div style="margin-bottom:10px;"><button class="btn-secondary small" data-action="toggle-bulk-entry">' + (state.showBulkEntry ? 'Hide' : 'Bulk') + ' entry</button></div>' + (state.showBulkEntry ? '<div style="margin-bottom:16px;"><textarea class="bulk-textarea" id="bulk-textarea" placeholder="150 Milk\n45 Bread\n200 Eggs"></textarea><button class="btn-primary small" data-action="submit-bulk" data-section-id="' + section.id + '" data-note-id="' + note.id + '" style="margin-top:8px;">Add all</button></div>' : '') + (note.entries.length===0 ? emptyState('Nothing logged yet', 'Type an amount and what it was for, then press Add.', null, null) : '<div class="ledger">' + note.entries.map(en => entryRow(en, section, note)).join('') + '</div>') + '<div style="margin-top:18px;"><button class="btn-secondary small ' + (state.confirmDeleteNote===(section.id+':'+note.id)?'danger':'') + '" data-action="' + (state.confirmDeleteNote===(section.id+':'+note.id)?'confirm-delete-note':'ask-delete-note') + '" data-section-id="' + section.id + '" data-note-id="' + note.id + '">' + (state.confirmDeleteNote===(section.id+':'+note.id)?'Confirm delete note':'Delete this note') + '</button></div></div>';
+}
+
+function todoRow(t, opts){
+  opts = opts || {};
+  const isConfirm = state.confirmDeleteTodo === t.id;
+  return '<div class="todo-row ' + (t.done?'done':'') + '"><button class="todo-check ' + (t.done?'checked':'') + '" data-action="toggle-todo" data-id="' + t.id + '" aria-label="' + (t.done?'Mark not done':'Mark done') + '">' + (t.done?'&#10003;':'') + '</button><span class="todo-text">' + escapeHtml(t.text) + '</span>' + (opts.showDate ? '<span class="ink-faint todo-date-tag">' + formatDate(t.date) + '</span>' : '') + '<button class="icon-btn ghost ' + (isConfirm?'danger':'') + '" data-action="' + (isConfirm?'confirm-delete-todo':'ask-delete-todo') + '" data-id="' + t.id + '" aria-label="Delete task">' + (isConfirm?'Confirm':'&#10005;') + '</button></div>';
+}
+
+function renderTodosView(){
+  const today = todayStr();
+  const viewDate = state.todoDate || today;
+  const isToday = viewDate === today;
+  let dayTodos = state.todos.filter(t => t.date === viewDate);
+  dayTodos = dayTodos.slice().sort((a,b) => (a.done?1:0) - (b.done?1:0));
+  const carriedOver = isToday ? state.todos.filter(t => t.date < viewDate && !t.done) : [];
+  const totalForProgress = dayTodos.length + carriedOver.length;
+  const doneCount = dayTodos.filter(t => t.done).length;
+  const pct = totalForProgress > 0 ? Math.round(doneCount/totalForProgress*100) : 0;
+
+  return '<div class="view"><div class="todo-nav"><button class="icon-btn" data-action="todo-prev-day" aria-label="Previous day">&#8249;</button><span class="todo-date-main">' + formatTodoDateLabel(viewDate) + '</span><button class="icon-btn" data-action="todo-next-day" aria-label="Next day">&#8250;</button></div>' + (!isToday ? '<button class="link-back" data-action="todo-jump-today" style="display:block;margin:0 auto 14px;">&larr; Back to today</button>' : '') + (totalForProgress > 0 ? '<div class="bar bar-sage"><div class="bar-fill" style="width:' + pct + '%"></div></div><div class="todo-progress-label">' + doneCount + ' of ' + totalForProgress + ' done</div>' : '') + '<form class="entry-form" data-form="todo" data-date="' + viewDate + '"><input id="todo-input" name="todo" type="text" autocomplete="off" placeholder="' + (isToday ? 'What do you need to do today?' : 'Add a task for this day') + '" /><button type="submit" class="btn-primary small">Add</button></form>' + (carriedOver.length > 0 ? '<div class="todo-section-label">Carried over</div><div class="todo-list">' + carriedOver.map(t => todoRow(t, {showDate:true})).join('') + '</div>' : '') + (dayTodos.length > 0 ? (carriedOver.length > 0 ? '<div class="todo-section-label">' + (isToday ? 'Today' : 'This day') + '</div>' : '') + '<div class="todo-list">' + dayTodos.map(t => todoRow(t, {showDate:false})).join('') + '</div>' : (carriedOver.length === 0 ? emptyState(isToday ? 'Nothing on your list' : 'No tasks for this day', isToday ? 'Add something below to get started.' : 'Tasks you add here will only show up on this day.', null, null) : '')) + '</div>';
+}
+
+function txRow(t, due, sym){
+  const isConfirm = state.confirmDeleteTx === t.id;
+  const positive = t.amount >= 0;
+  return '<div class="tx-row ' + (positive?'positive':'negative') + '"><span class="mono tx-amount">' + (positive?'+':'-') + formatMoney(Math.abs(t.amount), sym) + '</span><span class="tx-desc">' + escapeHtml(t.desc) + (t.comment ? ' <span class="ink-faint">(' + escapeHtml(t.comment) + ')</span>' : '') + '</span><span class="tx-date">' + formatDate(t.date) + '</span><button class="icon-btn ghost ' + (isConfirm?'danger':'') + '" data-action="' + (isConfirm?'confirm-delete-tx':'ask-delete-tx') + '" data-due-id="' + due.id + '" data-tx-id="' + t.id + '" aria-label="Delete transaction">' + (isConfirm?'Confirm':'&#10005;') + '</button></div>';
+}
+
+function dueCard(due){
+  const sym = state.settings.defaultCurrency;
+  const labels = dueTypeLabels(due.type);
+  const { principal, settled, pending } = txTotals(due);
+  const displayPending = Math.max(0, pending);
+  const expanded = state.expandedDueId === due.id;
+  const isConfirm = state.confirmDeleteDue === due.id;
+  const accent = due.type === 'lent' ? 'periwinkle' : 'sand';
+  const dueStatus = due.dueDate ? getDueDateStatus(due.dueDate) : null;
+  const dueBadge = dueStatus ? '<span class="due-date-badge ' + dueStatus.status + '">' + dueStatus.label + '</span>' : '';
+
+  return '<div class="card due-card"><div class="due-top" data-action="toggle-due" data-id="' + due.id + '" role="button" tabindex="0"><div class="due-person-row"><span class="due-person">' + escapeHtml(due.person) + '</span>' + dueBadge + '<button class="icon-btn ghost" data-action="open-edit-lender" data-id="' + due.id + '" title="Rename" aria-label="Rename lender">&#9998;</button></div><div class="due-amount-row"><span class="due-amount mono ' + (displayPending<=0?'text-sage':'accent-'+accent) + '">' + (displayPending<=0 ? 'Settled &#10003;' : formatMoney(displayPending, sym)) + '</span><span class="chevron ' + (expanded?'open':'') + '">&#9656;</span></div></div><div class="due-stats"><span>' + labels.principalLabel + ': <b class="mono">' + formatMoney(principal, sym) + '</b></span><span>' + labels.settledLabel + ': <b class="mono">' + formatMoney(settled, sym) + '</b></span></div>' + (displayPending > 0 ? '<div class="due-banner"><span class="due-banner-amount mono">' + formatMoney(displayPending, sym) + '</span><span class="due-banner-label">' + labels.bannerLabel + '</span></div>' : '') + (expanded ? '<div class="due-expand">' + (due.transactions.length === 0 ? '<p class="ink-faint" style="font-size:13px;margin:0 0 4px;">No transactions yet.</p>' : '<div class="tx-list">' + due.transactions.map(t => txRow(t, due, sym)).join('') + '</div>') + '<button class="btn-secondary small" data-action="open-add-tx" data-id="' + due.id + '" style="align-self:flex-start;">+ Add Transaction</button><div class="due-actions-row"><button class="btn-secondary small" data-action="share-due" data-id="' + due.id + '">Share</button><button class="btn-secondary small" data-action="share-whatsapp" data-id="' + due.id + '">WhatsApp</button><button class="btn-secondary small ' + (isConfirm?'danger':'') + '" data-action="' + (isConfirm?'confirm-delete-due':'ask-delete-due') + '" data-id="' + due.id + '">' + (isConfirm?'Confirm delete':'Delete') + '</button></div></div>' : '') + '</div>';
+}
+
+function renderDuesView(){
+  const sym = state.settings.defaultCurrency;
+  const lentTotal = dueGroupTotal('lent');
+  const borrowedTotal = dueGroupTotal('borrowed');
+  const filtered = state.dues.filter(d => d.type === state.duesTab);
+  return '<div class="view"><div class="dues-summary-row"><div class="dues-summary-card ' + (state.duesTab==='lent'?'active':'') + '" data-action="set-dues-tab" data-duestab="lent" role="button" tabindex="0"><span class="dues-summary-label accent-periwinkle">&#8593; Lent</span>' + (lentTotal<=0 ? '<span class="dues-summary-value text-sage">Settled &#10003;</span>' : '<span class="dues-summary-value mono accent-periwinkle">' + formatMoney(lentTotal, sym) + '</span>') + '</div><div class="dues-summary-card ' + (state.duesTab==='borrowed'?'active':'') + '" data-action="set-dues-tab" data-duestab="borrowed" role="button" tabindex="0"><span class="dues-summary-label accent-sand">&#8595; Borrowed</span>' + (borrowedTotal<=0 ? '<span class="dues-summary-value text-sage">Settled &#10003;</span>' : '<span class="dues-summary-value mono text-coral">' + formatMoney(borrowedTotal, sym) + '</span>') + '</div></div><p class="dues-tagline">Track loans from banks or friends, paid over time as EMIs or installments.</p><div class="view-head"><h2>' + (state.duesTab==='lent' ? 'People who owe you' : 'People you owe') + '</h2><button class="btn-primary" data-action="open-new-due">+ Add lender</button></div>' + (filtered.length===0 ? emptyState(state.duesTab==='lent' ? 'No one owes you yet' : 'You do not owe anyone yet', state.duesTab==='lent' ? 'Add a lender to start tracking money you have lent out.' : 'Add a lender to start tracking a loan, EMI, or money you owe.', '+ Add lender', 'open-new-due') : '<div class="due-list">' + filtered.map(dueCard).join('') + '</div>') + '</div>';
+}
+
+function currencyOptions(selected){
+  const opts = [['Rs ','Rs Pakistani Rupee'],['$','$ Dollar'],['&#8377;','&#8377; Indian Rupee'],['&#8364;','&#8364; Euro'],['&#163;','&#163; Pound'],['&#165;','&#165; Yen']];
+  return opts.map(([v,label]) => '<option value="' + v + '" ' + (selected===v?'selected':'') + '>' + label + '</option>').join('') + '<option value="custom">Custom symbol</option>';
+}
+
+function sectionModal(){
+  const editing = state.editSectionId ? findSection(state.editSectionId) : null;
+  const copyFromId = !editing ? (state.sectionCopyFromId || 'scratch') : null;
+  const copySource = (copyFromId && copyFromId !== 'scratch') ? findSection(copyFromId) : null;
+  const duration = editing ? editing.duration : (copySource ? copySource.duration : 'monthly');
+  const name = editing ? editing.name : suggestSectionName(duration);
+  const budget = editing ? editing.totalBudget : (copySource ? copySource.totalBudget : '');
+  const currency = editing ? editing.currency : (copySource ? copySource.currency : (state.settings.defaultCurrency || 'Rs '));
+  const showCopyOption = !editing && state.sections.length > 0;
+
+  // Savings goal
+  let goalHtml = '';
+  if(!editing){
+    goalHtml = '<label>Savings goal (optional)<input name="savingsGoal" type="number" min="0" step="0.01" placeholder="e.g. 10000" /></label><label>Goal label<input name="goalLabel" type="text" placeholder="e.g. Emergency Fund" /></label>';
+  }
+
+  return '<div class="overlay"><div class="modal"><h3>' + (editing ? 'Edit section' : 'New section') + '</h3><form data-form="section" data-edit-id="' + (editing ? editing.id : '') + '">' + (showCopyOption ? '<label>Start from<select name="copyFrom"><option value="scratch" ' + (copyFromId==='scratch'?'selected':'') + '>Scratch (blank)</option>' + state.sections.map(s => '<option value="' + s.id + '" ' + (copyFromId===s.id?'selected':'') + '>Copy from "' + escapeHtml(s.name) + '"</option>').join('') + '</select></label>' + (copySource ? '<p class="copy-hint">' + copySource.notes.length + ' ' + (copySource.notes.length===1?'category':'categories') + ' will be copied in with their budgets, but no entries.</p>' : '') : '') + '<label>Duration<select name="duration"><option value="weekly" ' + (duration==='weekly'?'selected':'') + '>Weekly</option><option value="monthly" ' + (duration==='monthly'?'selected':'') + '>Monthly</option><option value="yearly" ' + (duration==='yearly'?'selected':'') + '>Yearly</option></select></label><label>Name<input name="name" type="text" value="' + escapeHtml(name) + '" placeholder="May 2026" required /></label><label>Total budget<input name="totalBudget" type="number" min="0" step="0.01" value="' + budget + '" placeholder="65000" required /></label><label>Currency<select name="currency">' + currencyOptions(currency) + '</select></label><input name="customCurrency" type="text" maxlength="3" placeholder="Custom symbol" class="custom-currency-input" />' + goalHtml + '<div class="modal-actions"><button type="button" class="btn-secondary" data-action="close-modal">Cancel</button><button type="submit" class="btn-primary">' + (editing ? 'Save' : 'Create') + '</button></div></form></div></div>';
+}
+
+function noteModal(){
+  return '<div class="overlay"><div class="modal"><h3>Add a note</h3><form data-form="note" data-section-id="' + state.showNewNoteFor + '"><label>Title<input name="title" type="text" placeholder="Groceries" required /></label><div class="field-row"><label>Icon <span class="ink-faint">(optional)</span><input name="icon" type="text" maxlength="4" placeholder="&#128722;" /></label><label>Budget<input name="budget" type="number" min="0" step="0.01" placeholder="30000" required /></label></div><div class="modal-actions"><button type="button" class="btn-secondary" data-action="close-modal">Cancel</button><button type="submit" class="btn-primary">Create</button></div></form></div></div>';
+}
+
+function newDueModal(){
+  return '<div class="overlay"><div class="modal"><h3>Add a lender</h3><form data-form="new-due"><div class="radio-row"><label><input type="radio" name="type" value="lent" ' + (state.duesTab==='lent'?'checked':'') + '/> Lent (they owe you)</label><label><input type="radio" name="type" value="borrowed" ' + (state.duesTab==='borrowed'?'checked':'') + '/> Borrowed (you owe them)</label></div><label>Person<input name="person" type="text" placeholder="John" required /></label><label>Due date (optional)<input name="dueDate" type="date" /></label><div class="modal-actions"><button type="button" class="btn-secondary" data-action="close-modal">Cancel</button><button type="submit" class="btn-primary">Add</button></div></form></div></div>';
+}
+
+function addTransactionModal(){
+  const due = state.dues.find(d => d.id === state.showAddTxFor);
+  if(!due) return '';
+  const labels = dueTypeLabels(due.type);
+  return '<div class="overlay"><div class="modal"><h3>Add Transaction</h3><p class="tx-person-row">Person: <b>' + escapeHtml(due.person) + '</b></p><div class="tx-hint-card"><div class="tx-hint-title">Format:</div><div class="tx-hint-line">&bull; Amount then reason &mdash; e.g., <b>5000 medical help</b></div><div class="tx-hint-line">&bull; Optional comment after a dot &mdash; e.g., <b>5000 rent.Jan installment</b></div><div class="tx-hint-line">&bull; Pick a custom date above if not today</div></div><form data-form="transaction" data-due-id="' + due.id + '"><label>Date<input id="transaction-date" name="transaction-date" type="date" value="' + new Date().toISOString().slice(0,10) + '" /></label><input id="transaction-input" name="transaction" type="text" autocomplete="off" placeholder="5000 medical help" />' + (state.transactionError ? '<div class="form-error">' + escapeHtml(state.transactionError) + '</div>' : '') + '<div class="tx-buttons-row"><button type="submit" class="btn-tx-neg" data-sign="-">' + labels.negBtn + '</button><button type="submit" class="btn-tx-pos" data-sign="+">' + labels.posBtn + '</button></div><div class="modal-actions"><button type="button" class="btn-secondary" data-action="close-modal">Cancel</button></div></form></div></div>';
+}
+
+function editLenderModal(){
+  const due = state.dues.find(d => d.id === state.editLenderId);
+  if(!due) return '';
+  return '<div class="overlay"><div class="modal"><h3>Rename</h3><form data-form="rename-lender" data-due-id="' + due.id + '"><label>Name<input name="person" type="text" value="' + escapeHtml(due.person) + '" required /></label><div class="modal-actions"><button type="button" class="btn-secondary" data-action="close-modal">Cancel</button><button type="submit" class="btn-primary">Save</button></div></form></div></div>';
+}
+
+function settingsModal(){
+  const c = state.settings.defaultCurrency;
+  const householdId = state.settings.householdId;
+  const statusLabel = state.syncStatus === 'connected' ? 'Connected - changes sync live' : state.syncStatus === 'connecting' ? 'Connecting...' : state.syncStatus === 'error' ? 'Connection trouble - will retry' : '';
+
+  let syncSection;
+  if(householdId){
+    syncSection = '<div class="settings-row" style="display:block;"><div class="settings-label">Sync with partner</div><div class="sync-status-row"><span class="sync-dot ' + (state.syncStatus||'') + '"></span><span>' + escapeHtml(statusLabel) + '</span></div><div class="sync-code-box"><span class="sync-code-text">' + escapeHtml(householdId) + '</span><button type="button" class="icon-btn ghost" data-action="copy-household-code" aria-label="Copy code">Copy</button></div><p class="ink-faint small-print" style="margin:0 0 10px;">Share this code with your partner once - they enter it under "Join a partner\'s data" to connect.</p><button type="button" class="btn-secondary small" data-action="stop-syncing">Stop syncing</button></div>';
+  } else if(state.showJoinHousehold){
+    syncSection = '<div class="settings-row" style="display:block;"><div class="settings-label">Join a partner\'s data</div><form data-form="join-household"><label>Code from your partner<input name="code" type="text" autocomplete="off" placeholder="paste the code here" /></label>' + (state.syncError ? '<div class="form-error">' + escapeHtml(state.syncError) + '</div>' : '') + '<div class="sync-actions-row"><button type="button" class="btn-secondary small" data-action="cancel-join-household">Cancel</button><button type="submit" class="btn-primary small" ' + (state.syncBusy?'disabled':'') + '>' + (state.syncBusy ? 'Joining...' : 'Join') + '</button></div></form><p class="ink-faint small-print">This replaces your current data on this device with your partner\'s, then keeps both in sync from then on.</p></div>';
+  } else {
+    syncSection = '<div class="settings-row" style="display:block;"><div class="settings-label">Sync with partner</div><p class="ink-faint small-print" style="margin-top:0;">Add transactions on two phones and see each other\'s changes live.</p><div class="sync-actions-row"><button type="button" class="btn-secondary small" data-action="start-create-household" ' + (state.syncBusy?'disabled':'') + '>' + (state.syncBusy ? 'Creating...' : 'Create & share a code') + '</button><button type="button" class="btn-secondary small" data-action="open-join-household">Join a partner\'s data</button></div></div>';
+  }
+
+  return '<div class="overlay"><div class="modal"><h3>Backup & settings</h3>' + syncSection + '<div class="settings-row"><div><div class="settings-label">Default currency</div><select id="default-currency-select">' + currencyOptions(c).replace('<option value="custom">Custom symbol</option>','') + '</select></div></div><div class="settings-row"><button class="btn-secondary" data-action="export-data">Export backup (.json)</button><button class="btn-secondary" data-action="export-csv">Export CSV</button><button class="btn-secondary" data-action="trigger-import">Import backup</button><input id="import-file" type="file" accept="application/json" hidden /></div>' + (state.importError ? '<div class="form-error">' + escapeHtml(state.importError) + '</div>' : '') + '<p class="ink-faint small-print">Everything here stays in your account - nothing is shared' + (householdId ? ' beyond the partner you sync with' : '') + '.</p><div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line);"><p class="ink-faint small-print">Keyboard shortcuts: <span class="kbd">Ctrl+K</span> Search &middot; <span class="kbd">Ctrl+N</span> New entry &middot; <span class="kbd">Ctrl+.</span> Theme &middot; <span class="kbd">Esc</span> Close</p></div><div class="modal-actions"><button type="button" class="btn-primary" data-action="close-modal">Done</button></div></div></div>';
 }
 
 function attachLivePreview(){
@@ -1878,10 +2943,10 @@ function attachLivePreview(){
     const v = input.value.trim();
     const match = v.match(/^(-?[\d,]+(?:\.\d{1,2})?)\s+(.+)$/);
     if(match && section){
-      preview.textContent = formatMoney(parseFloat(match[1].replace(/,/g,'')), section.currency) + ' \u2192 ' + match[2].trim();
+      preview.textContent = formatMoney(parseFloat(match[1].replace(/,/g,'')), section.currency) + ' -> ' + match[2].trim();
       preview.className = 'entry-preview valid';
     } else if(v){
-      preview.textContent = 'Start with a number, like \u201c150 Groceries\u201d';
+      preview.textContent = 'Start with a number, like "150 Groceries"';
       preview.className = 'entry-preview hint';
     } else {
       preview.textContent = '';
@@ -1892,16 +2957,40 @@ function attachLivePreview(){
   update();
 }
 
+function attachQuickAddPreview(){
+  const input = document.getElementById('quick-add-input');
+  const preview = document.getElementById('quick-add-preview');
+  if(!input || !preview) return;
+  const update = () => {
+    const v = input.value.trim();
+    const match = v.match(/^(-?[\d,]+(?:\.\d{1,2})?)\s+(.+)$/);
+    if(match){
+      preview.textContent = formatMoney(parseFloat(match[1].replace(/,/g,'')), state.settings.defaultCurrency) + ' -> ' + match[2].trim();
+      preview.className = 'quick-add-preview valid';
+    } else if(v){
+      preview.textContent = 'Start with a number, like "150 Groceries"';
+      preview.className = 'quick-add-preview';
+    } else {
+      preview.textContent = '';
+      preview.className = 'quick-add-preview';
+    }
+  };
+  input.addEventListener('input', update);
+  update();
+}
+
 function render(){
   const app = document.getElementById('app');
   if(!state.loaded){
-    app.innerHTML = `<div class="loading">Loading your notes&hellip;</div>`;
+    app.innerHTML = '<div class="loading">Loading your notes...</div>';
     return;
   }
   let html = renderHeader();
-  html += `<main class="main">`;
+  html += renderSearchBar();
+  html += '<nav class="tabs" role="tablist"><button class="tab ' + (state.tab==='home'?'active':'') + '" data-action="set-tab" data-tab="home">Home</button><button class="tab ' + (state.tab==='notes'?'active':'') + '" data-action="set-tab" data-tab="notes">Notes</button><button class="tab ' + (state.tab==='dues'?'active':'') + '" data-action="set-tab" data-tab="dues">Dues</button><button class="tab ' + (state.tab==='todos'?'active':'') + '" data-action="set-tab" data-tab="todos">Todos</button></nav>';
+  html += '<main class="main">';
   if(state.migrationNotice){
-    html += `<div class="toast-info">${escapeHtml(state.migrationNotice)}</div>`;
+    html += '<div class="toast-info">' + escapeHtml(state.migrationNotice) + '</div>';
   }
   if(state.tab === 'home'){
     html += renderHome();
@@ -1919,9 +3008,10 @@ function render(){
     html += renderTodosView();
   }
   if(state.error){
-    html += `<div class="toast-error">${escapeHtml(state.error)}</div>`;
+    html += '<div class="toast-error">' + escapeHtml(state.error) + '</div>';
   }
-  html += `</main>`;
+  html += '</main>';
+  html += renderBottomNav();
   if(state.showNewSection) html += sectionModal();
   if(state.showNewNoteFor) html += noteModal();
   if(state.showNewDue) html += newDueModal();
@@ -1936,13 +3026,16 @@ function render(){
     pendingFocus = null;
   }
   attachLivePreview();
+  attachQuickAddPreview();
 }
+
 
 function closeAllModals(){
   state.showNewSection = false; state.editSectionId = null; state.sectionCopyFromId = 'scratch';
   state.showNewNoteFor = null; state.showNewDue = false; state.showSettings = false;
   state.showAddTxFor = null; state.editLenderId = null; state.transactionError = null;
   state.showJoinHousehold = false; state.syncError = null;
+  state.showBulkEntry = false;
 }
 
 function init(){
@@ -1963,9 +3056,10 @@ function init(){
     const entryId = el.dataset.entryId;
     const dueId = el.dataset.dueId;
     const txId = el.dataset.txId;
+
     switch(action){
       case 'set-tab':
-        state.tab = el.dataset.tab; render(); break;
+        state.tab = el.dataset.tab; state.showSearch = false; state.searchQuery = ''; render(); break;
       case 'set-history-period':
         state.historyPeriod = el.dataset.period; render(); break;
       case 'open-new-section':
@@ -2017,6 +3111,8 @@ function init(){
         deleteTransaction(dueId, txId); break;
       case 'share-due':
         shareRecords(id); break;
+      case 'share-whatsapp':
+        shareWhatsApp(id); break;
       case 'ask-delete-due':
         state.confirmDeleteDue = id; render(); break;
       case 'confirm-delete-due':
@@ -2033,8 +3129,12 @@ function init(){
         state.todoDate = shiftDateStr(state.todoDate || todayStr(), 1); render(); break;
       case 'todo-jump-today':
         state.todoDate = todayStr(); render(); break;
+      case 'todo-jump-date':
+        state.todoDate = el.dataset.date || todayStr(); state.tab = 'todos'; state.showSearch = false; render(); break;
       case 'export-data':
         exportData(); break;
+      case 'export-csv':
+        exportCSV(); break;
       case 'trigger-import': {
         const f = document.getElementById('import-file');
         if(f) f.click();
@@ -2058,6 +3158,57 @@ function init(){
         }
         break;
       }
+      case 'toggle-search':
+        state.showSearch = !state.showSearch;
+        state.searchQuery = '';
+        render();
+        if(state.showSearch) pendingFocus = 'search-input';
+        break;
+      case 'clear-search':
+        state.searchQuery = '';
+        render();
+        pendingFocus = 'search-input';
+        break;
+      case 'toggle-calendar':
+        state.showCalendar = !state.showCalendar;
+        render();
+        break;
+      case 'calendar-prev':
+        state.calendarMonth = new Date(state.calendarMonth.getFullYear(), state.calendarMonth.getMonth() - 1, 1);
+        render();
+        break;
+      case 'calendar-next':
+        state.calendarMonth = new Date(state.calendarMonth.getFullYear(), state.calendarMonth.getMonth() + 1, 1);
+        render();
+        break;
+      case 'calendar-select':
+        state.historyPeriod = '30d';
+        state.showCalendar = false;
+        render();
+        break;
+      case 'toggle-bulk-entry':
+        state.showBulkEntry = !state.showBulkEntry;
+        render();
+        break;
+      case 'submit-bulk': {
+        const ta = document.getElementById('bulk-textarea');
+        if(ta) processBulkEntry(el.dataset.sectionId, el.dataset.noteId, ta.value);
+        break;
+      }
+      case 'use-template': {
+        const sId = el.dataset.sectionId;
+        const nId = el.dataset.noteId;
+        const desc = el.dataset.desc;
+        const amount = parseFloat(el.dataset.amount);
+        const note = findNote(sId, nId);
+        if(note){
+          note.entries.unshift({ id: uid(), amount, desc, date: new Date().toISOString(), tag: null });
+          hapticSuccess();
+          render();
+          saveData();
+        }
+        break;
+      }
       default: break;
     }
   });
@@ -2066,6 +3217,17 @@ function init(){
     if((e.key === 'Enter' || e.key === ' ') && e.target.matches('[data-action][role="button"]')){
       e.preventDefault();
       e.target.click();
+    }
+    // Keyboard shortcuts
+    if(e.ctrlKey || e.metaKey){
+      if(e.key === 'k'){ e.preventDefault(); state.showSearch = true; state.searchQuery = ''; render(); pendingFocus = 'search-input'; }
+      if(e.key === 'n'){ e.preventDefault(); if(state.tab === 'notes' && state.openNote){ pendingFocus = 'entry-input'; render(); } }
+      if(e.key === '.'){ e.preventDefault(); toggleTheme(); }
+    }
+    if(e.key === 'Escape'){
+      if(state.showSearch){ state.showSearch = false; state.searchQuery = ''; render(); }
+      else if(state.showNewSection || state.showNewNoteFor || state.showNewDue || state.showSettings || state.showAddTxFor || state.editLenderId){ closeAllModals(); render(); }
+      else if(state.openNote){ state.openNote = null; render(); }
     }
   });
 
@@ -2081,6 +3243,13 @@ function init(){
         const copyFromEl = form.elements['copyFrom'];
         const copyFromId = (copyFromEl && copyFromEl.value !== 'scratch') ? copyFromEl.value : null;
         createSection(Object.assign({}, payload, { copyFromId }));
+        // Set savings goal if provided
+        const goalVal = form.elements['savingsGoal'] ? parseFloat(form.elements['savingsGoal'].value) : 0;
+        const goalLabel = form.elements['goalLabel'] ? form.elements['goalLabel'].value : '';
+        if(goalVal > 0){
+          const newSection = state.sections[0];
+          if(newSection) setSavingsGoal(newSection.id, goalVal, goalLabel);
+        }
       }
     } else if(form.dataset.form === 'note'){
       createNoteInSection(form.dataset.sectionId, {
@@ -2093,7 +3262,8 @@ function init(){
     } else if(form.dataset.form === 'new-due'){
       createLender({
         type: form.elements['type'].value,
-        person: form.elements['person'].value
+        person: form.elements['person'].value,
+        dueDate: form.elements['dueDate'] ? form.elements['dueDate'].value : null
       });
     } else if(form.dataset.form === 'transaction'){
       const sign = e.submitter ? e.submitter.dataset.sign : null;
@@ -2105,6 +3275,13 @@ function init(){
       addTodo(form.dataset.date, form.elements['todo'].value);
     } else if(form.dataset.form === 'join-household'){
       joinHousehold(form.elements['code'].value);
+    } else if(form.dataset.form === 'quick-add'){
+      const target = form.elements['quick-target'].value;
+      const parts = target.split(':');
+      if(parts.length === 2 && quickAdd(form.elements['quick-entry'].value, parts[0], parts[1])){
+        form.elements['quick-entry'].value = '';
+        document.getElementById('quick-add-preview').textContent = '';
+      }
     }
   });
 
@@ -2143,6 +3320,46 @@ function init(){
     if(e.target.name === 'name'){
       e.target.dataset.touched = 'true';
     }
+  });
+
+  // Search input handler
+  app.addEventListener('input', (e) => {
+    if(e.target.id === 'search-input'){
+      clearTimeout(searchDebounce);
+      searchDebounce = setTimeout(() => {
+        state.searchQuery = e.target.value;
+        render();
+        const input = document.getElementById('search-input');
+        if(input){ input.focus(); input.setSelectionRange(input.value.length, input.value.length); }
+      }, 150);
+    }
+  });
+
+  // Swipe gesture handlers
+  app.addEventListener('touchstart', (e) => {
+    const row = e.target.closest('.ledger-row, .todo-row, .tx-row');
+    if(!row) return;
+    state.swipeState = { active: true, startX: e.touches[0].clientX, currentX: e.touches[0].clientX, target: row };
+  }, { passive: true });
+
+  app.addEventListener('touchmove', (e) => {
+    if(!state.swipeState.active) return;
+    state.swipeState.currentX = e.touches[0].clientX;
+    const diff = state.swipeState.startX - state.swipeState.currentX;
+    if(diff > 0 && diff < 100){
+      state.swipeState.target.style.transform = 'translateX(-' + diff + 'px)';
+    }
+  }, { passive: true });
+
+  app.addEventListener('touchend', (e) => {
+    if(!state.swipeState.active) return;
+    const diff = state.swipeState.startX - state.swipeState.currentX;
+    state.swipeState.target.style.transform = '';
+    if(diff > 60){
+      // Swiped left - could trigger quick actions
+      haptic();
+    }
+    state.swipeState = { active: false, startX: 0, currentX: 0, target: null };
   });
 
   loadData();
