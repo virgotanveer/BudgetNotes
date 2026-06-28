@@ -1148,6 +1148,8 @@ function dueGroupTotal(type){
 
 /* ---------- LOAD / SAVE ---------- */
 async function loadData(){
+  let savedHouseholdId = null;
+  
   try{
     await Storage.initDB();
   }catch(e){ console.warn('IndexedDB init failed:', e); }
@@ -1156,6 +1158,8 @@ async function loadData(){
     const res = await window.storage.get(STORAGE_KEY);
     if(res && res.value){
       const parsed = JSON.parse(res.value);
+      // Save householdId before any potential overwrites
+      savedHouseholdId = parsed.settings && parsed.settings.householdId;
       state.settings = parsed.settings || { defaultCurrency: 'Rs ' };
       if(Array.isArray(parsed.sections)){
         state.sections = parsed.sections;
@@ -1185,6 +1189,7 @@ async function loadData(){
       state.savingsGoals = parsed.savingsGoals || {};
     }
   } catch(e){
+    console.warn('Load failed, starting fresh:', e);
     state.sections = [];
     state.dues = [];
     state.todos = [];
@@ -1193,6 +1198,12 @@ async function loadData(){
       await window.storage.set(STORAGE_KEY, JSON.stringify({ sections: [], dues: [], todos: [], settings: state.settings }));
     }catch(e2){ console.error('Could not initialize storage', e2); }
   }
+  
+  // Restore householdId if it was lost during parsing
+  if(savedHouseholdId && !state.settings.householdId){
+    state.settings.householdId = savedHouseholdId;
+  }
+  
   state.todoDate = todayStr();
   if(!state.settings.theme) state.settings.theme = detectSystemTheme();
   applyTheme();
@@ -1204,6 +1215,7 @@ async function loadData(){
     remoteUpdate: applyRemoteState,
     statusChange: (status) => { state.syncStatus = status; render(); }
   });
+  
   if(state.settings.householdId){
     state.syncStatus = 'connecting';
     CloudSync.start(state.settings.householdId);
@@ -1242,13 +1254,28 @@ function applyRemoteState(jsonString, remoteTimestamp){
       return;
     }
     const parsed = JSON.parse(jsonString);
+    
+    // Preserve local-only settings that shouldn't be overwritten
+    const currentHouseholdId = state.settings.householdId;
+    
     state.settings = Object.assign({}, state.settings, parsed.settings || {});
-    if(Array.isArray(parsed.sections)) state.sections = parsed.sections;
-    state.dues = (parsed.dues || []).map(migrateDue);
+    
+    // Ensure householdId is never lost
+    if(currentHouseholdId && !state.settings.householdId){
+      state.settings.householdId = currentHouseholdId;
+    }
+    
+    if(Array.isArray(parsed.sections)){
+      state.sections = parsed.sections;
+    }
+    state.dues = (Array.isArray(parsed.dues) ? parsed.dues : []).map(migrateDue);
     state.todos = Array.isArray(parsed.todos) ? parsed.todos : [];
     state.entryTemplates = parsed.entryTemplates || {};
     state.savingsGoals = parsed.savingsGoals || {};
-    window.storage.set(STORAGE_KEY, jsonString).catch(()=>{});
+    
+    // Save to localStorage using current state (includes householdId)
+    saveData().catch((e) => console.warn('Background save failed:', e));
+    
     applyTheme();
     render();
   }catch(e){
