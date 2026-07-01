@@ -21,8 +21,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-.bill-category-badge{ font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; background:var(--paper-soft); color:var(--ink-soft); padding:2px 8px; border-radius:999px; border:1px solid var(--line); }
-.bill-history-row{ display:grid; grid-template-columns:90px 1fr auto 30px; align-items:center; gap:8px; padding:8px 10px; border-radius:var(--radius-sm); font-size:13px; margin-bottom:4px; }
+
 :root{
   --bg:#F3F1FA;
   --paper:#FFFFFF;
@@ -876,7 +875,6 @@ function createSnapshot(){
     sections: state.sections,
     dues: state.dues,
     todos: state.todos,
-    bills: state.bills,
     settings: state.settings,
     savingsGoals: state.savingsGoals,
     entryTemplates: state.entryTemplates
@@ -887,7 +885,6 @@ function restoreSnapshot(snapshot){
   state.sections = snapshot.sections;
   state.dues = snapshot.dues;
   state.todos = snapshot.todos;
-  state.bills = snapshot.bills || [];
   state.settings = snapshot.settings;
   state.savingsGoals = snapshot.savingsGoals || {};
   state.entryTemplates = snapshot.entryTemplates || {};
@@ -1140,7 +1137,6 @@ async function loadData(){
       }
       state.dues = (parsed.dues || []).map(migrateDue);
       state.todos = Array.isArray(parsed.todos) ? parsed.todos : [];
-      state.bills = Array.isArray(parsed.bills) ? parsed.bills : [];
       state.entryTemplates = parsed.entryTemplates || {};
       state.savingsGoals = parsed.savingsGoals || {};
     }
@@ -1183,7 +1179,6 @@ async function saveData(){
     sections: state.sections,
     dues: state.dues,
     todos: state.todos,
-    bills: state.bills,
     settings: state.settings,
     entryTemplates: state.entryTemplates,
     savingsGoals: state.savingsGoals
@@ -1226,7 +1221,6 @@ function applyRemoteState(jsonString, remoteTimestamp){
     }
     state.dues = (Array.isArray(parsed.dues) ? parsed.dues : []).map(migrateDue);
     state.todos = Array.isArray(parsed.todos) ? parsed.todos : [];
-    state.bills = Array.isArray(parsed.bills) ? parsed.bills : [];
     state.entryTemplates = parsed.entryTemplates || {};
     state.savingsGoals = parsed.savingsGoals || {};
     
@@ -3022,8 +3016,6 @@ function closeAllModals(){
   state.showAddTxFor = null; state.editLenderId = null; state.transactionError = null;
   state.showJoinHousehold = false; state.syncError = null;
   state.showBulkEntry = false;
-  state.showNewBill = false; state.editBillId = null;
-  state.billPayModal = null; state.billHistoryModal = null;
 }
 
 function init(){
@@ -3197,26 +3189,6 @@ function init(){
         }
         break;
       }
-      case 'set-bills-filter':
-        state.billsFilter = el.dataset.filter; render(); break;
-      case 'open-new-bill':
-        closeAllModals(); state.showNewBill = true; render(); break;
-      case 'open-edit-bill':
-        closeAllModals(); state.editBillId = id; render(); break;
-      case 'open-pay-bill':
-        closeAllModals(); state.billPayModal = id; render(); break;
-      case 'open-bill-history':
-        closeAllModals(); state.billHistoryModal = id; render(); break;
-      case 'toggle-bill':
-        state.expandedDueId = state.expandedDueId === id ? null : id; render(); break;
-      case 'ask-delete-bill':
-        state.confirmDeleteBill = id; render(); break;
-      case 'confirm-delete-bill':
-        deleteBill(id); break;
-      case 'skip-bill':
-        skipBillPeriod(id); break;
-      case 'delete-bill-payment':
-        deleteBillPayment(el.dataset.billId, el.dataset.paymentId); break;
       default: break;
     }
   });
@@ -3283,28 +3255,6 @@ function init(){
       addTodo(form.dataset.date, form.elements['todo'].value);
     } else if(form.dataset.form === 'join-household'){
       joinHousehold(form.elements['code'].value);
-    } else if(form.dataset.form === 'bill'){
-      const editId = form.dataset.editId;
-      const recurrence = form.elements['recurrence'].value;
-      const payload = {
-        name: form.elements['name'].value,
-        category: form.elements['category'].value,
-        amount: form.elements['amount'].value,
-        dueDate: form.elements['dueDate'].value,
-        recurrence: recurrence,
-        customDays: recurrence === 'custom' ? form.elements['customDays'].value : 30,
-        notes: form.elements['notes'].value,
-        variableAmount: form.elements['variableAmount'] && form.elements['variableAmount'].checked,
-        autoEstimate: form.elements['autoEstimate'] && form.elements['autoEstimate'].checked
-      };
-      if(editId){
-        updateBill(editId, payload);
-      } else {
-        createBill(payload);
-      }
-    } else if(form.dataset.form === 'pay-bill'){
-      payBill(form.dataset.billId, form.elements['amount'].value, form.elements['date'].value, form.elements['note'].value);
-    }
     } else if(form.dataset.form === 'quick-add'){
       const target = form.elements['quick-target'].value;
       const parts = target.split(':');
@@ -3332,11 +3282,6 @@ function init(){
       pendingFocus = null;
       const nameInput = document.querySelector('form[data-form="section"] input[name="name"]');
       if(nameInput) nameInput.focus();
-    }
-        if(e.target.name === 'recurrence'){
-      const form = e.target.closest('form');
-      const customLabel = form && form.querySelector('#custom-days-label');
-      if(customLabel) customLabel.style.display = e.target.value === 'custom' ? 'block' : 'none';
     }
     if(e.target.name === 'currency'){
       const form = e.target.closest('form');
